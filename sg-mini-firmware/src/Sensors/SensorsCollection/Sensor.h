@@ -5,14 +5,13 @@
 #ifndef Sensor_h
 #define Sensor_h
 
-#include "../../Config/Config.h"
 #include "../Sensors.h"
 
 class Sensor {
   public:
     virtual void init() = 0;
     virtual void read() = 0;
-    virtual float get(Sensors::SensorDataType dataType) = 0;
+    virtual bool get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) = 0;
 };
 
 #endif

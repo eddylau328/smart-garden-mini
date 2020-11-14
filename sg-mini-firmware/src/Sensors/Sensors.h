@@ -5,6 +5,9 @@
 #ifndef Sensors_h
 #define Sensors_h
 
+#include <Arduino.h>
+#include "../Config/Config.h"
+
 class Sensors {
   public:
     enum SensorDataType {
