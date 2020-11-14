@@ -29,7 +29,7 @@ void Sensor_DHT::read() {
   Helper::getDecimalValue(measure, humDec);
 }
 
-bool Sensor_DHT::get(Sensors::SensorDataType dataType, uint8_t integerValue, uint8_t decimalValue) {
+bool Sensor_DHT::get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) {
   if (dataType == Sensors::SensorDataType::Temp) {
     integerValue = tempInt;
     decimalValue = tempDec;

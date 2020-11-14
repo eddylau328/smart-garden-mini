@@ -10,6 +10,8 @@
 #define SoilHumidity_PIN 14
 #define DHT_PIN 13
 #define DHT_TYPE DHT12
+#define UltraSound_Trigger_PIN 32
+#define UltraSound_Echo_PIN 35
 
 
 #endif

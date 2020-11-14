@@ -12,7 +12,7 @@
 class Sensors {
   public:
     enum SensorDataType {
-      None, Temp, Hum, SoilTemp, SoilHum, Light
+      None, Temp, Hum, SoilTemp, SoilHum, Light, WaterLevel
     };
 
     Sensors();

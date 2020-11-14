@@ -15,7 +15,7 @@ class Sensor_DHT : public Sensor {
     ~Sensor_DHT();
     void init();
     void read();
-    bool get(Sensors::SensorDataType dataType, uint8_t integerValue, uint8_t decimalValue);
+    bool get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue);
 
   private:
     DHT *dht;
