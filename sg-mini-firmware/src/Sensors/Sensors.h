@@ -7,6 +7,7 @@
 
 #include <Arduino.h>
 #include "../Config/Config.h"
+#include "../Helper/Helper.h"
 
 class Sensors {
   public:
@@ -16,6 +17,7 @@ class Sensors {
 
     Sensors();
     ~Sensors();
+
 };
 
 #endif

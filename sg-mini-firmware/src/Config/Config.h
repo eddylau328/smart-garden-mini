@@ -8,5 +8,8 @@
 // Pin Configuration
 #define DS18B20_PIN 33  
 #define SoilHumidity_PIN 14
+#define DHT_PIN 13
+#define DHT_TYPE DHT12
+
 
 #endif

@@ -19,9 +19,9 @@ void Sensor_DS18B20::init() {}
 
 void Sensor_DS18B20::read() {
   sensor->requestTemperatures(); 
-  float temperature = sensor->getTempCByIndex(0);
-  soilTempInt = (uint8_t) floor(temperature);
-  soilTempDec = (uint8_t) round((floor(temperature) - temperature)*100);
+  float measure = sensor->getTempCByIndex(0);
+  Helper::getIntegerValue(measure, soilTempInt);
+  Helper::getDecimalValue(measure, soilTempDec);
 }
 
 bool Sensor_DS18B20::get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) {
