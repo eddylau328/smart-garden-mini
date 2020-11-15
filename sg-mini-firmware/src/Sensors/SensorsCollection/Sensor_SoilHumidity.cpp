@@ -8,7 +8,10 @@ Sensor_SoilHumidity::Sensor_SoilHumidity() {}
 
 Sensor_SoilHumidity::~Sensor_SoilHumidity() {}
 
-void Sensor_SoilHumidity::init() {} // no init is needed as analog pins are input only
+bool Sensor_SoilHumidity::init() {  
+// no init is needed as analog pins are input only
+  return true;  // for now
+}
 
 void Sensor_SoilHumidity::read() {
   int soilMoistureValue = analogRead(SoilHumidity_PIN);  //put Sensor insert into soil
@@ -19,13 +22,12 @@ void Sensor_SoilHumidity::read() {
   else if (measureValue > 100)
     soilMoisturePercentage = 100;
   else
-    soilMoisturePercentage = measureValue;
+    soilMoisturePercentage = (float) measureValue;
 }
 
-bool Sensor_SoilHumidity::get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) {
+bool Sensor_SoilHumidity::get(Sensors::SensorDataType dataType, float &measureValue) {
   if (dataType == Sensors::SensorDataType::SoilHum) {
-    integerValue = soilMoisturePercentage;
-    decimalValue = 0;
+    measureValue = soilMoisturePercentage;
     return true;
   }
   

@@ -13,13 +13,12 @@ class Sensor_DS18B20 : public Sensor {
   public:
     Sensor_DS18B20();
     ~Sensor_DS18B20();
-    void init();
+    bool init();
     void read();
-    bool get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue);
+    bool get(Sensors::SensorDataType dataType, float &measureValue);
     
   private:
-    uint8_t soilTempInt;
-    uint8_t soilTempDec;
+    float soilTemp;
     OneWire *oneWire;
     DallasTemperature *sensor;
 };

@@ -13,14 +13,12 @@ class Sensor_UltraSound : public Sensor {
     Sensor_UltraSound();
     ~Sensor_UltraSound();
 
-    void init();
+    bool init();
     void read();
-    bool get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue);
+    bool get(Sensors::SensorDataType dataType, float &measureValue);
 
   private:
-    uint8_t distanceInt;
-    uint8_t distanceDec;
-    
+    float distance;    
     unsigned long duration;
 };
 

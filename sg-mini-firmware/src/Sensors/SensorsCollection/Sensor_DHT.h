@@ -13,16 +13,14 @@ class Sensor_DHT : public Sensor {
   public:
     Sensor_DHT();
     ~Sensor_DHT();
-    void init();
+    bool init();
     void read();
-    bool get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue);
+    bool get(Sensors::SensorDataType dataType, float &measureValue);
 
   private:
     DHT *dht;
-    uint8_t tempInt;
-    uint8_t tempDec;
-    uint8_t humInt;
-    uint8_t humDec;
+    float temp;
+    float hum;
 };
 
 #endif

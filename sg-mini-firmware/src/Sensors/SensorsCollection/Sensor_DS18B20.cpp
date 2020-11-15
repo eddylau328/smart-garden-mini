@@ -15,19 +15,18 @@ Sensor_DS18B20::~Sensor_DS18B20() {
 }
 
 // nothing to init
-void Sensor_DS18B20::init() {}
+bool Sensor_DS18B20::init() {
+  return true; // for now
+}
 
 void Sensor_DS18B20::read() {
   sensor->requestTemperatures(); 
-  float measure = sensor->getTempCByIndex(0);
-  Helper::getIntegerValue(measure, soilTempInt);
-  Helper::getDecimalValue(measure, soilTempDec);
+  soilTemp = sensor->getTempCByIndex(0);
 }
 
-bool Sensor_DS18B20::get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) {
+bool Sensor_DS18B20::get(Sensors::SensorDataType dataType, float &measureValue) {
   if (dataType == Sensors::SensorDataType::SoilTemp) {
-    integerValue = soilTempInt;
-    decimalValue = soilTempDec;
+    measureValue = soilTemp;
     return true;
   }
 

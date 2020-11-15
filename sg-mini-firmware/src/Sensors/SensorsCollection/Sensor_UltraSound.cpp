@@ -8,9 +8,11 @@ Sensor_UltraSound::Sensor_UltraSound() {}
 
 Sensor_UltraSound::~Sensor_UltraSound() {}
 
-void Sensor_UltraSound::init() {
+bool Sensor_UltraSound::init() {
   pinMode(UltraSound_Trigger_PIN, OUTPUT);// Ultra Sound pin setting
   pinMode(UltraSound_Echo_PIN, INPUT);
+
+  return true;  // for now
 }
 
 void Sensor_UltraSound::read() {
@@ -23,15 +25,11 @@ void Sensor_UltraSound::read() {
   
   duration = pulseIn(UltraSound_Echo_PIN, HIGH);
   float distance = duration*0.034/2;
-  
-  Helper::getIntegerValue(distance, distanceInt);
-  Helper::getDecimalValue(distance, distanceDec);
 }
 
-bool Sensor_UltraSound::get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) {
+bool Sensor_UltraSound::get(Sensors::SensorDataType dataType, float &measureValue) {
   if (dataType == Sensors::SensorDataType::WaterLevel) {
-    integerValue = distanceInt;
-    decimalValue = distanceDec;
+    measureValue = distance;
     return true;
   }
   return false;

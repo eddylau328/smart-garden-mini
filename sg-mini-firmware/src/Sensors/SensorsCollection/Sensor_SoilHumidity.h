@@ -12,12 +12,12 @@ class Sensor_SoilHumidity : public Sensor {
   public:
     Sensor_SoilHumidity();
     ~Sensor_SoilHumidity();
-    void init();
+    bool init();
     void read();
-    bool get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue);
+    bool get(Sensors::SensorDataType dataType, float &measureValue);
 
   private:
-    uint8_t soilMoisturePercentage;
+    float soilMoisturePercentage;
   
     const int AirValue = 3600;   //you need to replace this value with Value_1
     const int WaterValue = 1260;  //you need to replace this value with Value_2

@@ -7,12 +7,22 @@
 
 #include <Arduino.h>
 #include "../Config/Config.h"
-#include "../Helper/Helper.h"
 
 class Sensors {
   public:
     enum SensorDataType {
-      None, Temp, Hum, SoilTemp, SoilHum, Light, WaterLevel
+      None,
+      Temp,
+      Hum,
+      SoilTemp,
+      SoilHum,
+      Light,
+      WaterLevel,
+      ShuntVoltage,
+      LoadVoltage,
+      BusVoltage,
+      Current,
+      Power,
     };
 
     Sensors();

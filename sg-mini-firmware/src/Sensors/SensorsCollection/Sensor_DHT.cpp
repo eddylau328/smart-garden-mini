@@ -10,34 +10,27 @@ Sensor_DHT::~Sensor_DHT() {
   free(dht);
 }
 
-void Sensor_DHT::init() {
+bool Sensor_DHT::init() {
   dht->begin();
 
   // need to do connection test !!!  
   // if (isnan(h) || isnan(t) || isnan(f))
   // Serial.println(F("Failed to read from DHT sensor!"));
+  return true; // for now
 }
 
 void Sensor_DHT::read() {
-  float measure;
-  measure = dht->readTemperature();
-  Helper::getIntegerValue(measure, tempInt);
-  Helper::getDecimalValue(measure, tempDec);
-
-  measure = dht->readHumidity();
-  Helper::getIntegerValue(measure, humInt);
-  Helper::getDecimalValue(measure, humDec);
+  temp = dht->readTemperature();
+  hum = dht->readHumidity();
 }
 
-bool Sensor_DHT::get(Sensors::SensorDataType dataType, uint8_t &integerValue, uint8_t &decimalValue) {
+bool Sensor_DHT::get(Sensors::SensorDataType dataType, float &measureValue) {
   if (dataType == Sensors::SensorDataType::Temp) {
-    integerValue = tempInt;
-    decimalValue = tempDec;
+    measureValue = temp;
     return true;
   }
   else if (dataType == Sensors::SensorDataType::Hum) {
-    integerValue = humInt;
-    decimalValue = humDec;
+    measureValue = hum;
     return true;
   }
   return false;
