@@ -14,7 +14,7 @@ class Sensor_DHT : public Sensor {
     Sensor_DHT();
     ~Sensor_DHT();
     bool init();
-    void read();
+    bool read();
     bool get(Sensors::SensorDataType dataType, float &measureValue);
 
   private:

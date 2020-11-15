@@ -16,9 +16,9 @@ bool Sensor_MAX44009::init() {
   return true;
 }
 
-void Sensor_MAX44009::read() {
+bool Sensor_MAX44009::read() {
   lux = max44009->getLux();
-  int err = max44009->getError();
+  return !max44009->getError();
 }
 
 bool Sensor_MAX44009::get(Sensors::SensorDataType dataType, float &measureValue) {

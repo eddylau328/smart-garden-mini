@@ -19,8 +19,9 @@ class Sensor {
     /**
      * only ask the sensor to read the data
      * perform this in a cycle is a proper approach
+     * @return bool - Whether Sensor Reading is normal or unusual
      */
-    virtual void read() = 0;
+    virtual bool read() = 0;
 
 
     /** 

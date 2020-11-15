@@ -15,7 +15,7 @@ bool Sensor_UltraSound::init() {
   return true;  // for now
 }
 
-void Sensor_UltraSound::read() {
+bool Sensor_UltraSound::read() {
   digitalWrite(UltraSound_Trigger_PIN, LOW);
   delayMicroseconds(2);
   
@@ -25,6 +25,8 @@ void Sensor_UltraSound::read() {
   
   duration = pulseIn(UltraSound_Echo_PIN, HIGH);
   float distance = duration*0.034/2;
+  
+  return distance >= 0; // if distance is negative, it may indicate a wrong reading or water level is over
 }
 
 bool Sensor_UltraSound::get(Sensors::SensorDataType dataType, float &measureValue) {

@@ -19,9 +19,10 @@ bool Sensor_DS18B20::init() {
   return true; // for now
 }
 
-void Sensor_DS18B20::read() {
+bool Sensor_DS18B20::read() {
   sensor->requestTemperatures(); 
   soilTemp = sensor->getTempCByIndex(0);
+  return true;  // Currently, no way to define wrong value or not
 }
 
 bool Sensor_DS18B20::get(Sensors::SensorDataType dataType, float &measureValue) {

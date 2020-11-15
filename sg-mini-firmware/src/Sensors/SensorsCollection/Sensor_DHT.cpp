@@ -19,10 +19,11 @@ bool Sensor_DHT::init() {
   return true; // for now
 }
 
-void Sensor_DHT::read() {
+bool Sensor_DHT::read() {
   temp = dht->readTemperature();
   hum = dht->readHumidity();
-}
+  return !(isnan(hum) || isnan(temp));
+}  
 
 bool Sensor_DHT::get(Sensors::SensorDataType dataType, float &measureValue) {
   if (dataType == Sensors::SensorDataType::Temp) {

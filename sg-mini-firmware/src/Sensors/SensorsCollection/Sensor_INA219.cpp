@@ -22,12 +22,13 @@ bool Sensor_INA219::init() {
   }
 }
 
-void Sensor_INA219::read() {
+bool Sensor_INA219::read() {
   shuntVoltage = ina219->getShuntVoltage_mV();
   busVoltage = ina219->getBusVoltage_V();
   current_mA = ina219->getCurrent_mA();
   power_mW = ina219->getBusPower();
   loadVoltage = busVoltage + shuntVoltage / 1000.0;
+  return true;  // Currently, no way to define wrong value or not
 }
 
 bool Sensor_INA219::get(Sensors::SensorDataType dataType, float &measureValue) {

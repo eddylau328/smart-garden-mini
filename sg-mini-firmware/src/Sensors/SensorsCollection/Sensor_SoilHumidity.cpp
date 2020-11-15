@@ -13,7 +13,7 @@ bool Sensor_SoilHumidity::init() {
   return true;  // for now
 }
 
-void Sensor_SoilHumidity::read() {
+bool Sensor_SoilHumidity::read() {
   int soilMoistureValue = analogRead(SoilHumidity_PIN);  //put Sensor insert into soil
   int measureValue = map(soilMoistureValue, AirValue, WaterValue, 0, 100);
 
@@ -23,6 +23,8 @@ void Sensor_SoilHumidity::read() {
     soilMoisturePercentage = 100;
   else
     soilMoisturePercentage = (float) measureValue;
+
+  return true;  // Currently, cannot find a way to detect whether it is correct value or not
 }
 
 bool Sensor_SoilHumidity::get(Sensors::SensorDataType dataType, float &measureValue) {
