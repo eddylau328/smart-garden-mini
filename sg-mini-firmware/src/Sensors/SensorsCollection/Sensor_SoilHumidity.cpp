@@ -27,8 +27,8 @@ bool Sensor_SoilHumidity::read() {
   return true;  // Currently, cannot find a way to detect whether it is correct value or not
 }
 
-bool Sensor_SoilHumidity::get(Sensors::SensorDataType dataType, float &measureValue) {
-  if (dataType == Sensors::SensorDataType::SoilHum) {
+bool Sensor_SoilHumidity::get(SensorCollection::SensorDataType dataType, float &measureValue) {
+  if (dataType == SensorCollection::SensorDataType::SoilHum) {
     measureValue = soilMoisturePercentage;
     return true;
   }

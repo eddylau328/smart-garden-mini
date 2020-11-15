@@ -5,7 +5,8 @@
 #ifndef Sensor_h
 #define Sensor_h
 
-#include "../Sensors.h"
+#include "../../Config/Config.h"
+#include "SensorCollection.h"
 
 class Sensor {
   public:
@@ -30,7 +31,7 @@ class Sensor {
       * @param [float] measure value from your sensor
       * @return bool - whether the asking type of data is existed or not
     */
-    virtual bool get(Sensors::SensorDataType dataType, float &measureValue) = 0;
+    virtual bool get(SensorCollection::SensorDataType dataType, float &measureValue) = 0;
 };
 
 #endif

@@ -15,7 +15,7 @@ class Sensor_UltraSound : public Sensor {
 
     bool init();
     bool read();
-    bool get(Sensors::SensorDataType dataType, float &measureValue);
+    bool get(SensorCollection::SensorDataType dataType, float &measureValue);
 
   private:
     float distance;    

@@ -17,7 +17,7 @@ class Sensor_MAX44009 : public Sensor {
 
     bool init();
     bool read();
-    bool get(Sensors::SensorDataType dataType, float &measureValue);
+    bool get(SensorCollection::SensorDataType dataType, float &measureValue);
 
   private:
     Max44009 *max44009;

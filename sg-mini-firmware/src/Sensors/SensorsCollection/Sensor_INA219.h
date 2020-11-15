@@ -17,7 +17,7 @@ class Sensor_INA219 : public Sensor {
 
     bool init();
     bool read();
-    bool get(Sensors::SensorDataType dataType, float &measureValue);
+    bool get(SensorCollection::SensorDataType dataType, float &measureValue);
 
   private:
     INA219_WE *ina219;

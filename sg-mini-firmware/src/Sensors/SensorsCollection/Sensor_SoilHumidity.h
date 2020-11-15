@@ -14,7 +14,7 @@ class Sensor_SoilHumidity : public Sensor {
     ~Sensor_SoilHumidity();
     bool init();
     bool read();
-    bool get(Sensors::SensorDataType dataType, float &measureValue);
+    bool get(SensorCollection::SensorDataType dataType, float &measureValue);
 
   private:
     float soilMoisturePercentage;

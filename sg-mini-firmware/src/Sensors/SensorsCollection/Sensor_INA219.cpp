@@ -31,21 +31,21 @@ bool Sensor_INA219::read() {
   return true;  // Currently, no way to define wrong value or not
 }
 
-bool Sensor_INA219::get(Sensors::SensorDataType dataType, float &measureValue) {
+bool Sensor_INA219::get(SensorCollection::SensorDataType dataType, float &measureValue) {
   switch (dataType) {
-    case Sensors::SensorDataType::ShuntVoltage:
+    case SensorCollection::SensorDataType::ShuntVoltage:
       measureValue = shuntVoltage;
       return true;
-    case Sensors::SensorDataType::BusVoltage:
+    case SensorCollection::SensorDataType::BusVoltage:
       measureValue = busVoltage;
       return true;
-    case Sensors::SensorDataType::Current:
+    case SensorCollection::SensorDataType::Current:
       measureValue = current_mA;
       return true;
-    case Sensors::SensorDataType::Power:
+    case SensorCollection::SensorDataType::Power:
       measureValue = power_mW;
       return true;
-    case Sensors::SensorDataType::LoadVoltage:
+    case SensorCollection::SensorDataType::LoadVoltage:
       measureValue = loadVoltage;
       return true;
     default:

@@ -15,7 +15,7 @@ class Sensor_DS18B20 : public Sensor {
     ~Sensor_DS18B20();
     bool init();
     bool read();
-    bool get(Sensors::SensorDataType dataType, float &measureValue);
+    bool get(SensorCollection::SensorDataType dataType, float &measureValue);
     
   private:
     float soilTemp;

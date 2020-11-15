@@ -25,8 +25,8 @@ bool Sensor_DS18B20::read() {
   return true;  // Currently, no way to define wrong value or not
 }
 
-bool Sensor_DS18B20::get(Sensors::SensorDataType dataType, float &measureValue) {
-  if (dataType == Sensors::SensorDataType::SoilTemp) {
+bool Sensor_DS18B20::get(SensorCollection::SensorDataType dataType, float &measureValue) {
+  if (dataType == SensorCollection::SensorDataType::SoilTemp) {
     measureValue = soilTemp;
     return true;
   }

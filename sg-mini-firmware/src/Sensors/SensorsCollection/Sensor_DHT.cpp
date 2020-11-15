@@ -25,12 +25,12 @@ bool Sensor_DHT::read() {
   return !(isnan(hum) || isnan(temp));
 }  
 
-bool Sensor_DHT::get(Sensors::SensorDataType dataType, float &measureValue) {
-  if (dataType == Sensors::SensorDataType::Temp) {
+bool Sensor_DHT::get(SensorCollection::SensorDataType dataType, float &measureValue) {
+  if (dataType == SensorCollection::SensorDataType::Temp) {
     measureValue = temp;
     return true;
   }
-  else if (dataType == Sensors::SensorDataType::Hum) {
+  else if (dataType == SensorCollection::SensorDataType::Hum) {
     measureValue = hum;
     return true;
   }

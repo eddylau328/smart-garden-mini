@@ -21,8 +21,8 @@ bool Sensor_MAX44009::read() {
   return !max44009->getError();
 }
 
-bool Sensor_MAX44009::get(Sensors::SensorDataType dataType, float &measureValue) {
-  if (dataType == Sensors::SensorDataType::Light) {
+bool Sensor_MAX44009::get(SensorCollection::SensorDataType dataType, float &measureValue) {
+  if (dataType == SensorCollection::SensorDataType::Light) {
     measureValue = lux;
     return true;
   }

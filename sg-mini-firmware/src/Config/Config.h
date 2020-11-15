@@ -5,6 +5,19 @@
 #ifndef Config_h
 #define Config_h
 
+// Total Number of Sensors
+#define TotalSensors 6
+// Sensors Key Mapping, Range [0 - 254]
+#define DHT_Key 0
+#define DS18B20_Key 1
+#define SoilHumidity_Key 2
+#define UltraSound_Key 3
+#define INA219_Key 4
+#define MAX44009_Key 5
+// NOT FOUND KEY
+#define NOT_FOUND 255
+
+
 // Pin Configuration
 #define DS18B20_PIN 33  
 #define SoilHumidity_PIN 14

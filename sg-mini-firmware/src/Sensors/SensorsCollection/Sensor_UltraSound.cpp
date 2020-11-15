@@ -29,8 +29,8 @@ bool Sensor_UltraSound::read() {
   return distance >= 0; // if distance is negative, it may indicate a wrong reading or water level is over
 }
 
-bool Sensor_UltraSound::get(Sensors::SensorDataType dataType, float &measureValue) {
-  if (dataType == Sensors::SensorDataType::WaterLevel) {
+bool Sensor_UltraSound::get(SensorCollection::SensorDataType dataType, float &measureValue) {
+  if (dataType == SensorCollection::SensorDataType::WaterLevel) {
     measureValue = distance;
     return true;
   }
