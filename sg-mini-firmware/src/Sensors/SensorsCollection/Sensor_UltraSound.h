@@ -19,7 +19,7 @@ class Sensor_UltraSound : public Sensor {
 
   private:
     float distance;    
-    unsigned long duration;
+    long duration;
 };
 
 #endif

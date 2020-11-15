@@ -26,7 +26,6 @@
 #define UltraSound_Trigger_PIN 32
 #define UltraSound_Echo_PIN 35
 
-
 // INA219 current sensor I2C address
 #define I2C_ADDRESS 0x40
 

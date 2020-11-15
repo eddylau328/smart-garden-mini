@@ -13,6 +13,8 @@ Sensor_INA219::~Sensor_INA219() {
 }
 
 bool Sensor_INA219::init() {
+  Helper::handleWireBegin();  // Wire Begin
+
   if(!ina219->init())  // INA init
     return false;
   else {

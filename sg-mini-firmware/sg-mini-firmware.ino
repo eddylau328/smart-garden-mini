@@ -1,58 +1,9 @@
 //Testing code for all sensor for smartgarden mini (ESP32 dev Kit V1) on breadboard
 
-//-------------Soil Temperature DS18B20-------------
-#include <OneWire.h>
-#include <DallasTemperature.h>
-#define DS18B20PIN 33  
-OneWire oneWire(DS18B20PIN);
-DallasTemperature sensors(&oneWire);
-float temperatureC;
-float temperatureF;
-
-//-------------Soil humid-------------
-#define soilhumidPIN 14
-const int AirValue = 3600;   //you need to replace this value with Value_1
-const int WaterValue = 1260;  //you need to replace this value with Value_2
-int soilMoistureValue = 0;
-int soilmoisturepercent=0;
-
-
-#include <SPI.h>
-#include <SD.h>
-const int cs = 10;
-
-//-------------DHT sensor-------------
-#include <DHT.h>
-#include <DHT_U.h>
-#define DHTPIN 13
-#define DHTTYPE DHT12  //match to version
-DHT dht(DHTPIN, DHTTYPE);
-float h;
-float t; 
-float f;
-
 //-------------LCD 1602 I2C-------------
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27,16,2);
-
-//-------------Ultrasound sensor-------------
-#define trigPin 32
-#define echoPin 35
-long duration;
-float distance;
-
-//-------------INA219 I2C Current sensor-------------
-#include <Wire.h>
-#include <INA219_WE.h>
-#define I2C_ADDRESS 0x40
-INA219_WE ina219(I2C_ADDRESS);
-
-
-//-------------GY49 lux sensor------------
-#include <Max44009.h>
-Max44009 myLux(0x4A);
-float lux=0;
 
 //-------------Knob---------------------
 #define clk_knob 36
@@ -62,7 +13,7 @@ int rotateflag = 0;
 bool pressing = false;
 int countpos = 0;
 
-File datafile;  // for SD card file 
+// File datafile;  // for SD card file 
 #define pumpen 4 //Pumpenable Pin 
 
 #include <DS1307.h> // Real Time Clock
@@ -70,23 +21,21 @@ DS1307 rtc;
 
 long lastclock;
 
+#include "src/Sensors/Sensors.h"
+
+Sensors sensors;
+
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
   // put your setup code here, to run once:
   lastclock = millis();
   
   Serial.begin(9600);
-  Wire.begin();
-  dht.begin();
   
   lcd.init();
   lcd.backlight();
   lcd.setCursor(3,0);
   lcd.print("Hello, world!");
-
-  pinMode(trigPin, OUTPUT);// Ultra Sound pin setting
-  pinMode(echoPin, INPUT);
-  pinMode(pumpen,OUTPUT);
   
   pinMode(clk_knob,INPUT);// Knob pin setting
   pinMode(dt_knob,INPUT);
@@ -98,19 +47,13 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(clk_knob), rotate, CHANGE);  
   attachInterrupt(digitalPinToInterrupt(sw_knob), push, RISING);
 
-  if(!ina219.init())  // INA init
-    Serial.println("INA219 not connected!");
-    else
-    {
-    ina219.setADCMode(SAMPLE_MODE_128);
-    ina219.setMeasureMode(CONTINUOUS);
-    }
-
   rtc.begin(); // Real time Clock setting
   rtc.fillByYMD(2020, 11, 5); //Jan 19,2013
   rtc.fillByHMS(15, 28, 30); //15:28 30"
   rtc.fillDayOfWeek(SAT);//Saturday
   rtc.setTime();//write time to the RTC chip
+
+  sensors.init();
 
 // SD card file name create
 /*  char filename[] = "data00.txt";
@@ -131,34 +74,37 @@ void setup() {
 
 }
 
+float data;
+
 void loop() {
   digitalWrite(12,!digitalRead(12)); //Blinking LED
   
-/*  if(rotateflag == 100)
-    {
-    Serial.print("New countpos is:");
-    Serial.println(countpos);
-    for( ;rotateflag>0;rotateflag--);
-    }
-
-  if(pressing == true)
-    {
-    Serial.println("Pressed!");
-    pressing = false;
-    }
-  delay(200);
-*/
-  if(millis() - lastclock >= 2000){ 
+  if(millis() - lastclock >= 5000){ 
   printTime();
-  getdht();
-  getlux();
-  soilhumid();
-  soiltemp();
-  ultrasound();
-  ina();
-  
-
+  sensors.read();
   lastclock = millis();
+  
+  sensors.getSensorData(SensorCollection::SensorDataType::Temp, data);
+  Serial.print("Temp : ");
+  Serial.println(data);
+  sensors.getSensorData(SensorCollection::SensorDataType::Hum, data);
+  Serial.print("Hum : ");
+  Serial.println(data);
+  sensors.getSensorData(SensorCollection::SensorDataType::SoilTemp, data);
+  Serial.print("SoilTemp : ");
+  Serial.println(data);
+  sensors.getSensorData(SensorCollection::SensorDataType::SoilHum, data);
+  Serial.print("SoilHum : ");
+  Serial.println(data);
+  sensors.getSensorData(SensorCollection::SensorDataType::Light, data);
+  Serial.print("Light : ");
+  Serial.println(data);
+  sensors.getSensorData(SensorCollection::SensorDataType::WaterLevel, data);
+  Serial.print("WaterLevel : ");
+  Serial.println(data);
+  sensors.getSensorData(SensorCollection::SensorDataType::Current, data);
+  Serial.print("Current : ");
+  Serial.println(data);
   Serial.println();
   }
 }
@@ -175,108 +121,6 @@ void rotate(){
   }
 void push(){
   pressing = true;
-  }
-
-void getdht(){
-  h = dht.readHumidity();
-  t = dht.readTemperature();
-  f = dht.readTemperature(true);
-
-  if (isnan(h) || isnan(t) || isnan(f))
-  Serial.println(F("Failed to read from DHT sensor!"));
-  else{
-    float hif = dht.computeHeatIndex(f, h);
-    float hic = dht.computeHeatIndex(t, h, false);
-    Serial.print(F("air Humidity: "));
-    Serial.print(h);
-    Serial.print(F("%   air Temperature: "));
-    Serial.print(t);
-    Serial.print(F("°C "));
-    Serial.print(f);
-    Serial.print(F("°F  air Heat index: "));
-    Serial.print(hic);
-    Serial.print(F("°C "));
-    Serial.print(hif);
-    Serial.println(F("°F"));
-  }
-}
-  
-void soilhumid(){
-  soilMoistureValue = analogRead(soilhumidPIN);  //put Sensor insert into soil
-  Serial.print("soil humidity: ");
-  Serial.print(soilMoistureValue);
-  Serial.print(" ");
-  soilmoisturepercent = map(soilMoistureValue, AirValue, WaterValue, 0, 100);
-  if(soilmoisturepercent > 100)
-    Serial.println("100 %");
-  else if(soilmoisturepercent <0)
-    Serial.println("0 %");
-  else if(soilmoisturepercent >0 && soilmoisturepercent < 100){
-    Serial.print(soilmoisturepercent);
-    Serial.println("%"); }
-  }
-
-void soiltemp(){
-  sensors.requestTemperatures(); 
-  temperatureC = sensors.getTempCByIndex(0);
-  temperatureF = sensors.getTempFByIndex(0);
-  Serial.print("Soil temp: ");
-  Serial.print(temperatureC);
-  Serial.print("ºC ");
-  Serial.print(temperatureF);
-  Serial.println("ºF");
-  }
-
-void ina(){
-  float shuntVoltage_mV = 0.0;
-  float loadVoltage_V = 0.0;
-  float busVoltage_V = 0.0;
-  float current_mA = 0.0;
-  float power_mW = 0.0; 
-  bool ina219_overflow = false;
-  
-  shuntVoltage_mV = ina219.getShuntVoltage_mV();
-  busVoltage_V = ina219.getBusVoltage_V();
-  current_mA = ina219.getCurrent_mA();
-  power_mW = ina219.getBusPower();
-  loadVoltage_V  = busVoltage_V + (shuntVoltage_mV/1000);
-  
-  Serial.print("Shunt Voltage [mV]: "); Serial.print(shuntVoltage_mV);
-  Serial.print("  Bus Voltage [V]: "); Serial.print(busVoltage_V);
-  Serial.print("  Load Voltage [V]: "); Serial.print(loadVoltage_V);
-  Serial.print("  Current[mA]: "); Serial.print(current_mA);
-  Serial.print("  Bus Power [mW]: "); Serial.println(power_mW);
-
-  }
-  
-void ultrasound(){
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  
-  duration = pulseIn(echoPin, HIGH);
-  distance= duration*0.034/2;
-  
-  Serial.print("Distance: ");
-  Serial.println(distance);
-  }
-
-void getlux(){
-    lux = myLux.getLux();
-    int err = myLux.getError();
-    if (err != 0)
-    {
-      Serial.print("Error:\t");
-      Serial.println(err);
-    }
-    else
-    {
-      Serial.print("lux:\t");
-      Serial.println(lux);
-    }
   }
 
 void printTime() {

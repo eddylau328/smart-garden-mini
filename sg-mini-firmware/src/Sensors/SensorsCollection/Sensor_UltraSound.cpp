@@ -24,7 +24,7 @@ bool Sensor_UltraSound::read() {
   digitalWrite(UltraSound_Trigger_PIN, LOW);
   
   duration = pulseIn(UltraSound_Echo_PIN, HIGH);
-  float distance = duration*0.034/2;
+  distance = duration*0.034/2;
   
   return distance >= 0; // if distance is negative, it may indicate a wrong reading or water level is over
 }

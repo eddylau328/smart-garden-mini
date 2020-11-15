@@ -22,6 +22,10 @@ class Sensors {
     Sensors();
     ~Sensors();
 
+    void init();
+    void read();
+    bool getSensorData(SensorCollection::SensorDataType dataType, float &data);
+
   private:
     Sensor *sensorList[TotalSensors];
 
