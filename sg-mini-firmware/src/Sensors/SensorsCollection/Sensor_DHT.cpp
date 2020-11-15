@@ -7,7 +7,7 @@ Sensor_DHT::Sensor_DHT() {
 }
 
 Sensor_DHT::~Sensor_DHT() {
-  free(dht);
+  delete dht;
 }
 
 bool Sensor_DHT::init() {

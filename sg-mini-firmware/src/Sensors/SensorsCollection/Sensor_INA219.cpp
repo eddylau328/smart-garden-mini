@@ -9,7 +9,7 @@ Sensor_INA219::Sensor_INA219() {
 }
 
 Sensor_INA219::~Sensor_INA219() {
-  free(ina219);
+  delete ina219;
 }
 
 bool Sensor_INA219::init() {

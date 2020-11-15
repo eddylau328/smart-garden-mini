@@ -9,7 +9,7 @@ Sensor_MAX44009::Sensor_MAX44009() {
 }
 
 Sensor_MAX44009::~Sensor_MAX44009() {
-  free(max44009);
+  delete max44009;
 }
 
 bool Sensor_MAX44009::init() {

@@ -10,8 +10,8 @@ Sensor_DS18B20::Sensor_DS18B20() {
 }
 
 Sensor_DS18B20::~Sensor_DS18B20() {
-  free(oneWire);
-  free(sensor);
+  delete oneWire;
+  delete sensor;
 }
 
 // nothing to init
