@@ -9,6 +9,7 @@
 #include <Wire.h>
 #include <INA219_WE.h>
 #include "../../Helper/Helper.h"
+#include <DebugLog.h>
 
 class Sensor_INA219 : public Sensor {
 

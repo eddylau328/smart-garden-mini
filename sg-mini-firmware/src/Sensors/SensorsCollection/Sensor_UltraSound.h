@@ -6,6 +6,7 @@
 #define Sensor_UltraSound_h
 
 #include "Sensor.h"
+#include <DebugLog.h>
 
 class Sensor_UltraSound : public Sensor {
 

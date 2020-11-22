@@ -7,7 +7,7 @@
 
 #include "Sensor.h"
 #include <Max44009.h>
-
+#include <DebugLog.h>
 
 class Sensor_MAX44009 : public Sensor {
 

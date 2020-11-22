@@ -18,6 +18,7 @@ bool Sensor_MAX44009::init() {
 
 bool Sensor_MAX44009::read() {
   lux = max44009->getLux();
+  LOG_VERBOSE("Light Int" ,lux, "lux");
   return !max44009->getError();
 }
 

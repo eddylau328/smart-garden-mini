@@ -7,6 +7,7 @@
 
 #include "Sensor.h"
 #include <DHT.h>
+#include <DebugLog.h>
 
 class Sensor_DHT : public Sensor {
 

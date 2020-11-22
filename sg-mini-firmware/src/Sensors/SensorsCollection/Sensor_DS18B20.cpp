@@ -22,6 +22,7 @@ bool Sensor_DS18B20::init() {
 bool Sensor_DS18B20::read() {
   sensor->requestTemperatures(); 
   soilTemp = sensor->getTempCByIndex(0);
+  LOG_VERBOSE("Soil Temp", soilTemp, "deg C");
   return true;  // Currently, no way to define wrong value or not
 }
 

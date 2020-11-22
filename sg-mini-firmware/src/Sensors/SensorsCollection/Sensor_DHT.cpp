@@ -22,6 +22,7 @@ bool Sensor_DHT::init() {
 bool Sensor_DHT::read() {
   temp = dht->readTemperature();
   hum = dht->readHumidity();
+  LOG_VERBOSE("Air Temp", temp, "deg C", "|", "Air Hum", hum, "%");
   return !(isnan(hum) || isnan(temp));
 }  
 

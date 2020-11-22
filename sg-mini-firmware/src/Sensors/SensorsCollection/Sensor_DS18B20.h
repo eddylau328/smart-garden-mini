@@ -8,6 +8,7 @@
 #include "Sensor.h"
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <DebugLog.h>
 
 class Sensor_DS18B20 : public Sensor {
   public:

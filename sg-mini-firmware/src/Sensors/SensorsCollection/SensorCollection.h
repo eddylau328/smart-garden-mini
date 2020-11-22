@@ -22,6 +22,7 @@ class SensorCollection {
     };
 
     static uint8_t getSensorListKey(SensorCollection::SensorDataType dataType);
+    static char* getSensorName(uint8_t key);
 };
 
 #endif

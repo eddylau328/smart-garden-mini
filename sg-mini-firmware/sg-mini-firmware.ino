@@ -31,7 +31,7 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  
+  LOG_SET_LEVEL(DebugLogLevel::VERBOSE); // all log is printed
   lcd.init();
   lcd.backlight();
   lcd.setCursor(3,0);
@@ -74,38 +74,13 @@ void setup() {
 
 }
 
-float data;
-
 void loop() {
   digitalWrite(12,!digitalRead(12)); //Blinking LED
   
   if(millis() - lastclock >= 5000){ 
-  printTime();
-  sensors.read();
-  lastclock = millis();
-  
-  sensors.getSensorData(SensorCollection::SensorDataType::Temp, data);
-  Serial.print("Temp : ");
-  Serial.println(data);
-  sensors.getSensorData(SensorCollection::SensorDataType::Hum, data);
-  Serial.print("Hum : ");
-  Serial.println(data);
-  sensors.getSensorData(SensorCollection::SensorDataType::SoilTemp, data);
-  Serial.print("SoilTemp : ");
-  Serial.println(data);
-  sensors.getSensorData(SensorCollection::SensorDataType::SoilHum, data);
-  Serial.print("SoilHum : ");
-  Serial.println(data);
-  sensors.getSensorData(SensorCollection::SensorDataType::Light, data);
-  Serial.print("Light : ");
-  Serial.println(data);
-  sensors.getSensorData(SensorCollection::SensorDataType::WaterLevel, data);
-  Serial.print("WaterLevel : ");
-  Serial.println(data);
-  sensors.getSensorData(SensorCollection::SensorDataType::Current, data);
-  Serial.print("Current : ");
-  Serial.println(data);
-  Serial.println();
+    printTime();
+    sensors.read();
+    lastclock = millis();
   }
 }
 

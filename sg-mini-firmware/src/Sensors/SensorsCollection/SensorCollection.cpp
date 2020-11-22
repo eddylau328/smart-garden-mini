@@ -28,3 +28,22 @@ uint8_t SensorCollection::getSensorListKey(SensorCollection::SensorDataType data
       return NOT_FOUND;
   }
 }
+
+char* SensorCollection::getSensorName(uint8_t key) {
+  switch (key) {
+    case DHT_Key:
+      return "DHT Sensor";
+    case DS18B20_Key:
+      return "DS18B20 Sensor";
+    case SoilHumidity_Key:
+      return "SoilHumidity Sensor";
+    case MAX44009_Key:
+      return "MAX44009 Sensor";
+    case UltraSound_Key:
+      return "Ultrasound Sensor";
+    case INA219_Key:
+      return "INA219 Sensor";
+    default:
+      return "Not Found";
+  }
+}

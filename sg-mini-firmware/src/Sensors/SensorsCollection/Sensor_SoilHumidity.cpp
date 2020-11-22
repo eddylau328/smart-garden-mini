@@ -24,6 +24,8 @@ bool Sensor_SoilHumidity::read() {
   else
     soilMoisturePercentage = (float) measureValue;
 
+  LOG_VERBOSE("Soil Moisture" ,soilMoisturePercentage, "%");
+
   return true;  // Currently, cannot find a way to detect whether it is correct value or not
 }
 

@@ -6,6 +6,7 @@
 #define Sensor_SoilHumidity_h
 
 #include "Sensor.h"
+#include <DebugLog.h>
 
 class Sensor_SoilHumidity : public Sensor {
 

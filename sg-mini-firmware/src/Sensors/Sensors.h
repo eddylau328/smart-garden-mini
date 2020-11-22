@@ -16,6 +16,7 @@
 #include "SensorsCollection/Sensor_MAX44009.h"
 #include "SensorsCollection/Sensor_SoilHumidity.h"
 #include "SensorsCollection/Sensor_UltraSound.h"
+#include <DebugLog.h>
 
 class Sensors {
   public:
@@ -28,7 +29,6 @@ class Sensors {
 
   private:
     Sensor *sensorList[TotalSensors];
-
 };
 
 #endif

@@ -30,6 +30,7 @@ bool Sensor_INA219::read() {
   current_mA = ina219->getCurrent_mA();
   power_mW = ina219->getBusPower();
   loadVoltage = busVoltage + shuntVoltage / 1000.0;
+  LOG_VERBOSE("Shunt Volt", shuntVoltage, "mV", "|", "Bus Volt", busVoltage, "V","|", "Current", current_mA, "mA","|", "Power", power_mW, "mW","|", "Load Volt", loadVoltage, "V");
   return true;  // Currently, no way to define wrong value or not
 }
 

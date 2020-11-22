@@ -20,13 +20,22 @@ Sensors::~Sensors() {
 }
 
 void Sensors::init() {
-  for (int i = 0 ; i < TotalSensors; i++)
-    sensorList[i]->init();
+  int8_t sensorCount = 0;
+  bool isConnected = false;
+  for (int i = 0 ; i < TotalSensors; i++) {
+    isConnected = sensorList[i]->init();
+    isConnected ? sensorCount++ : sensorCount;
+    LOG_WARNING(SensorCollection::getSensorName(i), "Connect", isConnected? "Success" : "Failed");
+  }
+  LOG_WARNING("Total Connected Sensors:", sensorCount);
 }
 
 void Sensors::read() {
-  for (int i = 0 ; i < TotalSensors; i++)
-    sensorList[i]->read();
+  bool isSuccess;
+  for (int i = 0 ; i < TotalSensors; i++) {
+    isSuccess = sensorList[i]->read();
+    LOG_WARNING(SensorCollection::getSensorName(i), "Read", isSuccess? "Success" : "Failed");
+  }
 }
 
 bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &data) {
