@@ -11,11 +11,13 @@ unsigned long lastclock;
 #include "src/Sensors/Sensors.h"
 #include "src/LcdDisplayUI/RotaryEncoder.h"
 #include "src/DeviceSetting/DeviceSetting.h"
+#include "src/Controller/Controller.h"
 
 Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
+Controller controller;
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -35,6 +37,7 @@ void setup() {
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
 
+  controller.init();
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -60,6 +63,7 @@ void loop() {
 
   pageControl.mainLoop();
   display.render();
+  controller.update();
   if (millis() - lastclock > 2000) {
     sensors.read();
     lastclock = millis();

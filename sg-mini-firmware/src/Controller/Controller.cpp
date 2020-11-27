@@ -1,0 +1,38 @@
+#include "Controller.h"
+
+portMUX_TYPE Controller::timerMux = portMUX_INITIALIZER_UNLOCKED;
+volatile int Controller::interruptCounter = 0;
+
+Controller::Controller() {}
+
+Controller::~Controller() {}
+
+void Controller::init() {
+  initInterval();
+}
+
+void Controller::update() {
+  if (interruptCounter > 0) {
+ 
+    portENTER_CRITICAL(&timerMux);
+    interruptCounter--;
+    portEXIT_CRITICAL(&timerMux);
+ 
+    totalInterruptCounter++;
+    LOG_WARNING("An interrupt as occurred. Total number: ", totalInterruptCounter);
+  }
+}
+
+void Controller::onTimer() {
+  portENTER_CRITICAL_ISR(&timerMux);
+  interruptCounter++;
+  portEXIT_CRITICAL_ISR(&timerMux);
+}
+
+void Controller::initInterval() {
+  timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(timer, &onTimer, true);
+  timerAlarmWrite(timer, ReadingInterval, true);
+  timerAlarmEnable(timer);
+}
+
