@@ -56,7 +56,7 @@ void setup() {
   rtc.setTime();//write time to the RTC chip
 
   sensors.init();
-  controller.init();
+  controller.init(&sensors);
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -77,13 +77,8 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(12,!digitalRead(12)); //Blinking LED
+  // digitalWrite(12,!digitalRead(12)); //Blinking LED
   controller.update();
-  if(millis() - lastclock >= 5000){ 
-    printTime();
-    sensors.read();
-    lastclock = millis();
-  }
 }
 
 void rotate(){

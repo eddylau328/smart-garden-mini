@@ -33,6 +33,6 @@
 #define MAX44009_MAX_ADDR 0x4B // 0x4B is no interrupt, or 0x4B if A0 pin connected to Vcc
 
 // Define the reading time for sensors
-#define ReadingInterval 2000000  // 2s = 2000ms = 2000 000 micro sec
+#define ReadingInterval 5000000  // 5s = 5000ms = 5000 000 micro sec
 
 #endif

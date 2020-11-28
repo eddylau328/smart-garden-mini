@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 #include "../Config/Config.h"
-
+#include "../Sensors/Sensors.h"
 
 class Controller {
 
@@ -12,17 +12,18 @@ class Controller {
     Controller();
     ~Controller();
 
-    void init();
+    void init(Sensors *sensors);
     void update();
   
   private:
     void initInterval();
     static void onTimer();
 
-    int totalInterruptCounter;
     hw_timer_t *timer = NULL;
     static volatile int interruptCounter;
     static portMUX_TYPE timerMux;
+
+    Sensors *sensors;
 };
 
 #endif
