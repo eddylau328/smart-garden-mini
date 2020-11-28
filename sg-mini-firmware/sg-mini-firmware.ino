@@ -18,10 +18,14 @@ DS1307 rtc;
 long lastclock;
 
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
+#include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
+#include "src/LcdDisplayUI/PageCollection/MainPage.h"
 
 Sensors sensors;
 LcdDisplayUI display(2, 20);
+PageControl pageControl;
+
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
   // put your setup code here, to run once:
