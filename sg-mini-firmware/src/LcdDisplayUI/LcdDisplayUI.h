@@ -29,6 +29,8 @@ class LcdDisplayUI {
     LiquidCrystal_I2C *lcd;
 
     char *strBuffer;
+    void clearContent(PageContent *content);
+    void printContent(PageContent *content);
 };
 
 #endif

@@ -19,5 +19,7 @@ void PageControl::init(Sensors *sensors) {
 
 void PageControl::handleUI() {
   // render the page
-  display->render(pages[PageControl::PageKey::MainPageKey]);
+  display->render(pages[PageControl::PageKey::SensorPageKey]);
+
+  pages[PageControl::PageKey::SensorPageKey]->updateContents();
 }

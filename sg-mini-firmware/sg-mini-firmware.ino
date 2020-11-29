@@ -31,7 +31,7 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::WARNINGS); // all log is printed
   // lcd.init();
   // lcd.backlight();
   // lcd.setCursor(3,0);
@@ -55,6 +55,7 @@ void setup() {
 
   sensors.init();
   pageControl.init(&sensors);
+  LOG_ERROR((unsigned long) &sensors);
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){

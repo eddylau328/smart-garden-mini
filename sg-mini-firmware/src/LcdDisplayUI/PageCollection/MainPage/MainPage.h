@@ -8,6 +8,7 @@ class MainPage : public Page {
     MainPage();
     ~MainPage();
     void getContents(PageContent **contents, int *length);
+    void updateContents();
 
   private:
     PageContent contents[1] = {

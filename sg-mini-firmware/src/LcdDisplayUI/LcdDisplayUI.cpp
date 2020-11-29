@@ -24,16 +24,30 @@ void LcdDisplayUI::render(Page *page) {
   int length;
   page->getContents(&contents, &length);
   // render the page
-  PageLayoutPosition pos;
+  
   for (int i = 0; i < length; i++) {
     if ((contents+i)->getIsUpdate()) {
       LOG_WARNING("Update Content:", (contents+i)->getContent(), "|", "id:", (contents+i)->getId());
-      pos = (contents+i)->getPos();
-      strncpy(strBuffer, (contents+i)->getContent(), (contents+i)->getContentLength());
-      lcd->setCursor(pos.col, pos.row);
-      lcd->printstr(strBuffer);
+      clearContent(contents+i);
+      printContent(contents+i);
       // tell that content is updated
       (contents+i)->confirmUpdate();
     }
   }
+}
+
+void LcdDisplayUI::clearContent(PageContent *content) {
+  PageLayoutPosition pos;
+  pos = content->getPos();
+  lcd->setCursor(pos.col, pos.row);
+  for (int i = 0 ; i < content->getContentLength(); i++)
+    lcd->print(" ");
+}
+
+void LcdDisplayUI::printContent(PageContent *content) {
+  PageLayoutPosition pos;
+  pos = content->getPos();
+  strncpy(strBuffer, content->getContent(), content->getContentLength());
+  lcd->setCursor(pos.col, pos.row);
+  lcd->printstr(strBuffer);
 }

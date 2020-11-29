@@ -7,6 +7,7 @@
 class Page {
   public:
     virtual void getContents(PageContent **contents, int *length) = 0;
+    virtual void updateContents() = 0;
 };
 
 #endif
