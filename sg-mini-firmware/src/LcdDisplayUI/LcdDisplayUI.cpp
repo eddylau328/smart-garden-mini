@@ -27,7 +27,7 @@ void LcdDisplayUI::render(Page *page) {
   
   for (int i = 0; i < length; i++) {
     if ((contents+i)->getIsUpdate()) {
-      LOG_WARNING("Update Content:", (contents+i)->getContent(), "|", "id:", (contents+i)->getId());
+      LOG_WARNING("Update Content id:", (contents+i)->getId());
       clearContent(contents+i);
       printContent(contents+i);
       // tell that content is updated
@@ -50,4 +50,5 @@ void LcdDisplayUI::printContent(PageContent *content) {
   strncpy(strBuffer, content->getContent(), content->getContentLength());
   lcd->setCursor(pos.col, pos.row);
   lcd->printstr(strBuffer);
+  LOG_WARNING("Print Content:", strBuffer, "at", "(" , pos.col, "," , pos.row, ")"); 
 }
