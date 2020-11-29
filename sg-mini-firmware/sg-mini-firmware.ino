@@ -1,9 +1,5 @@
 //Testing code for all sensor for smartgarden mini (ESP32 dev Kit V1) on breadboard
 
-//-------------LCD 1602 I2C-------------
-#include <Wire.h> 
-#include <LiquidCrystal_I2C.h>
-LiquidCrystal_I2C lcd(0x27,16,2);
 
 //-------------Knob---------------------
 #define clk_knob 36
@@ -21,9 +17,13 @@ DS1307 rtc;
 
 long lastclock;
 
+#include "src/LcdDisplayUI/LcdDisplayUI.h"
+#include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
 
 Sensors sensors;
+LcdDisplayUI display(2, 20);
+PageControl pageControl(&display);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -31,11 +31,11 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::VERBOSE); // all log is printed
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(3,0);
-  lcd.print("Hello, world!");
+  LOG_SET_LEVEL(DebugLogLevel::WARNINGS); // all log is printed
+  // lcd.init();
+  // lcd.backlight();
+  // lcd.setCursor(3,0);
+  // lcd.print("Hello, world!");
   
   pinMode(clk_knob,INPUT);// Knob pin setting
   pinMode(dt_knob,INPUT);
@@ -54,7 +54,8 @@ void setup() {
   rtc.setTime();//write time to the RTC chip
 
   sensors.init();
-
+  pageControl.init(&sensors);
+  LOG_ERROR((unsigned long) &sensors);
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -75,13 +76,16 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(12,!digitalRead(12)); //Blinking LED
+  // digitalWrite(12,!digitalRead(12)); //Blinking LED
   
-  if(millis() - lastclock >= 5000){ 
-    printTime();
-    sensors.read();
-    lastclock = millis();
-  }
+  // if(millis() - lastclock >= 5000){ 
+  //   printTime();
+  //   sensors.read();
+  //   lastclock = millis();
+  // }
+
+  pageControl.handleUI();
+  delay(2000);
 }
 
 void rotate(){
