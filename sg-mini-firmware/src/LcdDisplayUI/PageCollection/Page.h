@@ -6,7 +6,7 @@
 
 class Page {
   public:
-    virtual void getContents(PageContent *contents, uint8_t *length) = 0;
+    virtual void getContents(PageContent **contents, int *length) = 0;
 };
 
 #endif

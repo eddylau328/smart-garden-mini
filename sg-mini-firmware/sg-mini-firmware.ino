@@ -20,11 +20,10 @@ long lastclock;
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
 #include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
-#include "src/LcdDisplayUI/PageCollection/MainPage.h"
 
 Sensors sensors;
 LcdDisplayUI display(2, 20);
-PageControl pageControl;
+PageControl pageControl(&display);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -32,7 +31,7 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::VERBOSE); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
   // lcd.init();
   // lcd.backlight();
   // lcd.setCursor(3,0);
@@ -55,7 +54,7 @@ void setup() {
   rtc.setTime();//write time to the RTC chip
 
   sensors.init();
-  display.init();
+  pageControl.init(&sensors);
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -76,13 +75,16 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(12,!digitalRead(12)); //Blinking LED
+  // digitalWrite(12,!digitalRead(12)); //Blinking LED
   
-  if(millis() - lastclock >= 5000){ 
-    printTime();
-    sensors.read();
-    lastclock = millis();
-  }
+  // if(millis() - lastclock >= 5000){ 
+  //   printTime();
+  //   sensors.read();
+  //   lastclock = millis();
+  // }
+
+  pageControl.handleUI();
+  delay(2000);
 }
 
 void rotate(){

@@ -21,8 +21,8 @@ uint8_t PageContent::getId(){
     return this->id;
 }
 
-uint8_t PageContent::getContentLength(){
-    return this->contentLength;
+int PageContent::getContentLength(){
+    return (int) this->contentLength;
 }
 
 char* PageContent::getContent(){

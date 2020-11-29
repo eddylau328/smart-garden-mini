@@ -16,7 +16,7 @@ class PageContent {
 
     // getter function  --------------------------------
     uint8_t getId();
-    uint8_t getContentLength();
+    int getContentLength();
     char* getContent();
     PageLayoutPosition getPos();
     PageContent::ContentType getContentType();
@@ -36,7 +36,7 @@ class PageContent {
     PageLayoutPosition pos;
     ContentType contentType;
 
-    bool isUpdate = false;
+    bool isUpdate = true;
 
     static void convertNumToStr(int num, char result[], int strlen);
     static void convertNumToStr(float num, char result[], int strlen, int decimalPoints);

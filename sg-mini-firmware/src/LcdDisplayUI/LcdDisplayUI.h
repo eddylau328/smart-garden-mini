@@ -4,6 +4,11 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 #include <Arduino.h>
+#include <DebugLog.h>
+
+#include "PageCollection/Page.h"
+#include "UI/Components/PageContent/PageContent.h"
+#include "UI/Components/PageLayoutPosition/PageLayoutPosition.h"
 
 class LcdDisplayUI {
 
@@ -16,11 +21,14 @@ class LcdDisplayUI {
     ~LcdDisplayUI();
 
     void init();
+    void render(Page *page);
 
   private:
     // LCD size 
     uint8_t rowSize, colSize;
     LiquidCrystal_I2C *lcd;
+
+    char *strBuffer;
 };
 
 #endif
