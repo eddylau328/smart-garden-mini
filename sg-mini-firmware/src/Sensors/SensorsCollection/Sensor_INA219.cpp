@@ -14,24 +14,31 @@ Sensor_INA219::~Sensor_INA219() {
 
 bool Sensor_INA219::init() {
   Helper::handleWireBegin();  // Wire Begin
-
-  if(!ina219->init())  // INA init
-    return false;
-  else {
+  isConnect = ina219->init();
+  if(isConnect) {
     ina219->setADCMode(SAMPLE_MODE_128);
     ina219->setMeasureMode(CONTINUOUS);
-    return true;
   }
+  return isConnect;
 }
 
 bool Sensor_INA219::read() {
-  shuntVoltage = ina219->getShuntVoltage_mV();
-  busVoltage = ina219->getBusVoltage_V();
-  current_mA = ina219->getCurrent_mA();
-  power_mW = ina219->getBusPower();
-  loadVoltage = busVoltage + shuntVoltage / 1000.0;
-  LOG_VERBOSE("Shunt Volt", shuntVoltage, "mV", "|", "Bus Volt", busVoltage, "V","|", "Current", current_mA, "mA","|", "Power", power_mW, "mW","|", "Load Volt", loadVoltage, "V");
-  return true;  // Currently, no way to define wrong value or not
+  if (!isConnect) {
+    // try reconnect
+    init();
+  }
+
+  if (isConnect) {
+    // Read data
+    shuntVoltage = ina219->getShuntVoltage_mV();
+    busVoltage = ina219->getBusVoltage_V();
+    current_mA = ina219->getCurrent_mA();
+    power_mW = ina219->getBusPower();
+    loadVoltage = busVoltage + shuntVoltage / 1000.0;
+    LOG_VERBOSE("Shunt Volt", shuntVoltage, "mV", "|", "Bus Volt", busVoltage, "V","|", "Current", current_mA, "mA","|", "Power", power_mW, "mW","|", "Load Volt", loadVoltage, "V");
+  }
+
+  return isConnect;  // Currently, no way to define wrong value or not
 }
 
 bool Sensor_INA219::get(SensorCollection::SensorDataType dataType, float &measureValue) {

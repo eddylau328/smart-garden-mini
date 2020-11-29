@@ -12,18 +12,16 @@ Sensor_DHT::~Sensor_DHT() {
 
 bool Sensor_DHT::init() {
   dht->begin();
-
-  // need to do connection test !!!  
-  // if (isnan(h) || isnan(t) || isnan(f))
-  // Serial.println(F("Failed to read from DHT sensor!"));
-  return true; // for now
+  return read();
 }
 
 bool Sensor_DHT::read() {
   temp = dht->readTemperature();
   hum = dht->readHumidity();
   LOG_VERBOSE("Air Temp", temp, "deg C", "|", "Air Hum", hum, "%");
-  return !(isnan(hum) || isnan(temp));
+  
+  isConnect = !(isnan(hum) || isnan(temp));
+  return isConnect;
 }  
 
 bool Sensor_DHT::get(SensorCollection::SensorDataType dataType, float &measureValue) {

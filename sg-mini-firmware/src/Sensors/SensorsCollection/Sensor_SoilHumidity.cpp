@@ -10,7 +10,8 @@ Sensor_SoilHumidity::~Sensor_SoilHumidity() {}
 
 bool Sensor_SoilHumidity::init() {  
 // no init is needed as analog pins are input only
-  return true;  // for now
+  isConnect = true;
+  return isConnect;
 }
 
 bool Sensor_SoilHumidity::read() {
@@ -26,7 +27,7 @@ bool Sensor_SoilHumidity::read() {
 
   LOG_VERBOSE("Soil Moisture" ,soilMoisturePercentage, "%");
 
-  return true;  // Currently, cannot find a way to detect whether it is correct value or not
+  return isConnect;  // Currently, cannot find a way to detect whether it is correct value or not
 }
 
 bool Sensor_SoilHumidity::get(SensorCollection::SensorDataType dataType, float &measureValue) {

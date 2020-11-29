@@ -32,6 +32,12 @@ class Sensor {
       * @return bool - whether the asking type of data is existed or not
     */
     virtual bool get(SensorCollection::SensorDataType dataType, float &measureValue) = 0;
+    
+    bool isConnected();
+
+  protected:
+    // check whether the sensor is connected or not
+    bool isConnect = false;
 };
 
 #endif
