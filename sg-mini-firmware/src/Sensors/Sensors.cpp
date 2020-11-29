@@ -39,5 +39,6 @@ void Sensors::read() {
 }
 
 bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &data) {
-  return sensorList[SensorCollection::getSensorListKey(dataType)]->get(dataType, data);
+  return (sensorList[SensorCollection::getSensorListKey(dataType)]->get(dataType, data) &&
+          sensorList[SensorCollection::getSensorListKey(dataType)]->isConnected());
 }
