@@ -13,13 +13,21 @@ Sensor_MAX44009::~Sensor_MAX44009() {
 }
 
 bool Sensor_MAX44009::init() {
-  return true;
+  isConnect = !max44009->getError();
+  return isConnect;
 }
 
 bool Sensor_MAX44009::read() {
-  lux = max44009->getLux();
-  LOG_VERBOSE("Light Int" ,lux, "lux");
-  return !max44009->getError();
+  if (!isConnect) {
+    init();
+  }
+
+  if (isConnect) {
+    lux = max44009->getLux();
+    LOG_VERBOSE("Light Int" ,lux, "lux");
+  }
+  
+  return isConnect;
 }
 
 bool Sensor_MAX44009::get(SensorCollection::SensorDataType dataType, float &measureValue) {

@@ -16,14 +16,16 @@ Sensor_DS18B20::~Sensor_DS18B20() {
 
 // nothing to init
 bool Sensor_DS18B20::init() {
-  return true; // for now
+  return read(); // for now
 }
 
 bool Sensor_DS18B20::read() {
   sensor->requestTemperatures(); 
   soilTemp = sensor->getTempCByIndex(0);
   LOG_VERBOSE("Soil Temp", soilTemp, "deg C");
-  return true;  // Currently, no way to define wrong value or not
+
+  isConnect = true;
+  return isConnect;  // Currently, no way to define wrong value or not
 }
 
 bool Sensor_DS18B20::get(SensorCollection::SensorDataType dataType, float &measureValue) {
