@@ -21,13 +21,16 @@ class LcdDisplayUI {
     ~LcdDisplayUI();
 
     void init();
-    void render(Page *page);
+    void update(Page *page);
+    void render();
 
   private:
     // LCD size 
     uint8_t rowSize, colSize;
     LiquidCrystal_I2C *lcd;
-
+    Page *renderPage;
+    unsigned long lastRender;
+    
     char *strBuffer;
     void clearContent(PageContent *content);
     void printContent(PageContent *content);

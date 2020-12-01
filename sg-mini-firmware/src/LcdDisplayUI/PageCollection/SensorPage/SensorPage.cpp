@@ -24,7 +24,7 @@ void SensorPage::updateContents() {
       this->contents[2].updateContent("NULL", 4);
 
     isCorrect = sensors->getSensorData(SensorCollection::SensorDataType::Hum,  value);
-    
+
     if (isCorrect)
       this->contents[3].updateContent(value, 2);
     else

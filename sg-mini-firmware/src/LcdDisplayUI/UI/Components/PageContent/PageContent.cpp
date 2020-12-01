@@ -1,20 +1,21 @@
 #include "PageContent.h"
 
-PageContent::PageContent(const char* content, int length, ContentType type, PageLayoutPosition pos) {
+PageContent::PageContent(const char* content, int length, PageLayoutPosition pos) {
   this->content = new char[length+1];
+  this->buffer = new char[length+1];
   if (strcmp(content, "") != 0)
   {
       for (int i = 0 ; i < length + 1; i++)
           *(this->content+i) = *(content+i);
   }
   this->contentLength = length + 1;
-  this->contentType = type;
   this->pos.set(pos);
   this->id = createId();
 }
 
 PageContent::~PageContent() {
     delete content;
+    delete buffer;
 }
 
 uint8_t PageContent::getId(){
@@ -33,39 +34,44 @@ PageLayoutPosition PageContent::getPos(){
     return this->pos;
 }
 
-PageContent::ContentType PageContent::getContentType(){
-    return this->contentType;
-}
-
 void PageContent::updateContent(int data){
-    if (contentType == ContentType::Variable)
-    {
-        convertNumToStr(data, content, contentLength-1);
-        isUpdate = true;
+    convertNumToStr(data, buffer, contentLength-1);
+    for (int i = 0; i < contentLength; i++) {
+        if (*(buffer+i) != *(content+i)) {
+            copyString(content, buffer, contentLength);
+            isUpdate = true;
+            break;
+        }
     }
 }
 
 void PageContent::updateContent(float data, int decimalPoints){
-    if (contentType == ContentType::Variable)
-    {
-        convertNumToStr(data, content, contentLength-1, decimalPoints);
-        isUpdate = true;
+    convertNumToStr(data, buffer, contentLength-1, decimalPoints);
+    for (int i = 0; i < contentLength; i++) {
+        if (*(buffer+i) != *(content+i)) {
+            copyString(content, buffer, contentLength);
+            isUpdate = true;
+            break;
+        }
     }
 }
 
 void PageContent::updateContent(char *data, int length){
-    if (contentType == ContentType::Variable)
-    {
-        for (int i = 0; i < length; i++){
-            if (i < contentLength-1)
-                *(content+i) = *(data+i);
-            else
-            {
-                *(content+i) = '\0';
-                break;
-            }
+    for (int i = 0; i < length; i++){
+        if (i < contentLength-1)
+            *(buffer+i) = *(data+i);
+        else
+        {
+            *(buffer+i) = '\0';
+            break;
         }
-        isUpdate = true;
+    }
+    for (int i = 0; i < contentLength; i++) {
+        if (*(buffer+i) != *(content+i)) {
+            copyString(content, buffer, contentLength);
+            isUpdate = true;
+            break;
+        }
     }
 }
 
@@ -84,6 +90,11 @@ void PageContent::convertNumToStr(int num, char result[], int strlen){
 
 void PageContent::convertNumToStr(float num, char result[], int strlen, int decimalPoints){
     dtostrf(num, strlen, decimalPoints, result); // Leave room for too large numbers!
+}
+
+void PageContent::copyString(char *target, char *copy, int length) {
+    for (int i = 0; i < length; i++)
+        *(target + i) = *(copy + i);
 }
 
 uint8_t PageContent::createId() {

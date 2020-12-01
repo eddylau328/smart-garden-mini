@@ -17,9 +17,19 @@ void PageControl::init(Sensors *sensors) {
   this->display->init();
 }
 
+void PageControl::mainLoop() {
+  if (millis() - lastUpdate > 2000) {
+    handleUI();
+    handleUpdateContents();
+    lastUpdate = millis();
+  }
+}
+
 void PageControl::handleUI() {
   // render the page
-  display->render(pages[PageControl::PageKey::SensorPageKey]);
+  display->update(pages[currentPageKey]);
+}
 
-  pages[PageControl::PageKey::SensorPageKey]->updateContents();
+void PageControl::handleUpdateContents() {
+  pages[currentPageKey]->updateContents();
 }

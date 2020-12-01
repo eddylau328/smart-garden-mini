@@ -12,7 +12,7 @@ class MainPage : public Page {
 
   private:
     PageContent contents[1] = {
-      PageContent("SG Mini beta", 12, PageContent::ContentType::Constant, PageLayoutPosition(0, 0)),
+      PageContent("SG Mini beta", 12, PageLayoutPosition(0, 0)),
     };
 };
 

@@ -1,6 +1,7 @@
 #ifndef PageControl_h
 #define PageControl_h
 
+#include <Arduino.h>
 #include "LcdDisplayUI.h"
 
 // Page Collection -------------------------------------
@@ -31,12 +32,19 @@ class PageControl {
      */
     void init(Sensors *sensors);
 
-    // Main loop function for controlling all the page
-    void handleUI();
+    void mainLoop();
 
   private:
     Page *pages[TotalPage];
+    uint8_t currentPageKey = PageKey::SensorPageKey;
+
     LcdDisplayUI *display;
+
+    unsigned long lastUpdate;
+
+    // Main loop function for controlling all the page
+    void handleUI();
+    void handleUpdateContents();
 };
 
 #endif

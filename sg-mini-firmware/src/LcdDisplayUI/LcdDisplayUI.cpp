@@ -18,21 +18,30 @@ void LcdDisplayUI::init() {
   lcd->backlight();
 }
 
-void LcdDisplayUI::render(Page *page) {
-  // Retrieve page contents array
-  PageContent *contents;
-  int length;
-  page->getContents(&contents, &length);
-  // render the page
-  
-  for (int i = 0; i < length; i++) {
-    if ((contents+i)->getIsUpdate()) {
-      LOG_WARNING("Update Content id:", (contents+i)->getId());
-      clearContent(contents+i);
-      printContent(contents+i);
-      // tell that content is updated
-      (contents+i)->confirmUpdate();
+void LcdDisplayUI::update(Page *page) {
+  this->renderPage = page;
+}
+
+void LcdDisplayUI::render() {
+  if (millis() - lastRender > 500) {
+    if (renderPage) {
+      // Retrieve page contents array
+      PageContent *contents;
+      int length;
+      renderPage->getContents(&contents, &length);
+      // render the page
+      
+      for (int i = 0; i < length; i++) {
+        if ((contents+i)->getIsUpdate()) {
+          LOG_WARNING("Update Content id:", (contents+i)->getId());
+          clearContent(contents+i);
+          printContent(contents+i);
+          // tell that content is updated
+          (contents+i)->confirmUpdate();
+        }
+      }
     }
+    lastRender = millis();
   }
 }
 

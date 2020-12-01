@@ -16,10 +16,10 @@ class SensorPage : public Page {
 
   private:
     PageContent contents[4] = {
-      PageContent("Air Temp", 8, PageContent::ContentType::Constant, PageLayoutPosition(0, 0)),
-      PageContent("Air Hum",  7, PageContent::ContentType::Constant, PageLayoutPosition(0, 1)),
-      PageContent("",         6, PageContent::ContentType::Variable, PageLayoutPosition(9, 0)),
-      PageContent("",         6, PageContent::ContentType::Variable, PageLayoutPosition(9, 1))
+      PageContent("Air Temp", 8, PageLayoutPosition(0, 0)),
+      PageContent("Air Hum",  7, PageLayoutPosition(0, 1)),
+      PageContent("",         6, PageLayoutPosition(9, 0)),
+      PageContent("",         6, PageLayoutPosition(9, 1))
     };
 
     Sensors *sensors; // no need to free this pointer, as you are just referencing it
