@@ -7,3 +7,8 @@ void Helper::handleWireBegin() {
     isBegin = true;
   }
 }
+
+uint8_t Helper::modifyBit(uint8_t target, uint8_t bitNo, uint8_t bitValue) {
+  uint8_t mask = 1 << bitNo; 
+	return (target & ~mask) | ((bitValue << bitNo) & mask); 
+}
