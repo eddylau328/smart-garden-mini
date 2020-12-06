@@ -1,14 +1,5 @@
 //Testing code for all sensor for smartgarden mini (ESP32 dev Kit V1) on breadboard
 
-
-//-------------Knob---------------------
-#define clk_knob 36
-#define dt_knob 39
-#define sw_knob 34
-int rotateflag = 0;
-bool pressing = false;
-int countpos = 0;
-
 // File datafile;  // for SD card file 
 #define pumpen 4 //Pumpenable Pin 
 
@@ -17,13 +8,17 @@ DS1307 rtc;
 
 long lastclock;
 
+#include "src/Helper/Helper.h"
+#include "src/Config/Config.h"
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
 #include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
+#include "src/LcdDisplayUI/RotaryEncoder.h"
 
 Sensors sensors;
 LcdDisplayUI display(2, 20);
 PageControl pageControl(&display);
+RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 40);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -31,21 +26,11 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::WARNINGS); // all log is printed
-  // lcd.init();
-  // lcd.backlight();
-  // lcd.setCursor(3,0);
-  // lcd.print("Hello, world!");
-  
-  pinMode(clk_knob,INPUT);// Knob pin setting
-  pinMode(dt_knob,INPUT);
-  pinMode(sw_knob,INPUT);
+  LOG_SET_LEVEL(DebugLogLevel::NONE); // all log is printed
   
   pinMode(12, OUTPUT); //On board LED
 
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
-  attachInterrupt(digitalPinToInterrupt(clk_knob), rotate, CHANGE);  
-  attachInterrupt(digitalPinToInterrupt(sw_knob), push, RISING);
 
   rtc.begin(); // Real time Clock setting
   rtc.fillByYMD(2020, 11, 5); //Jan 19,2013
@@ -56,6 +41,9 @@ void setup() {
   sensors.init();
   pageControl.init(&sensors);
   LOG_ERROR((unsigned long) &sensors);
+
+  rotaryEncoder.init(&pressInteract, &rotateInteract);
+
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -75,32 +63,17 @@ void setup() {
 
 }
 
-void loop() {
-  // digitalWrite(12,!digitalRead(12)); //Blinking LED
-  
-  // if(millis() - lastclock >= 5000){ 
-  //   printTime();
-  //   sensors.read();
-  //   lastclock = millis();
-  // }
-
-  pageControl.handleUI();
-  delay(2000);
+void pressInteract() {
+  Serial.println("pressed");
 }
 
-void rotate(){
-  if(rotateflag ==0)
-    {
-  if(digitalRead(clk_knob) == digitalRead(dt_knob))
-      countpos++;
-    else
-      countpos--;
-    rotateflag = 100;
-    }
-  }
-void push(){
-  pressing = true;
-  }
+void rotateInteract(int counter) {
+  Serial.println(counter);
+}
+
+void loop() {
+  rotaryEncoder.eventLoop();
+}
 
 void printTime() {
     rtc.getTime();
