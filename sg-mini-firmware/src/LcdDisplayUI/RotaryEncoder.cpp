@@ -27,7 +27,7 @@ void RotaryEncoder::init(void (*_pressCallback)(), void (*_rotateCallback)(int))
   pinMode(swPin,INPUT);
 
   attachInterrupt(digitalPinToInterrupt(clkPin), RotaryEncoder::rotate, CHANGE);  
-  attachInterrupt(digitalPinToInterrupt(swPin),RotaryEncoder:: press, RISING);
+  attachInterrupt(digitalPinToInterrupt(swPin), RotaryEncoder:: press, RISING);
 
   rotateCallback = _rotateCallback;
   pressCallback = _pressCallback;

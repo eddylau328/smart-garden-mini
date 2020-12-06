@@ -8,7 +8,6 @@ DS1307 rtc;
 
 long lastclock;
 
-#include "src/Helper/Helper.h"
 #include "src/Config/Config.h"
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
 #include "src/LcdDisplayUI/PageControl.h"
