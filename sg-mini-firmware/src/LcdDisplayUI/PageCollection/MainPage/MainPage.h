@@ -2,6 +2,7 @@
 #define MainPage_h
 
 #include "../Page.h"
+#include "../../UI/Components/Input/InputTool.h"
 
 class MainPage : public Page {
   public:
@@ -9,11 +10,16 @@ class MainPage : public Page {
     ~MainPage();
     void getContents(PageContent **contents, int *length);
     void updateContents();
+    void interactiveUpdate(int counter, bool isPress);
 
   private:
-    PageContent contents[1] = {
+    PageContent contents[2] = {
       PageContent("SG Mini beta", 12, PageLayoutPosition(0, 0)),
+      PageContent("", 3, PageLayoutPosition(0, 1))
     };
+
+    InputTool inputTool;
+
 };
 
 #endif

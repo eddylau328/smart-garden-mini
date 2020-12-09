@@ -23,7 +23,7 @@ void LcdDisplayUI::update(Page *page) {
 }
 
 void LcdDisplayUI::render() {
-  if (millis() - lastRender > 500) {
+  if (millis() - lastRender > 100) {
     if (renderPage) {
       // Retrieve page contents array
       PageContent *contents;
@@ -58,6 +58,7 @@ void LcdDisplayUI::printContent(PageContent *content) {
   pos = content->getPos();
   strncpy(strBuffer, content->getContent(), content->getContentLength());
   lcd->setCursor(pos.col, pos.row);
-  lcd->printstr(strBuffer);
+  for (int i = 0 ; i < content->getContentLength(); i++)
+    lcd->print(*(strBuffer+i));
   LOG_WARNING("Print Content:", strBuffer, "at", "(" , pos.col, "," , pos.row, ")"); 
 }

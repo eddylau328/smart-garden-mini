@@ -1,5 +1,8 @@
 #include "PageControl.h"
 
+Page *PageControl::pages[TotalPage];
+uint8_t PageControl::currentPageKey = PageControl::PageKey::MainPageKey;
+
 PageControl::PageControl(LcdDisplayUI *display) {
   this->display = display;
 }
@@ -17,12 +20,19 @@ void PageControl::init(Sensors *sensors) {
   this->display->init();
 }
 
+void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
+  this->rotaryEncoder = rotaryEncoder;
+
+  this->rotaryEncoder->init(&pressInputCallback, &rotateInputCallback);
+}
+
 void PageControl::mainLoop() {
   if (millis() - lastUpdate > 2000) {
     handleUI();
     handleUpdateContents();
     lastUpdate = millis();
   }
+  rotaryEncoder->eventLoop();
 }
 
 void PageControl::handleUI() {
@@ -32,4 +42,12 @@ void PageControl::handleUI() {
 
 void PageControl::handleUpdateContents() {
   pages[currentPageKey]->updateContents();
+}
+
+void PageControl::rotateInputCallback(int counter) {
+  pages[currentPageKey]->interactiveUpdate(counter, false);
+}
+
+void PageControl::pressInputCallback() {
+  pages[currentPageKey]->interactiveUpdate(0, true);
 }

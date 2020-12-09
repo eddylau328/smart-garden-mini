@@ -17,7 +17,7 @@ long lastclock;
 Sensors sensors;
 LcdDisplayUI display(2, 20);
 PageControl pageControl(&display);
-RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 40);
+RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 20);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -25,7 +25,7 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::NONE); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
   
   pinMode(12, OUTPUT); //On board LED
 
@@ -39,9 +39,8 @@ void setup() {
 
   sensors.init();
   pageControl.init(&sensors);
+  pageControl.initInput(&rotaryEncoder);
   LOG_ERROR((unsigned long) &sensors);
-
-  rotaryEncoder.init(&pressInteract, &rotateInteract);
 
 // SD card file name create
 /*  char filename[] = "data00.txt";
@@ -76,15 +75,7 @@ void loop() {
     sensors.read();
     lastclock = millis();
   }
-  rotaryEncoder.eventLoop();
-}
-
-void pressInteract() {
-  Serial.println("pressed");
-}
-
-void rotateInteract(int counter) {
-  Serial.println(counter);
+  
 }
 
 void printTime() {

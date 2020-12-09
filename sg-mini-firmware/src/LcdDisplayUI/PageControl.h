@@ -13,17 +13,18 @@
 
 // Class you need to display data / information --------
 #include "../Sensors/Sensors.h"
+#include "RotaryEncoder.h"
 // -----------------------------------------------------
 
 class PageControl {
 
-  // Add PageKey if you add a new page
-  enum PageKey {
-    MainPageKey,
-    SensorPageKey
-  };
-
   public:
+    // Add PageKey if you add a new page
+    enum PageKey {
+      MainPageKey,
+      SensorPageKey
+    };
+
     PageControl(LcdDisplayUI *display);
     ~PageControl();
 
@@ -32,19 +33,28 @@ class PageControl {
      */
     void init(Sensors *sensors);
 
+    /** Parse in the object pointer that you need to use to call in page object
+     * @param RotaryEncoder RotaryEncoder Class Object for reading all the input data 
+     */
+    void initInput(RotaryEncoder *rotaryEncoder);
+
     void mainLoop();
 
   private:
-    Page *pages[TotalPage];
-    uint8_t currentPageKey = PageKey::SensorPageKey;
+    static Page *pages[TotalPage];
+    static uint8_t currentPageKey;
 
     LcdDisplayUI *display;
+    RotaryEncoder *rotaryEncoder;
 
     unsigned long lastUpdate;
 
     // Main loop function for controlling all the page
     void handleUI();
     void handleUpdateContents();
+
+    static void rotateInputCallback(int counter);
+    static void pressInputCallback();
 };
 
 #endif

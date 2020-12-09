@@ -34,13 +34,16 @@ void RotaryEncoder::init(void (*_pressCallback)(), void (*_rotateCallback)(int))
 }
 
 void RotaryEncoder::eventLoop() {
-  if (millis() - lastEventCallback > 400) {
+  if (millis() - lastEventCallback > 100) {
     if (eventTrigger >> 4 & 1) {
+      LOG_ERROR("Press triggered");
       pressCallback();
       eventTrigger = Helper::modifyBit(eventTrigger, 4, 0);
     }
     if (eventTrigger & 1) {
-      rotateCallback(counter);
+      LOG_ERROR("Counter triggered", counter);
+      if (counter != 0)
+        rotateCallback(counter);
       counter = 0;
       eventTrigger = Helper::modifyBit(eventTrigger, 0, 0);
     }
