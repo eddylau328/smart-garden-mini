@@ -1,11 +1,10 @@
 #include "InputNumber.h"
 
-void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber, bool isCircleLoop=true) {
+void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber) {
   inputValue = new char[4];
   Helper::assignStrValue(inputValue, ' ', 4);
   this->minNumber = minNumber;
   this->maxNumber = maxNumber;
-  this->isCircleLoop = isCircleLoop;
   Helper::convertNumToStr((int) defaultValue, inputValue, 4);
   connectContent->updateContent(inputValue, 4);
 }
