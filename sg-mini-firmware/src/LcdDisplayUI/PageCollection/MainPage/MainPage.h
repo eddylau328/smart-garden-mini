@@ -2,7 +2,7 @@
 #define MainPage_h
 
 #include "../Page.h"
-#include "../../UI/Components/Input/InputAlphabet/InputAlphabet.h"
+#include "../../UI/Components/Input/InputAscii/InputAscii.h"
 
 class MainPage : public Page {
   public:
@@ -18,7 +18,7 @@ class MainPage : public Page {
       PageContent("", 3, PageLayoutPosition(0, 1))
     };
 
-    InputAlphabet input;
+    InputAscii input;
 
 };
 

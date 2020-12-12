@@ -15,9 +15,6 @@ class InputTool {
     void setLinkage(PageContent *pageContent);
     void setCircleLoop(bool isCircleLoop);
     virtual void interactiveUpdate(int counter, bool isPress) = 0;
-    
-    
-    // void setAscii(const char* defaultValue, int8_t stringLength);
 
   protected:
     char *inputValue;
