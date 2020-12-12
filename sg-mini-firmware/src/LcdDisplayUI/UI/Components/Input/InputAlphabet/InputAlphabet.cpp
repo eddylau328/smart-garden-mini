@@ -11,7 +11,19 @@ void InputAlphabet::set(const char* defaultValue, int8_t stringLength) {
   connectContent->updateContent(inputValue, stringLength);
 }
 
-void InputAlphabet::interactiveUpdate(int counter, bool isPress) {
+bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
+  if (isPress) {
+    valueIndex++;
+    if (valueIndex >= stringLength) {
+      valueIndex = 0;
+      return true;
+    }
+    return false;
+  }
+
+  if (!connectContent)
+    return true;
+
   char temp = *(inputValue + valueIndex) == ' ' ? 123 : *(inputValue + valueIndex);
   char value = temp + counter;
   if (isCircleLoop) {
@@ -58,6 +70,7 @@ void InputAlphabet::interactiveUpdate(int counter, bool isPress) {
   value = value == 123 ? ' ' : value;
   *(inputValue + valueIndex) = value;
   connectContent->updateContent(inputValue, stringLength);
+  return false;
 }
 
 bool InputAlphabet::isUpperCase(char value){

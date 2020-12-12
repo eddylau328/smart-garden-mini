@@ -11,7 +11,20 @@ void InputAscii::set(const char* defaultValue, int8_t stringLength) {
   connectContent->updateContent(inputValue, stringLength);
 }
 
-void InputAscii::interactiveUpdate(int counter, bool isPress) {
+bool InputAscii::interactiveUpdate(int counter, bool isPress) {
+  if (isPress) {
+    valueIndex++;
+    if (valueIndex >= stringLength) {
+      valueIndex = 0;
+      return true;
+    }
+    return false;
+  }
+
+  if (!connectContent)
+    return true;
+
+  
   char value = *(inputValue + valueIndex) + counter;
   if (isCircleLoop) {
     if (value < 32)
@@ -27,4 +40,5 @@ void InputAscii::interactiveUpdate(int counter, bool isPress) {
   }
   *(inputValue + valueIndex) = value;
   connectContent->updateContent(inputValue, stringLength);
+  return false;
 }

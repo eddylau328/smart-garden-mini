@@ -10,7 +10,14 @@ void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber) {
 }
 
 
-void InputNumber::interactiveUpdate(int counter, bool isPress){
+bool InputNumber::interactiveUpdate(int counter, bool isPress){
+
+  if (isPress)
+    return true;
+    
+  if (!connectContent)
+    return true;
+
   int8_t number;
   Helper::convertStrToNum(inputValue, number);
   if (isCircleLoop) {
@@ -35,4 +42,5 @@ void InputNumber::interactiveUpdate(int counter, bool isPress){
   }
   Helper::convertNumToStr(number, inputValue, 4);
   connectContent->updateContent(inputValue, 4);
+  return false;
 }

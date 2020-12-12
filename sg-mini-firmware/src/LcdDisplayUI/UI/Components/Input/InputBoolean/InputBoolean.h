@@ -7,7 +7,7 @@ class InputBoolean : public InputTool {
 
   public:
     void set(bool defaultValue);
-    void interactiveUpdate(int counter, bool isPress);
+    bool interactiveUpdate(int counter, bool isPress);
   
 };
 

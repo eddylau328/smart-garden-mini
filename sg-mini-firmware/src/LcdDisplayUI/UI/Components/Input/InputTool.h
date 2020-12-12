@@ -14,7 +14,13 @@ class InputTool {
 
     void setLinkage(PageContent *pageContent);
     void setCircleLoop(bool isCircleLoop);
-    virtual void interactiveUpdate(int counter, bool isPress) = 0;
+    
+    /**
+     * @param counter number of rotation
+     * @param isPress whether the button is Pressed
+     * @return whether the input is finish or not
+     */
+    virtual bool interactiveUpdate(int counter, bool isPress) = 0;
 
   protected:
     char *inputValue;

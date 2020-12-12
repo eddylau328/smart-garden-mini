@@ -7,7 +7,7 @@ class InputAscii : public InputTool {
 
   public:
     void set(const char* defaultValue, int8_t stringLength);
-    void interactiveUpdate(int counter, bool isPress);
+    bool interactiveUpdate(int counter, bool isPress);
 
   private:
     int8_t valueIndex;

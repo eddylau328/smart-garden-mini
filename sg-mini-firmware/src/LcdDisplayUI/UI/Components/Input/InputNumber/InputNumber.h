@@ -7,7 +7,7 @@ class InputNumber : public InputTool {
 
   public:
     void set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber);
-    void interactiveUpdate(int counter, bool isPress);
+    bool interactiveUpdate(int counter, bool isPress);
 
   private:
     int8_t minNumber = 0;
