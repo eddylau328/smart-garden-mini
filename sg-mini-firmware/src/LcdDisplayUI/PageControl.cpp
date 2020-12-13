@@ -1,7 +1,7 @@
 #include "PageControl.h"
 
 Page *PageControl::pages[TotalPage];
-uint8_t PageControl::currentPageKey = PageControl::PageKey::MainPageKey;
+uint8_t PageControl::currentPageKey = PageControl::PageKey::SensorPageKey;
 
 PageControl::PageControl(LcdDisplayUI *display) {
   this->display = display;

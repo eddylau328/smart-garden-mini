@@ -2,32 +2,39 @@
 
 SensorPage::SensorPage(Sensors *sensors) {
   this->sensors = sensors;
+  scroll.init(LCDScreenWidth, LCDScreenHeight);
+  scroll.setCoverArea(PageLayoutRange(0, 5));
 }
 
-SensorPage::~SensorPage() {}
+SensorPage::~SensorPage() {
+}
 
 void SensorPage::getContents(PageContent **contents, int *length) {
   *contents = this->contents;
-  *length = *(&(this->contents) + 1) - this->contents;
+  *length = contentSize;
 }
 
 void SensorPage::updateContents() {
-  float value;
-  bool isCorrect;
   // if sensors pointer is not null
   if (sensors) {
-    isCorrect = sensors->getSensorData(SensorCollection::SensorDataType::Temp, value);
-    
-    if (isCorrect)
-      this->contents[2].updateContent(value, 2);
-    else
-      this->contents[2].updateContent("NULL", 4);
-
-    isCorrect = sensors->getSensorData(SensorCollection::SensorDataType::Hum,  value);
-
-    if (isCorrect)
-      this->contents[3].updateContent(value, 2);
-    else
-      this->contents[3].updateContent("NULL", 4);
+    updateSensorData(SensorCollection::SensorDataType::Temp, 6);
+    updateSensorData(SensorCollection::SensorDataType::Hum, 7);
+    updateSensorData(SensorCollection::SensorDataType::SoilTemp, 8);
+    updateSensorData(SensorCollection::SensorDataType::SoilHum, 9);
+    updateSensorData(SensorCollection::SensorDataType::Light, 10);
+    updateSensorData(SensorCollection::SensorDataType::WaterLevel, 11);
   }
+}
+
+void SensorPage::interactiveUpdate(int counter, bool isPress) {
+  scroll.updateScroll(contents, contentSize, counter);
+}
+
+void SensorPage::updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex) {
+  float value;
+  bool isCorrect = sensors->getSensorData(dataType, value);
+  if (isCorrect)
+    this->contents[contentIndex].updateContent(value, 1);
+  else
+    this->contents[contentIndex].updateContent("NULL", 4);
 }

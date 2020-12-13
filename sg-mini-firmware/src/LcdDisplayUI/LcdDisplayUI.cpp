@@ -30,7 +30,6 @@ void LcdDisplayUI::render() {
       int length;
       renderPage->getContents(&contents, &length);
       // render the page
-      
       for (int i = 0; i < length; i++) {
         if ((contents+i)->getIsUpdate()) {
           LOG_WARNING("Update Content id:", (contents+i)->getId());

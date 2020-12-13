@@ -25,7 +25,7 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::NONE); // all log is printed
   
   pinMode(12, OUTPUT); //On board LED
 
@@ -40,7 +40,6 @@ void setup() {
   sensors.init();
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
-  LOG_ERROR((unsigned long) &sensors);
 
 // SD card file name create
 /*  char filename[] = "data00.txt";

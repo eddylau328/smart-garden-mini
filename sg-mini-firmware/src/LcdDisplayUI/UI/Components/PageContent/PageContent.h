@@ -10,6 +10,7 @@ class PageContent {
 
   public:
     PageContent(const char* content, int length, PageLayoutPosition pos);
+    PageContent(int length, PageLayoutPosition pos);
     ~PageContent();
 
     // getter function  --------------------------------
@@ -31,7 +32,7 @@ class PageContent {
 
   private:
     char *content;
-    char *buffer;
+    static char buffer[20];
     uint8_t contentLength;
     uint8_t id;
     PageLayoutPosition pos;

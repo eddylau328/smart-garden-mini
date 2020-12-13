@@ -1,26 +1,28 @@
 #include "PageContent.h"
 
+char PageContent::buffer[20];
+
 PageContent::PageContent(const char* content, int length, PageLayoutPosition pos) {
-  this->content = new char[length];
-  this->buffer = new char[length];
-  if (strcmp(content, "") != 0)
-  {
+    this->content = new char[length];
     for (int i = 0 ; i < length; i++)
         *(this->content+i) = *(content+i);
-  }
-  else
-  {
-      Helper::assignStrValue(this->content, ' ', length);
-  }
-  this->contentLength = length;
-  this->pos = pos;
-  this->newPos = pos;
-  this->id = createId();
+    this->contentLength = length;
+    this->pos = pos;
+    this->newPos = pos;
+    this->id = createId();
+}
+
+PageContent::PageContent(int length, PageLayoutPosition pos) {
+    this->content = new char[length];
+    Helper::assignStrValue(this->content, ' ', length);
+    this->contentLength = length;
+    this->pos = pos;
+    this->newPos = pos;
+    this->id = createId();
 }
 
 PageContent::~PageContent() {
     delete content;
-    delete buffer;
 }
 
 uint8_t PageContent::getId(){

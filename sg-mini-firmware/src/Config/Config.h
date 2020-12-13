@@ -37,4 +37,8 @@
 #define CLK_PIN 36
 #define SW_PIN 25
 
+// LCD Screen Size
+#define LCDScreenWidth 16
+#define LCDScreenHeight 2
+
 #endif
