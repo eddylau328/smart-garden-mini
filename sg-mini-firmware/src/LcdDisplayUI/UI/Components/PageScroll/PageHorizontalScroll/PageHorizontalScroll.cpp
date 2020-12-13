@@ -1,5 +1,4 @@
 #include "PageHorizontalScroll.h"
-#include <DebugLog.h>
 
 void PageHorizontalScroll::setCoverArea(PageLayoutRange colRange, PageLayoutRange rowRange) {
   this->colRange = colRange;
