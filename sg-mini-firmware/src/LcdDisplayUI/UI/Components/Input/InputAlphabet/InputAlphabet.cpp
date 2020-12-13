@@ -6,7 +6,7 @@ void InputAlphabet::set(const char* defaultValue, int8_t stringLength) {
   this->stringLength = stringLength;
   Helper::copyString(inputValue, defaultValue, stringLength);
   for (int i = 0 ; i < stringLength ; i++)
-    if ( !(Helper::numInRange((int) *(inputValue+i), 65, 90)) && !(Helper::numInRange((int) *(inputValue+i), 97, 122)) )
+    if ( !(Helper::intInRange((int) *(inputValue+i), 65, 90)) && !(Helper::intInRange((int) *(inputValue+i), 97, 122)) )
       *(inputValue + i) = ' ';
   connectContent->updateContent(inputValue, stringLength);
 }
@@ -35,7 +35,7 @@ bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
       if (isUpperCase(temp))
         value += 7;
     }
-    else if (Helper::numInRange((int)value, 91, 96)) {
+    else if (Helper::intInRange((int)value, 91, 96)) {
       if (counter > 0)
         value += 7;
       else
@@ -55,7 +55,7 @@ bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
       if (isUpperCase(*(inputValue + valueIndex)))
         value += 7;
     }
-    else if (Helper::numInRange((int)value, 91, 96)) {
+    else if (Helper::intInRange((int)value, 91, 96)) {
       if (counter > 0)
         value += 7;
       else
@@ -74,9 +74,9 @@ bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
 }
 
 bool InputAlphabet::isUpperCase(char value){
-  return Helper::numInRange((int)value, 65, 90);
+  return Helper::intInRange((int)value, 65, 90);
 }
 
 bool InputAlphabet::isLowerCase(char value){
-  return Helper::numInRange((int)value, 97, 122);
+  return Helper::intInRange((int)value, 97, 122);
 }

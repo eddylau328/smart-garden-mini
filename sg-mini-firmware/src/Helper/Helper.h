@@ -20,7 +20,8 @@ class Helper {
     static void convertStrToNum(char *target, int8_t &number);
     static void convertStrToNum(char *target, int &number);
     static void convertStrToNum(char *target, float &number);
-    static bool numInRange(int number, int min, int max);
+    static bool int8_tInRange(int8_t target, int8_t min, int8_t max);
+    static bool intInRange(int number, int min, int max);
 };
 
 #endif

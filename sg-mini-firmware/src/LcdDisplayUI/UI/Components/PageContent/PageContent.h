@@ -17,7 +17,10 @@ class PageContent {
     int getContentLength();
     char* getContent();
     PageLayoutPosition getPos();
+    PageLayoutPosition getNewPos();
     // -------------------------------------------------
+
+    void updatePos(PageLayoutPosition pos);
 
     void updateContent(int data);
     void updateContent(float data, int decimalPoints);
@@ -32,6 +35,7 @@ class PageContent {
     uint8_t contentLength;
     uint8_t id;
     PageLayoutPosition pos;
+    PageLayoutPosition newPos;
 
     bool isUpdate = true;
 

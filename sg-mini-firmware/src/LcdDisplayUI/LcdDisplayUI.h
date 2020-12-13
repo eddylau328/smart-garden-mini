@@ -6,6 +6,7 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 
+#include "../Helper/Helper.h"
 #include "PageCollection/Page.h"
 #include "UI/Components/PageContent/PageContent.h"
 #include "UI/Components/PageLayoutPosition/PageLayoutPosition.h"

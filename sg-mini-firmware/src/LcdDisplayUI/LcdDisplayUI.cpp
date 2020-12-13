@@ -35,6 +35,10 @@ void LcdDisplayUI::render() {
         if ((contents+i)->getIsUpdate()) {
           LOG_WARNING("Update Content id:", (contents+i)->getId());
           clearContent(contents+i);
+        }
+      }
+      for (int i = 0; i < length; i++) {
+        if ((contents+i)->getIsUpdate()) {
           printContent(contents+i);
           // tell that content is updated
           (contents+i)->confirmUpdate();
@@ -48,17 +52,40 @@ void LcdDisplayUI::render() {
 void LcdDisplayUI::clearContent(PageContent *content) {
   PageLayoutPosition pos;
   pos = content->getPos();
-  lcd->setCursor(pos.col, pos.row);
-  for (int i = 0 ; i < content->getContentLength(); i++)
-    lcd->print(" ");
+  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+    int8_t startIndex = 0;
+    int8_t contentSize = (int8_t)content->getContentLength();
+    if (pos.col >= 0)
+      lcd->setCursor(pos.col, pos.row);
+    else {
+      lcd->setCursor(0, pos.row);
+      startIndex = abs(pos.col);
+    }
+    for (int8_t i = startIndex ; i < contentSize; i++)
+      if (pos.col + i < colSize)
+        lcd->print(" ");
+      else
+        break;
+  }
 }
 
 void LcdDisplayUI::printContent(PageContent *content) {
   PageLayoutPosition pos;
-  pos = content->getPos();
+  pos = content->getNewPos();
   strncpy(strBuffer, content->getContent(), content->getContentLength());
-  lcd->setCursor(pos.col, pos.row);
-  for (int i = 0 ; i < content->getContentLength(); i++)
-    lcd->print(*(strBuffer+i));
-  LOG_WARNING("Print Content:", strBuffer, "at", "(" , pos.col, "," , pos.row, ")"); 
+  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+    int8_t startIndex = 0;
+    int8_t contentSize = (int8_t)content->getContentLength();
+    if (pos.col >= 0 )
+      lcd->setCursor(pos.col, pos.row);
+    else {
+      lcd->setCursor(0, pos.row);
+      startIndex = abs(pos.col);
+    }
+    for (int8_t i = startIndex ; i < contentSize; i++)
+      if (pos.col + i < colSize)
+        lcd->print(*(strBuffer+i));
+      else
+        break;
+  }   
 }

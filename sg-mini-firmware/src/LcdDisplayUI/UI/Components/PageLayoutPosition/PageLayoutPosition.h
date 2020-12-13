@@ -10,23 +10,11 @@
 class PageLayoutPosition{
     public:
         PageLayoutPosition();
-        PageLayoutPosition(byte col, byte row);
-        void set(byte col, byte row);
-        void setRow(byte row);
-        void setCol(byte col);
-        void set(PageLayoutPosition pos);
-        bool compare(PageLayoutPosition pos);
-        PageLayoutPosition get();
-        byte col, row;
-};
-
-class PageLayoutRange{
-    public:
-        PageLayoutRange();
-        PageLayoutRange(byte min, byte max);
-        void set(byte min, byte max);
-        void set(PageLayoutRange range);
-        byte min, max;
+        PageLayoutPosition(int8_t col, int8_t row);
+        void set(int8_t col, int8_t row);
+        bool operator == (const PageLayoutPosition &pos);
+        void operator = (const PageLayoutPosition &pos);
+        int8_t col, row;
 };
 
 #endif

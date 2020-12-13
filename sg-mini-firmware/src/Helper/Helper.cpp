@@ -66,7 +66,11 @@ void Helper::convertStrToNum(char *target, float &number) {
   number = atof(target);
 }
 
-bool Helper::numInRange(int target, int min, int max) {
+bool Helper::int8_tInRange(int8_t target, int8_t min, int8_t max) {
+  return (target >= min && target <= max);
+}
+
+bool Helper::intInRange(int target, int min, int max) {
     return (target >= min && target <= max);
 }
 

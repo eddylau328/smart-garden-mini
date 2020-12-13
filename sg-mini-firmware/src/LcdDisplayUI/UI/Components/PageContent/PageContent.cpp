@@ -13,7 +13,8 @@ PageContent::PageContent(const char* content, int length, PageLayoutPosition pos
       Helper::assignStrValue(this->content, ' ', length);
   }
   this->contentLength = length;
-  this->pos.set(pos);
+  this->pos = pos;
+  this->newPos = pos;
   this->id = createId();
 }
 
@@ -34,8 +35,17 @@ char* PageContent::getContent(){
     return this->content;
 }
 
-PageLayoutPosition PageContent::getPos(){
+PageLayoutPosition PageContent::getPos() {
     return this->pos;
+}
+
+PageLayoutPosition PageContent::getNewPos() {
+    return this->newPos;
+}
+
+void PageContent::updatePos(PageLayoutPosition pos) {
+    this->newPos = pos;
+    isUpdate = true;
 }
 
 void PageContent::updateContent(int data){
@@ -76,6 +86,7 @@ void PageContent::updateContent(char *data, int length){
 
 void PageContent::confirmUpdate() {
   this->isUpdate = false;
+  this->pos = this->newPos;
 }
 
 bool PageContent::getIsUpdate() {
