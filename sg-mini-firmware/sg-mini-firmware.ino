@@ -15,7 +15,7 @@ long lastclock;
 #include "src/LcdDisplayUI/RotaryEncoder.h"
 
 Sensors sensors;
-LcdDisplayUI display(2, 20);
+LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 20);
 

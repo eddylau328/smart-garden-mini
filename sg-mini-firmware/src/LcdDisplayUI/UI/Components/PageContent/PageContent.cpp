@@ -51,6 +51,7 @@ void PageContent::updatePos(PageLayoutPosition pos) {
 }
 
 void PageContent::updateContent(int data){
+    Helper::assignStrValue(buffer, ' ', contentLength);
     Helper::convertNumToStr(data, buffer, contentLength);
     for (int i = 0; i < contentLength; i++) {
         if (*(buffer+i) != *(content+i)) {
@@ -62,6 +63,7 @@ void PageContent::updateContent(int data){
 }
 
 void PageContent::updateContent(float data, int decimalPoints){
+    Helper::assignStrValue(buffer, ' ', contentLength);
     Helper::convertNumToStr(data, buffer, contentLength, decimalPoints);
     for (int i = 0; i < contentLength; i++) {
         if (*(buffer+i) != *(content+i)) {
@@ -73,6 +75,7 @@ void PageContent::updateContent(float data, int decimalPoints){
 }
 
 void PageContent::updateContent(char *data, int length){
+    Helper::assignStrValue(buffer, ' ', contentLength);
     for (int i = 0; i < length; i++){
         if (i < contentLength)
             *(buffer+i) = *(data+i);

@@ -1,11 +1,11 @@
 #include "LcdDisplayUI.h"
 
-LcdDisplayUI::LcdDisplayUI(uint8_t rowSize, uint8_t colSize) {
+LcdDisplayUI::LcdDisplayUI(int8_t colSize, int8_t rowSize) {
   this->rowSize = rowSize;
   this->colSize = colSize;
   this->strBuffer = new char[colSize];
 
-  lcd = new LiquidCrystal_I2C(0x27,colSize, rowSize);
+  lcd = new LiquidCrystal_I2C(0x27, colSize, rowSize);
 }
 
 LcdDisplayUI::~LcdDisplayUI() {
@@ -53,18 +53,22 @@ void LcdDisplayUI::clearContent(PageContent *content) {
   pos = content->getPos();
   if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
-    int8_t contentSize = (int8_t)content->getContentLength();
-    if (pos.col >= 0)
+    int8_t endIndex = (int8_t)content->getContentLength();
+    if (pos.col >= 0) {
       lcd->setCursor(pos.col, pos.row);
+      if (pos.col + endIndex > colSize)
+        endIndex = colSize - pos.col;
+      else
+        endIndex += pos.col;
+    }
     else {
       lcd->setCursor(0, pos.row);
       startIndex = abs(pos.col);
+      if (endIndex - startIndex > colSize)
+        endIndex = colSize;
     }
-    for (int8_t i = startIndex ; i < contentSize; i++)
-      if (pos.col + i < colSize)
-        lcd->print(" ");
-      else
-        break;
+    for (int8_t i = startIndex ; i < endIndex; i++)
+      lcd->print(" ");
   }
 }
 
@@ -74,17 +78,21 @@ void LcdDisplayUI::printContent(PageContent *content) {
   strncpy(strBuffer, content->getContent(), content->getContentLength());
   if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
-    int8_t contentSize = (int8_t)content->getContentLength();
-    if (pos.col >= 0 )
+    int8_t endIndex = (int8_t)content->getContentLength();
+    if (pos.col >= 0 ) {
       lcd->setCursor(pos.col, pos.row);
+      if (pos.col + endIndex > colSize)
+        endIndex = colSize - pos.col;
+      else
+        endIndex += pos.col;
+    }
     else {
       lcd->setCursor(0, pos.row);
       startIndex = abs(pos.col);
+      if (endIndex - startIndex > colSize)
+        endIndex = colSize;
     }
-    for (int8_t i = startIndex ; i < contentSize; i++)
-      if (pos.col + i < colSize)
-        lcd->print(*(strBuffer+i));
-      else
-        break;
+    for (int8_t i = startIndex ; i < endIndex; i++)
+      lcd->print(*(strBuffer+i));
   }   
 }
