@@ -12,6 +12,7 @@ class SensorPage : public Page {
     SensorPage(Sensors *sensors);
     ~SensorPage();
 
+    void mountPage();
     void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);

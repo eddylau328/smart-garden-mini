@@ -8,7 +8,6 @@ class MainPage : public Page {
     ~MainPage();
     void getContents(PageContent **contents, int *length);
     void updateContents();
-    void interactiveUpdate(int counter, bool isPress);
 
   private:
     PageContent contents[1] = {

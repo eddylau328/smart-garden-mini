@@ -21,8 +21,8 @@ class PageControl {
   public:
     // Add PageKey if you add a new page
     enum PageKey {
-      MainPageKey,
-      SensorPageKey
+      MainPageKey = 0,
+      SensorPageKey = 1
     };
 
     PageControl(LcdDisplayUI *display);
@@ -43,6 +43,7 @@ class PageControl {
   private:
     static Page *pages[TotalPage];
     static uint8_t currentPageKey;
+    static uint8_t newPageKey;
 
     LcdDisplayUI *display;
     RotaryEncoder *rotaryEncoder;
@@ -55,6 +56,7 @@ class PageControl {
 
     static void rotateInputCallback(int counter);
     static void pressInputCallback();
+    static void nextPageCallback(uint8_t pageKey);
 };
 
 #endif

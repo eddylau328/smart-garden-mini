@@ -30,6 +30,7 @@ class LcdDisplayUI {
     int8_t rowSize, colSize;
     LiquidCrystal_I2C *lcd;
     Page *renderPage;
+    bool isUpdatePage = true;
     unsigned long lastRender;
     
     char *strBuffer;

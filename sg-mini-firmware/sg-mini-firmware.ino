@@ -17,7 +17,7 @@ long lastclock;
 Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
-RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 20);
+RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -25,7 +25,7 @@ void setup() {
   lastclock = millis();
   
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::NONE); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
   
   pinMode(12, OUTPUT); //On board LED
 

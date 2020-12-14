@@ -20,6 +20,7 @@ void LcdDisplayUI::init() {
 
 void LcdDisplayUI::update(Page *page) {
   this->renderPage = page;
+  this->isUpdatePage = true;
 }
 
 void LcdDisplayUI::render() {
@@ -30,17 +31,28 @@ void LcdDisplayUI::render() {
       int length;
       renderPage->getContents(&contents, &length);
       // render the page
-      for (int i = 0; i < length; i++) {
-        if ((contents+i)->getIsUpdate()) {
-          LOG_WARNING("Update Content id:", (contents+i)->getId());
-          clearContent(contents+i);
-        }
-      }
-      for (int i = 0; i < length; i++) {
-        if ((contents+i)->getIsUpdate()) {
+      if (isUpdatePage) {
+        lcd->clear();
+        for (int i = 0; i < length; i++) {
           printContent(contents+i);
           // tell that content is updated
           (contents+i)->confirmUpdate();
+        }
+        isUpdatePage = false;
+      }
+      else {
+        for (int i = 0; i < length; i++) {
+          if ((contents+i)->getIsUpdate()) {
+            LOG_WARNING("Update Content id:", (contents+i)->getId());
+            clearContent(contents+i);
+          }
+        }
+        for (int i = 0; i < length; i++) {
+          if ((contents+i)->getIsUpdate()) {
+            printContent(contents+i);
+            // tell that content is updated
+            (contents+i)->confirmUpdate();
+          }
         }
       }
     }
@@ -58,8 +70,6 @@ void LcdDisplayUI::clearContent(PageContent *content) {
       lcd->setCursor(pos.col, pos.row);
       if (pos.col + endIndex > colSize)
         endIndex = colSize - pos.col;
-      else
-        endIndex += pos.col;
     }
     else {
       lcd->setCursor(0, pos.row);
@@ -83,8 +93,6 @@ void LcdDisplayUI::printContent(PageContent *content) {
       lcd->setCursor(pos.col, pos.row);
       if (pos.col + endIndex > colSize)
         endIndex = colSize - pos.col;
-      else
-        endIndex += pos.col;
     }
     else {
       lcd->setCursor(0, pos.row);

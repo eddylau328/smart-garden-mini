@@ -9,6 +9,10 @@ SensorPage::SensorPage(Sensors *sensors) {
 SensorPage::~SensorPage() {
 }
 
+void SensorPage::mountPage() {
+  scroll.resetScroll(contents, contentSize);
+}
+
 void SensorPage::getContents(PageContent **contents, int *length) {
   *contents = this->contents;
   *length = contentSize;
@@ -28,6 +32,7 @@ void SensorPage::updateContents() {
 
 void SensorPage::interactiveUpdate(int counter, bool isPress) {
   scroll.updateScroll(contents, contentSize, counter);
+  Page::interactiveUpdate(counter, isPress);
 }
 
 void SensorPage::updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex) {

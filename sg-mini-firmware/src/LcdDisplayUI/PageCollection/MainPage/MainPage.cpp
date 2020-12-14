@@ -12,5 +12,3 @@ void MainPage::getContents(PageContent **contents, int *length){
 }
 
 void MainPage::updateContents() {}
-
-void MainPage::interactiveUpdate(int counter, bool isPress) {}
