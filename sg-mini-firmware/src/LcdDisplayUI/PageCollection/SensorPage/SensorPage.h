@@ -4,8 +4,8 @@
 #include "../Page.h"
 #include "../../../Sensors/Sensors.h"
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
-#include "../../UI/Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
-#include "../../UI/Components/PageLayoutRange/PageLayoutRange.h"
+#include "../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
+#include "../../Components/PageLayoutRange/PageLayoutRange.h"
 class SensorPage : public Page {
 
   public:

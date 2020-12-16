@@ -8,8 +8,8 @@
 
 #include "../Helper/Helper.h"
 #include "PageCollection/Page.h"
-#include "UI/Components/PageContent/PageContent.h"
-#include "UI/Components/PageLayoutPosition/PageLayoutPosition.h"
+#include "Components/PageContent/PageContent.h"
+#include "Components/PageLayoutPosition/PageLayoutPosition.h"
 
 class LcdDisplayUI {
 

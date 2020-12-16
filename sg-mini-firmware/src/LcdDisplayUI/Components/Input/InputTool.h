@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 #include "../PageContent/PageContent.h"
-#include "../../../../Helper/Helper.h"
+#include "../../../Helper/Helper.h"
 
 class InputTool {
 

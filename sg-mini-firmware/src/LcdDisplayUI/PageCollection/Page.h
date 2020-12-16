@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 #include "../../Config/Config.h"
-#include "../UI/Components/PageContent/PageContent.h"
-#include "../UI/Components/PageLayoutPosition/PageLayoutPosition.h"
+#include "../Components/PageContent/PageContent.h"
+#include "../Components/PageLayoutPosition/PageLayoutPosition.h"
 
 class Page {
   public:
