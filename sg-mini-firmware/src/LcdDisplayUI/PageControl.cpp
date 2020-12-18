@@ -17,10 +17,11 @@ PageControl::~PageControl() {
 void PageControl::init(Sensors *sensors) {
   pages[PageControl::PageKey::MainPageKey] = new MainPage();
   pages[PageControl::PageKey::SensorPageKey] = new SensorPage(sensors);
+  pages[PageControl::PageKey::SettingPageKey] = new SettingPage();
 
   pages[PageControl::PageKey::MainPageKey]->setNextPageCallback(PageControl::PageKey::SensorPageKey, &nextPageCallback);
-  pages[PageControl::PageKey::SensorPageKey]->setNextPageCallback(PageControl::PageKey::MainPageKey, &nextPageCallback);
-
+  pages[PageControl::PageKey::SensorPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageControl::PageKey::SettingPageKey]->setNextPageCallback(PageControl::PageKey::MainPageKey, &nextPageCallback);
   this->display->init();
 }
 

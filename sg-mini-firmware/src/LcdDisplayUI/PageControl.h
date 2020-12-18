@@ -5,10 +5,11 @@
 #include "LcdDisplayUI.h"
 
 // Page Collection -------------------------------------
-#define TotalPage 2 // Modify it if you want to add page
+#define TotalPage 3 // Modify it if you want to add page
 #include "PageCollection/Page.h"
 #include "PageCollection/MainPage/MainPage.h"
 #include "PageCollection/SensorPage/SensorPage.h"
+#include "PageCollection/SettingPage/SettingPage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------
@@ -22,7 +23,8 @@ class PageControl {
     // Add PageKey if you add a new page
     enum PageKey {
       MainPageKey = 0,
-      SensorPageKey = 1
+      SensorPageKey = 1,
+      SettingPageKey = 2
     };
 
     PageControl(LcdDisplayUI *display);
