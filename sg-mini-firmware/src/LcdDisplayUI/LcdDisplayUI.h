@@ -6,9 +6,10 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 
+#include "../Helper/Helper.h"
 #include "PageCollection/Page.h"
-#include "UI/Components/PageContent/PageContent.h"
-#include "UI/Components/PageLayoutPosition/PageLayoutPosition.h"
+#include "Components/PageContent/PageContent.h"
+#include "Components/PageLayoutPosition/PageLayoutPosition.h"
 
 class LcdDisplayUI {
 
@@ -17,17 +18,21 @@ class LcdDisplayUI {
      * @param rowSize the number of character LCD can show in one row
      * @param colSize the number of character LCD can show in one column
     */
-    LcdDisplayUI(uint8_t rowSize, uint8_t colSize);
+    LcdDisplayUI(int8_t colSize, int8_t rowSize);
     ~LcdDisplayUI();
 
     void init();
-    void render(Page *page);
+    void update(Page *page);
+    void render();
 
   private:
     // LCD size 
-    uint8_t rowSize, colSize;
+    int8_t rowSize, colSize;
     LiquidCrystal_I2C *lcd;
-
+    Page *renderPage;
+    bool isUpdatePage = true;
+    unsigned long lastRender;
+    
     char *strBuffer;
     void clearContent(PageContent *content);
     void printContent(PageContent *content);

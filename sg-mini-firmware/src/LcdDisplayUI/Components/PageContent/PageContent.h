@@ -1,17 +1,16 @@
 #ifndef PageContent_h
 #define PageContent_h
 
+#include "../../../Helper/Helper.h"
 #include "../PageLayoutPosition/PageLayoutPosition.h"
 #include <Arduino.h>
+#include <DebugLog.h>
 
 class PageContent {
 
   public:
-    enum ContentType {
-        Constant, Variable
-    };
-
-    PageContent(const char* content, int length, ContentType type, PageLayoutPosition pos);
+    PageContent(const char* content, int length, PageLayoutPosition pos);
+    PageContent(int length, PageLayoutPosition pos);
     ~PageContent();
 
     // getter function  --------------------------------
@@ -19,8 +18,10 @@ class PageContent {
     int getContentLength();
     char* getContent();
     PageLayoutPosition getPos();
-    PageContent::ContentType getContentType();
+    PageLayoutPosition getNewPos();
     // -------------------------------------------------
+
+    void updatePos(PageLayoutPosition pos);
 
     void updateContent(int data);
     void updateContent(float data, int decimalPoints);
@@ -31,16 +32,16 @@ class PageContent {
 
   private:
     char *content;
+    static char buffer[20];
     uint8_t contentLength;
     uint8_t id;
     PageLayoutPosition pos;
-    ContentType contentType;
+    PageLayoutPosition newPos;
 
     bool isUpdate = true;
 
-    static void convertNumToStr(int num, char result[], int strlen);
-    static void convertNumToStr(float num, char result[], int strlen, int decimalPoints);
     static uint8_t createId();
+
 };
 
 #endif

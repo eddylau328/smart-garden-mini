@@ -1,11 +1,11 @@
 #include "LcdDisplayUI.h"
 
-LcdDisplayUI::LcdDisplayUI(uint8_t rowSize, uint8_t colSize) {
+LcdDisplayUI::LcdDisplayUI(int8_t colSize, int8_t rowSize) {
   this->rowSize = rowSize;
   this->colSize = colSize;
   this->strBuffer = new char[colSize];
 
-  lcd = new LiquidCrystal_I2C(0x27,colSize, rowSize);
+  lcd = new LiquidCrystal_I2C(0x27, colSize, rowSize);
 }
 
 LcdDisplayUI::~LcdDisplayUI() {
@@ -18,37 +18,89 @@ void LcdDisplayUI::init() {
   lcd->backlight();
 }
 
-void LcdDisplayUI::render(Page *page) {
-  // Retrieve page contents array
-  PageContent *contents;
-  int length;
-  page->getContents(&contents, &length);
-  // render the page
-  
-  for (int i = 0; i < length; i++) {
-    if ((contents+i)->getIsUpdate()) {
-      LOG_WARNING("Update Content id:", (contents+i)->getId());
-      clearContent(contents+i);
-      printContent(contents+i);
-      // tell that content is updated
-      (contents+i)->confirmUpdate();
+void LcdDisplayUI::update(Page *page) {
+  this->renderPage = page;
+  this->isUpdatePage = true;
+}
+
+void LcdDisplayUI::render() {
+  if (millis() - lastRender > 100) {
+    if (renderPage) {
+      // Retrieve page contents array
+      PageContent *contents;
+      int length;
+      renderPage->getContents(&contents, &length);
+      // render the page
+      if (isUpdatePage) {
+        lcd->clear();
+        for (int i = 0; i < length; i++) {
+          printContent(contents+i);
+          // tell that content is updated
+          (contents+i)->confirmUpdate();
+        }
+        isUpdatePage = false;
+      }
+      else {
+        for (int i = 0; i < length; i++) {
+          if ((contents+i)->getIsUpdate()) {
+            LOG_WARNING("Update Content id:", (contents+i)->getId());
+            clearContent(contents+i);
+          }
+        }
+        for (int i = 0; i < length; i++) {
+          if ((contents+i)->getIsUpdate()) {
+            printContent(contents+i);
+            // tell that content is updated
+            (contents+i)->confirmUpdate();
+          }
+        }
+      }
     }
+    lastRender = millis();
   }
 }
 
 void LcdDisplayUI::clearContent(PageContent *content) {
   PageLayoutPosition pos;
   pos = content->getPos();
-  lcd->setCursor(pos.col, pos.row);
-  for (int i = 0 ; i < content->getContentLength(); i++)
-    lcd->print(" ");
+  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+    int8_t startIndex = 0;
+    int8_t endIndex = (int8_t)content->getContentLength();
+    if (pos.col >= 0) {
+      lcd->setCursor(pos.col, pos.row);
+      if (pos.col + endIndex > colSize)
+        endIndex = colSize - pos.col;
+    }
+    else {
+      lcd->setCursor(0, pos.row);
+      startIndex = abs(pos.col);
+      if (endIndex - startIndex > colSize)
+        endIndex = colSize;
+    }
+    for (int8_t i = startIndex ; i < endIndex; i++)
+      lcd->print(" ");
+  }
 }
 
 void LcdDisplayUI::printContent(PageContent *content) {
   PageLayoutPosition pos;
-  pos = content->getPos();
+  pos = content->getNewPos();
   strncpy(strBuffer, content->getContent(), content->getContentLength());
-  lcd->setCursor(pos.col, pos.row);
-  lcd->printstr(strBuffer);
-  LOG_WARNING("Print Content:", strBuffer, "at", "(" , pos.col, "," , pos.row, ")"); 
+  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+    int8_t startIndex = 0;
+    int8_t endIndex = (int8_t)content->getContentLength();
+    if (pos.col >= 0 ) {
+      lcd->setCursor(pos.col, pos.row);
+      if (pos.col + endIndex > colSize)
+        endIndex = colSize - pos.col;
+    }
+    else {
+      lcd->setCursor(0, pos.row);
+      startIndex = abs(pos.col);
+      if (endIndex - startIndex > colSize)
+        endIndex = colSize;
+    }
+    for (int8_t i = startIndex ; i < endIndex; i++)
+      lcd->print(*(strBuffer+i));
+  }   
 }

@@ -1,9 +1,7 @@
 #include "MainPage.h"
 
-MainPage::MainPage() {
 
-}
-
+MainPage::MainPage() {}
 MainPage::~MainPage() {
 
 }

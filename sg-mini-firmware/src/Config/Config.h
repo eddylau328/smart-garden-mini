@@ -32,4 +32,13 @@
 // MAX44009 Light Intensity Sensor
 #define MAX44009_MAX_ADDR 0x4B // 0x4B is no interrupt, or 0x4B if A0 pin connected to Vcc
 
+// Rotary Encoder
+#define DT_PIN 39
+#define CLK_PIN 36
+#define SW_PIN 25
+
+// LCD Screen Size
+#define LCDScreenWidth 16
+#define LCDScreenHeight 2
+
 #endif

@@ -4,25 +4,41 @@
 #include "../Page.h"
 #include "../../../Sensors/Sensors.h"
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
-
+#include "../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
+#include "../../Components/PageLayoutRange/PageLayoutRange.h"
 class SensorPage : public Page {
 
   public:
     SensorPage(Sensors *sensors);
     ~SensorPage();
 
+    void mountPage();
     void getContents(PageContent **contents, int *length);
     void updateContents();
+    void interactiveUpdate(int counter, bool isPress);
 
   private:
-    PageContent contents[4] = {
-      PageContent("Air Temp", 8, PageContent::ContentType::Constant, PageLayoutPosition(0, 0)),
-      PageContent("Air Hum",  7, PageContent::ContentType::Constant, PageLayoutPosition(0, 1)),
-      PageContent("",         6, PageContent::ContentType::Variable, PageLayoutPosition(9, 0)),
-      PageContent("",         6, PageContent::ContentType::Variable, PageLayoutPosition(9, 1))
+    const int8_t contentSize = 12;
+    PageContent contents[12] = {
+      PageContent("Temp",  4, PageLayoutPosition(0, 0)),
+      PageContent("Hum",   3, PageLayoutPosition(0, 1)),
+      PageContent("STemp", 5, PageLayoutPosition(0, 2)),
+      PageContent("SHum",  4, PageLayoutPosition(0, 3)),
+      PageContent("Light", 5, PageLayoutPosition(0, 4)),
+      PageContent("Water", 5, PageLayoutPosition(0, 5)),
+      PageContent(6, PageLayoutPosition(9, 0)),
+      PageContent(6, PageLayoutPosition(9, 1)),
+      PageContent(6, PageLayoutPosition(9, 2)),
+      PageContent(6, PageLayoutPosition(9, 3)),
+      PageContent(6, PageLayoutPosition(9, 4)),
+      PageContent(6, PageLayoutPosition(9, 5)),
     };
 
+    PageVerticalScroll scroll;
+
     Sensors *sensors; // no need to free this pointer, as you are just referencing it
+
+    void updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex);
 
 };
 
