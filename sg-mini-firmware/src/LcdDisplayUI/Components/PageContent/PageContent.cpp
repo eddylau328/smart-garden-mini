@@ -21,6 +21,12 @@ PageContent::PageContent(int length, PageLayoutPosition pos) {
     this->id = createId();
 }
 
+PageContent::PageContent() {
+    this->contentLength = 0;
+    this->pos = PageLayoutPosition(0,0);
+    this->newPos = pos;
+}
+
 PageContent::~PageContent() {
     delete content;
 }

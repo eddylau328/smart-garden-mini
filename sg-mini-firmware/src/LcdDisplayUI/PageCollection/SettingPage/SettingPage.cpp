@@ -1,5 +1,5 @@
 #include "SettingPage.h"
-#include "../PageControl.h"
+#include "../../PageControl.h"
 
 SettingPage::SettingPage() {
   scroll.init(LCDScreenWidth, LCDScreenHeight);
