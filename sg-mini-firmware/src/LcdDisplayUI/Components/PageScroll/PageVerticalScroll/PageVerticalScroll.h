@@ -10,6 +10,7 @@ class PageVerticalScroll : public PageScroll {
     void setCoverArea(PageLayoutRange rowRange);
     void resetScroll(PageContent *contents, int length);
     void updateScroll(PageContent *contents, int length, int counter);
+    int8_t getCurrentArrowRow(PageContent *contents, int length);
 
   private:
     int8_t upScrollMax;

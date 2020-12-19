@@ -2,6 +2,7 @@
 #define Page_h
 
 #include <Arduino.h>
+#include <DebugLog.h>
 #include "../../Config/Config.h"
 #include "../Components/PageContent/PageContent.h"
 #include "../Components/PageLayoutPosition/PageLayoutPosition.h"

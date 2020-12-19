@@ -110,6 +110,17 @@ void PageVerticalScroll::resetScroll(PageContent *contents, int length) {
   for (int i = 0; i < length; i++){
     newPos = (contents + i)->getNewPos();
     newPos.row -= currentOrigin;
-    (contents + i) ->updatePos(newPos);
+    (contents + i)->updatePos(newPos);
   }
+  currentOrigin = 0;
+}
+
+int8_t PageVerticalScroll::getCurrentArrowRow(PageContent *contents, int length) {
+  PageLayoutPosition newPos;
+  for (int i = 0; i < length; i++) {
+    newPos = (contents + i)->getNewPos();
+    if (newPos.row == cursorRow)
+      return newPos.row - currentOrigin;
+  }
+  return 0;
 }
