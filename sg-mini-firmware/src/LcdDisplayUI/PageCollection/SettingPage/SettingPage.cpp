@@ -1,4 +1,5 @@
 #include "SettingPage.h"
+#include "../PageControl.h"
 
 SettingPage::SettingPage() {
   scroll.init(LCDScreenWidth, LCDScreenHeight);
@@ -48,10 +49,10 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
         break;
       case 6:
         LOG_ERROR("Return");
-        Page::interactiveUpdate(counter, isPress);
+        Page::nextPageCallback(Page::defaultPageKey);
         break;
       default:
-        Page::interactiveUpdate(counter, isPress);
+        Page::nextPageCallback(Page::defaultPageKey);
         break;
     }
   }

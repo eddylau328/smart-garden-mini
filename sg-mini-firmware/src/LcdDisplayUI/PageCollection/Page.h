@@ -14,10 +14,11 @@ class Page {
     virtual void updateContents();
     virtual void interactiveUpdate(int counter, bool isPress);
     virtual void dismountPage();
-    void setNextPageCallback(uint8_t key, void (*callback)(uint8_t));
+    void setNextPageCallback(uint8_t defaultPageKey, void (*callback)(uint8_t));
   protected:
-    uint8_t pageKey;
+    uint8_t defaultPageKey;
     void (*nextPageCallback)(uint8_t);
+  
 };
 
 #endif
