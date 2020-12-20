@@ -3,10 +3,7 @@
 // File datafile;  // for SD card file 
 #define pumpen 4 //Pumpenable Pin 
 
-#include <DS1307.h> // Real Time Clock
-DS1307 rtc;
-
-long lastclock;
+unsigned long lastclock;
 
 #include "src/Config/Config.h"
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
@@ -37,12 +34,6 @@ void setup() {
 
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
 
-  rtc.begin(); // Real time Clock setting
-  rtc.fillByYMD(2020, 11, 5); //Jan 19,2013
-  rtc.fillByHMS(15, 28, 30); //15:28 30"
-  rtc.fillDayOfWeek(SAT);//Saturday
-  rtc.setTime();//write time to the RTC chip
-
   sensors.init();
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
@@ -67,63 +58,15 @@ void setup() {
 
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED
-  
-  // if(millis() - lastclock >= 5000){ 
-  //   printTime();
-  //   sensors.read();
-  //   lastclock = millis();
-  // }
+
   pageControl.mainLoop();
   display.render();
   if (millis() - lastclock > 2000) {
     sensors.read();
     lastclock = millis();
   }
-  
+  DeviceSetting::mainLoop();
 }
-
-void printTime() {
-    rtc.getTime();
-    Serial.print(rtc.hour, DEC);
-    Serial.print(":");
-    Serial.print(rtc.minute, DEC);
-    Serial.print(":");
-    Serial.print(rtc.second, DEC);
-    Serial.print("  ");
-    Serial.print(rtc.month, DEC);
-    Serial.print("/");
-    Serial.print(rtc.dayOfMonth, DEC);
-    Serial.print("/");
-    Serial.print(rtc.year + 2000, DEC);
-    Serial.print(" ");
-    Serial.print(rtc.dayOfMonth);
-    Serial.print("*");
-    switch (rtc.dayOfWeek) { // Friendly printout the weekday
-        case MON:
-            Serial.print("MON");
-            break;
-        case TUE:
-            Serial.print("TUE");
-            break;
-        case WED:
-            Serial.print("WED");
-            break;
-        case THU:
-            Serial.print("THU");
-            break;
-        case FRI:
-            Serial.print("FRI");
-            break;
-        case SAT:
-            Serial.print("SAT");
-            break;
-        case SUN:
-            Serial.print("SUN");
-            break;
-    }
-    Serial.println(" ");
-}
-
 
 
 /* void sdcard(){
