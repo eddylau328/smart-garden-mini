@@ -3,6 +3,7 @@
 char DeviceSetting::userName[UserNameLength];
 DS1307 DeviceSetting::clock;
 uint8_t DeviceSetting::time[3];
+uint8_t DeviceSetting::date[4];
 unsigned long DeviceSetting::lastTimeRecord;
 
 void DeviceSetting::init() {
@@ -47,11 +48,30 @@ void DeviceSetting::getTime(int *hour, int *minute, int *second) {
   *second = time[2];
 }
 
+void DeviceSetting::getDate(int *year, int *month, int *day, int *dayOfWeek) {
+  *year = ((int)date[0]) + 2000;
+  *month = date[1];
+  *day = date[2];
+  *dayOfWeek = date[3];
+}
+
+void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
+  if (Helper::isValidDate(year, month, day) && Helper::intInRange(dayOfWeek, MON , SUN)) {
+    clock.fillByYMD(year, month, day);
+    clock.fillDayOfWeek(dayOfWeek);//Saturday
+    clock.setTime();
+  }
+}
+
 void DeviceSetting::mainLoop() {
   if (millis() - lastTimeRecord > 400) {
     clock.getTime();
     time[0] = clock.hour;
     time[1] = clock.minute;
     time[2] = clock.second;
+    date[0] = clock.year;
+    date[1] = clock.month;
+    date[2] = clock.dayOfMonth;
+    date[3] = clock.dayOfWeek;
   }
 }

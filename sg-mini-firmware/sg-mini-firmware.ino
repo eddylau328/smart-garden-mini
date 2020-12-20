@@ -17,19 +17,16 @@ LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
-char name[4] = {'E', 'd', 'd', 'y'};
-
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
   // put your setup code here, to run once:
   lastclock = millis();
-  
+
   Serial.begin(9600);
   LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
   
   DeviceSetting::init();
-  DeviceSetting::setUserName(name, 4);
-
+  
   pinMode(12, OUTPUT); //On board LED
 
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
@@ -56,6 +53,8 @@ void setup() {
 
 }
 
+int sec,minute,hr,yr,mon,day,dayOfWeek;
+
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED
 
@@ -64,6 +63,9 @@ void loop() {
   if (millis() - lastclock > 2000) {
     sensors.read();
     lastclock = millis();
+    DeviceSetting::getDate(&yr, &mon, &day, &dayOfWeek);
+    DeviceSetting::getTime(&hr, &minute, &sec);
+    LOG_ERROR(yr, mon, day, dayOfWeek, hr, minute, sec);
   }
   DeviceSetting::mainLoop();
 }

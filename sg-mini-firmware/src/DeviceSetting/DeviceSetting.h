@@ -11,6 +11,8 @@ class DeviceSetting {
     static void init ();
     static void getUserName(char **userName, int *length);
     static void setUserName(char *newUserName, int length);
+    static void getDate(int *year, int *month, int *day, int *dayOfWeek);
+    static void setDate(int year, int month, int day, int dayOfWeek);
     static void getTime(int *hour, int *minute, int *second);
     static void setTime(int hour, int minute, int second);
     static void mainLoop();
@@ -20,6 +22,7 @@ class DeviceSetting {
     static char userName[UserNameLength];
     static unsigned long lastTimeRecord;
     static uint8_t time[3];
+    static uint8_t date[4];
 };
 
 #endif

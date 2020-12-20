@@ -78,3 +78,42 @@ void Helper::assignStrValue(char *target, char value, int strlen) {
   for (int i = 0; i < strlen; i++)
     *(target+i) = value;
 }
+
+bool Helper::isValidDate(int year, int month, int day) {
+    // If year, month and day  
+    // are not in given range 
+    if (!Helper::intInRange(year, MIN_VALID_YR, MAX_VALID_YR)) 
+      return false; 
+    if (!Helper::intInRange(month, 1, 12)) 
+      return false; 
+    if (!Helper::intInRange(day, 1, 31)) 
+      return false; 
+  
+    // Handle February month  
+    // with leap year 
+    if (month == 2) { 
+      if (isLeapYear(year)) 
+        return (day <= 29); 
+      else
+        return (day <= 28); 
+    } 
+  
+    // Months of April, June,  
+    // Sept and Nov must have  
+    // number of days less than 
+    // or equal to 30. 
+    if (month == 4 || month == 6 || month == 9 || month == 11) 
+        return (day <= 30); 
+  
+    return true; 
+} 
+
+bool Helper::isLeapYear(int year) { 
+  // Return true if year  
+  // is a multiple pf 4 and 
+  // not multiple of 100. 
+  // OR year is multiple of 400. 
+  return (((year % 4 == 0) &&  
+          (year % 100 != 0)) || 
+          (year % 400 == 0)); 
+} 
