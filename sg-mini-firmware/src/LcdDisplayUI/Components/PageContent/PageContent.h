@@ -11,6 +11,7 @@ class PageContent {
   public:
     PageContent(const char* content, int length, PageLayoutPosition pos);
     PageContent(int length, PageLayoutPosition pos);
+    PageContent();
     ~PageContent();
 
     // getter function  --------------------------------

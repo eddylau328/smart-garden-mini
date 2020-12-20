@@ -13,11 +13,14 @@ long lastclock;
 #include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
 #include "src/LcdDisplayUI/RotaryEncoder.h"
+#include "src/DeviceSetting/DeviceSetting.h"
 
 Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
+
+char name[4] = {'E', 'd', 'd', 'y'};
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -27,6 +30,9 @@ void setup() {
   Serial.begin(9600);
   LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
   
+  DeviceSetting::init();
+  DeviceSetting::setUserName(name, 4);
+
   pinMode(12, OUTPUT); //On board LED
 
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
@@ -40,7 +46,6 @@ void setup() {
   sensors.init();
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
-
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){

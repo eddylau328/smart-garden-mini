@@ -1,9 +1,20 @@
 #include "MainPage.h"
 
 
-MainPage::MainPage() {}
-MainPage::~MainPage() {
+MainPage::MainPage() {
+  char *userName;
+  int length;
+  DeviceSetting::getUserName(&userName, &length);
+  contents[1] = PageContent(length, PageLayoutPosition(0, 1));
+}
 
+MainPage::~MainPage() {}
+
+void MainPage::mountPage() {
+  char *userName;
+  int length;
+  DeviceSetting::getUserName(&userName, &length);
+  contents[1].updateContent(userName, length);
 }
 
 void MainPage::getContents(PageContent **contents, int *length){
