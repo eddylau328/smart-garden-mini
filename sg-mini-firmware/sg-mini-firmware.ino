@@ -53,8 +53,6 @@ void setup() {
 
 }
 
-int sec,minute,hr,yr,mon,day,dayOfWeek;
-
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED
 
@@ -63,9 +61,6 @@ void loop() {
   if (millis() - lastclock > 2000) {
     sensors.read();
     lastclock = millis();
-    DeviceSetting::getDate(&yr, &mon, &day, &dayOfWeek);
-    DeviceSetting::getTime(&hr, &minute, &sec);
-    LOG_ERROR(yr, mon, day, dayOfWeek, hr, minute, sec);
   }
   DeviceSetting::mainLoop();
 }
