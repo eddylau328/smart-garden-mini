@@ -4,6 +4,9 @@
 #include "Wire.h"
 #include <Arduino.h>
 
+#define MAX_VALID_YR 2100 
+#define MIN_VALID_YR 2000 
+
 class Helper {
   public:
     static void handleWireBegin();
@@ -22,6 +25,9 @@ class Helper {
     static void convertStrToNum(char *target, float &number);
     static bool int8_tInRange(int8_t target, int8_t min, int8_t max);
     static bool intInRange(int number, int min, int max);
+    static bool isValidDate(int year, int month, int day);
+    static bool isLeapYear(int year);
+
 };
 
 #endif
