@@ -64,7 +64,7 @@ void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
 }
 
 void DeviceSetting::mainLoop() {
-  if (millis() - lastTimeRecord > 400) {
+  if (millis() - lastTimeRecord > 200) {
     clock.getTime();
     time[0] = clock.hour;
     time[1] = clock.minute;

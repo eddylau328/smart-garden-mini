@@ -24,9 +24,10 @@ class PageContent {
 
     void updatePos(PageLayoutPosition pos);
 
-    void updateContent(int data);
+    void updateContent(int data, bool keptZero=false);
     void updateContent(float data, int decimalPoints);
     void updateContent(char *data, int length);
+    void updateContent(const char *data, int length);
 
     void confirmUpdate();
     bool getIsUpdate();
