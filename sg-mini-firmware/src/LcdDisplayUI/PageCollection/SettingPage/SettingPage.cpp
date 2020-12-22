@@ -31,6 +31,7 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
     switch (index) {
       case 0:
         LOG_ERROR("Enter Time Setting");
+         Page::nextPageCallback(PageControl::TimeSettingPageKey);
         break;
       case 1:
         LOG_ERROR("Enter Date Setting");
