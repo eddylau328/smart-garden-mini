@@ -22,6 +22,7 @@ void TimeSettingPage::mountPage() {
   input[InputIndex::Hour].set((int8_t)hour, 0, 23, true);
   input[InputIndex::Minute].set((int8_t)minute, 0, 59, true);
   input[InputIndex::Second].set((int8_t)second, 0, 59, true);
+  contents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Hour;
   scroll.resetScroll(contents, contentSize);
 }

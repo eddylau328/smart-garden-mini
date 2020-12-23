@@ -25,13 +25,13 @@ class TimeSettingPage : public Page {
 
     const int8_t contentSize = 9;
     PageContent contents[9] = {
-      PageContent(2, PageLayoutPosition(1, 1)),
-      PageContent(2, PageLayoutPosition(4, 1)),
-      PageContent(2, PageLayoutPosition(7, 1)),
-      PageContent(" ", 1, PageLayoutPosition(11, 1)),
+      PageContent(2, PageLayoutPosition(0, 1)),
+      PageContent(2, PageLayoutPosition(3, 1)),
+      PageContent(2, PageLayoutPosition(6, 1)),
+      PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Set Time",  8, PageLayoutPosition(0, 0)),
-      PageContent(":", 1, PageLayoutPosition(3, 1)),
-      PageContent(":", 1, PageLayoutPosition(6, 1)),
+      PageContent(":", 1, PageLayoutPosition(2, 1)),
+      PageContent(":", 1, PageLayoutPosition(5, 1)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
       PageContent("Save", 4, PageLayoutPosition(12, 1))
     };
