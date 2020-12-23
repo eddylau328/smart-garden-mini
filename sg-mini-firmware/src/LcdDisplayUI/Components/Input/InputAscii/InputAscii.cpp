@@ -1,5 +1,9 @@
 #include "InputAscii.h"
 
+InputAscii::~InputAscii() {
+  delete inputValue;
+}
+
 void InputAscii::set(const char* defaultValue, int8_t stringLength) {
   valueIndex = 0;
   inputValue = new char[stringLength];

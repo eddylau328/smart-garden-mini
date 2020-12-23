@@ -1,12 +1,11 @@
 #include "InputNumber.h"
 
-void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber) {
-  inputValue = new char[4];
-  Helper::assignStrValue(inputValue, ' ', 4);
+void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber, bool keptZero) {
+  inputNumber = defaultValue;
   this->minNumber = minNumber;
   this->maxNumber = maxNumber;
-  Helper::convertNumToStr((int) defaultValue, inputValue, 4);
-  connectContent->updateContent(inputValue, 4);
+  connectContent->updateContent(inputNumber, keptZero);
+  this->keptZero = keptZero;
 }
 
 
@@ -18,8 +17,8 @@ bool InputNumber::interactiveUpdate(int counter, bool isPress){
   if (!connectContent)
     return true;
 
-  int8_t number;
-  Helper::convertStrToNum(inputValue, number);
+  int8_t number = inputNumber;
+
   if (isCircleLoop) {
     number += counter;
     if (number > maxNumber)
@@ -40,7 +39,7 @@ bool InputNumber::interactiveUpdate(int counter, bool isPress){
       }
     }
   }
-  Helper::convertNumToStr(number, inputValue, 4);
-  connectContent->updateContent(inputValue, 4);
+  inputNumber = number;
+  connectContent->updateContent(inputNumber, keptZero);
   return false;
 }

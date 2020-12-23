@@ -23,7 +23,6 @@ class InputTool {
     virtual bool interactiveUpdate(int counter, bool isPress) = 0;
 
   protected:
-    char *inputValue;
     bool isCircleLoop = true;
     int8_t stringLength = 0;
     PageContent *connectContent;

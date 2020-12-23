@@ -2,9 +2,7 @@
 
 InputTool::InputTool() {}
 
-InputTool::~InputTool() {
-  delete inputValue;
-}
+InputTool::~InputTool() {}
 
 void InputTool::setLinkage(PageContent *pageContent) {
   this->connectContent = pageContent; 

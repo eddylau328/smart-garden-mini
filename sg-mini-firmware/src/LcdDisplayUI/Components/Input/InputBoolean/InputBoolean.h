@@ -9,6 +9,9 @@ class InputBoolean : public InputTool {
     void set(bool defaultValue);
     bool interactiveUpdate(int counter, bool isPress);
   
+  private:
+    bool inputBool = false;
+  
 };
 
 #endif

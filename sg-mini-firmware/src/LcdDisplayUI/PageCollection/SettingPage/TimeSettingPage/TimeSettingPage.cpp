@@ -19,9 +19,9 @@ TimeSettingPage::~TimeSettingPage() {}
 void TimeSettingPage::mountPage() {
   int hour, minute, second;
   DeviceSetting::getTime(&hour, &minute, &second);
-  input[InputIndex::Hour].set((int8_t)hour, 0, 23);
-  input[InputIndex::Minute].set((int8_t)minute, 0, 59);
-  input[InputIndex::Second].set((int8_t)second, 0, 59);
+  input[InputIndex::Hour].set((int8_t)hour, 0, 23, true);
+  input[InputIndex::Minute].set((int8_t)minute, 0, 59, true);
+  input[InputIndex::Second].set((int8_t)second, 0, 59, true);
   inputIndex = InputIndex::Hour;
   scroll.resetScroll(contents, contentSize);
 }

@@ -1,5 +1,9 @@
 #include "InputAlphabet.h"
 
+InputAlphabet::~InputAlphabet() {
+  delete inputValue;
+}
+
 void InputAlphabet::set(const char* defaultValue, int8_t stringLength) {
   valueIndex = 0;
   inputValue = new char[stringLength];
