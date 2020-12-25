@@ -1,9 +1,8 @@
 #include "InputBoolean.h"
 
 void InputBoolean::set(bool defaultValue) {
-  inputValue = new char[3];
-  Helper::copyString(inputValue, defaultValue? "ON " : "OFF", 3);
-  connectContent->updateContent(inputValue, 3);
+  inputBool = defaultValue;
+  connectContent->updateContent(inputBool? "ON " : "OFF", 3);
 }
 
 bool InputBoolean::interactiveUpdate(int counter, bool isPress) {
@@ -14,9 +13,13 @@ bool InputBoolean::interactiveUpdate(int counter, bool isPress) {
     return true;
 
   if ((int)ceil(abs(counter)/2.0) % 2) {
-    Helper::copyString(inputValue, Helper::compareString(inputValue, "ON ", 3) ? "OFF" : "ON ", 3);
-    connectContent->updateContent(inputValue, 3);
+    inputBool = !inputBool;
+    connectContent->updateContent(inputBool? "ON " : "OFF", 3);
   }
 
   return false;
+}
+
+bool InputBoolean::getInputValue() {
+  return inputBool;
 }

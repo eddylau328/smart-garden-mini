@@ -1,5 +1,9 @@
 #include "InputAlphabet.h"
 
+InputAlphabet::~InputAlphabet() {
+  delete inputValue;
+}
+
 void InputAlphabet::set(const char* defaultValue, int8_t stringLength) {
   valueIndex = 0;
   inputValue = new char[stringLength];
@@ -79,4 +83,8 @@ bool InputAlphabet::isUpperCase(char value){
 
 bool InputAlphabet::isLowerCase(char value){
   return Helper::intInRange((int)value, 97, 122);
+}
+
+char* InputAlphabet::getInputValue() {
+  return inputValue;
 }

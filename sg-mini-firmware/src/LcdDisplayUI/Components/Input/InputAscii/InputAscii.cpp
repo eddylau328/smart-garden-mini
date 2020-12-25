@@ -1,5 +1,9 @@
 #include "InputAscii.h"
 
+InputAscii::~InputAscii() {
+  delete inputValue;
+}
+
 void InputAscii::set(const char* defaultValue, int8_t stringLength) {
   valueIndex = 0;
   inputValue = new char[stringLength];
@@ -41,4 +45,8 @@ bool InputAscii::interactiveUpdate(int counter, bool isPress) {
   *(inputValue + valueIndex) = value;
   connectContent->updateContent(inputValue, stringLength);
   return false;
+}
+
+char* InputAscii::getInputValue() {
+  return inputValue;
 }

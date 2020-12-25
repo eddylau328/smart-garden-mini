@@ -91,10 +91,21 @@ void PageVerticalScroll::updateScroll(PageContent *contents, int length, int cou
       newOrigin = downScrollMax;
   }
   if (newOrigin != currentOrigin) {
-    for (int i = 0; i < length; i++){
-      newPos = (contents + i)->getNewPos();
-      newPos.row += (newOrigin - currentOrigin);
-      (contents + i)->updatePos(newPos);
+    if (cursor) {
+      for (int i = 0; i < length; i++){
+        if (cursor != contents+i) {
+          newPos = (contents + i)->getNewPos();
+          newPos.row += (newOrigin - currentOrigin);
+          (contents + i)->updatePos(newPos);
+        }
+      }
+    }
+    else {
+      for (int i = 0; i < length; i++){
+        newPos = (contents + i)->getNewPos();
+        newPos.row += (newOrigin - currentOrigin);
+        (contents + i)->updatePos(newPos);
+      }
     }
     currentOrigin = newOrigin;
   }
@@ -106,11 +117,21 @@ void PageVerticalScroll::resetScroll(PageContent *contents, int length) {
     newPos = cursor->getNewPos();
     newPos.row = cursorDefaultRow;
     cursor->updatePos(newPos);
+    for (int i = 0; i < length; i++){
+      if (cursor != contents+i) {
+        newPos = (contents + i)->getNewPos();
+        newPos.row -= currentOrigin;
+        (contents + i)->updatePos(newPos);
+      }
+    }
+    cursorRow = cursorDefaultRow;
   }
-  for (int i = 0; i < length; i++){
-    newPos = (contents + i)->getNewPos();
-    newPos.row -= currentOrigin;
-    (contents + i)->updatePos(newPos);
+  else {
+    for (int i = 0; i < length; i++){
+      newPos = (contents + i)->getNewPos();
+      newPos.row -= currentOrigin;
+      (contents + i)->updatePos(newPos);
+    }
   }
   currentOrigin = 0;
 }
@@ -118,9 +139,11 @@ void PageVerticalScroll::resetScroll(PageContent *contents, int length) {
 int8_t PageVerticalScroll::getCurrentArrowRow(PageContent *contents, int length) {
   PageLayoutPosition newPos;
   for (int i = 0; i < length; i++) {
-    newPos = (contents + i)->getNewPos();
-    if (newPos.row == cursorRow)
-      return newPos.row - currentOrigin;
+    if (cursor != contents+i) {
+      newPos = (contents + i)->getNewPos();
+      if (newPos.row == cursorRow)
+        return newPos.row - currentOrigin;
+    }
   }
   return 0;
 }

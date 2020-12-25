@@ -8,6 +8,10 @@ class InputBoolean : public InputTool {
   public:
     void set(bool defaultValue);
     bool interactiveUpdate(int counter, bool isPress);
+    bool getInputValue();
+  
+  private:
+    bool inputBool = false;
   
 };
 

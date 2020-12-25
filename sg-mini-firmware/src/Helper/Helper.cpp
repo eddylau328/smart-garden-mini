@@ -13,11 +13,19 @@ uint8_t Helper::modifyBit(uint8_t target, uint8_t bitNo, uint8_t bitValue) {
 	return (target & ~mask) | ((bitValue << bitNo) & mask); 
 }
 
-void Helper::convertNumToStr(int num, char result[], int strlen){
+void Helper::convertNumToStr(int num, char result[], int strlen, bool keptZero) {
+  int shiftIndex = 0;
   itoa(num, result, 10);
-  for (int i = 0; i < strlen; i++) {
-    if (*(result+i) == 0 || *(result+i) == 254)
-      *(result+i) = ' ';
+  for (int i = strlen - 1; i >= 0; i--)
+    if (!(*(result+i) == 0 || *(result+i) == 254)) {
+      shiftIndex = i;
+      break;
+    }
+  for (int i = shiftIndex, j = 1; i >= 0; i--, j++)
+    *(result + strlen - j) = *(result + i);
+
+  for (int i = strlen - shiftIndex - 2; i >= 0; i--) {
+    *(result+i) = keptZero? '0' : ' ';
   }
 }
 

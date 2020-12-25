@@ -6,11 +6,14 @@
 class InputAscii : public InputTool {
 
   public:
+    ~InputAscii();
     void set(const char* defaultValue, int8_t stringLength);
     bool interactiveUpdate(int counter, bool isPress);
+    char* getInputValue();
 
   private:
     int8_t valueIndex;
+    char *inputValue;
     
 };
 

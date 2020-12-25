@@ -15,13 +15,17 @@ PageControl::~PageControl() {
 }
 
 void PageControl::init(Sensors *sensors) {
-  pages[PageControl::PageKey::MainPageKey] = new MainPage();
+  pages[PageControl::PageKey::MainPageKey] = new MainPage(sensors);
   pages[PageControl::PageKey::SensorPageKey] = new SensorPage(sensors);
   pages[PageControl::PageKey::SettingPageKey] = new SettingPage();
+  pages[PageControl::PageKey::TimeSettingPageKey] = new TimeSettingPage();
+  pages[PageControl::PageKey::DateSettingPageKey] = new DateSettingPage();
 
   pages[PageControl::PageKey::MainPageKey]->setNextPageCallback(PageControl::PageKey::SensorPageKey, &nextPageCallback);
   pages[PageControl::PageKey::SensorPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageControl::PageKey::SettingPageKey]->setNextPageCallback(PageControl::PageKey::MainPageKey, &nextPageCallback);
+  pages[PageControl::PageKey::TimeSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageControl::PageKey::DateSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
   this->display->init();
 }
 
@@ -32,7 +36,7 @@ void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
 }
 
 void PageControl::mainLoop() {
-  if (millis() - lastUpdate > 2000) {
+  if (millis() - lastUpdate > 500) {
     handleUpdateContents();
     lastUpdate = millis();
   }
