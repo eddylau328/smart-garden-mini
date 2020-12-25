@@ -35,6 +35,7 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
         break;
       case 1:
         LOG_ERROR("Enter Date Setting");
+        Page::nextPageCallback(PageControl::DateSettingPageKey);
         break;
       case 2:
         LOG_ERROR("Enter WiFi Setting");
