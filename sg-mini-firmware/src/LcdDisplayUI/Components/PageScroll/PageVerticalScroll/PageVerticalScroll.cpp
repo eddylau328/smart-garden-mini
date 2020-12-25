@@ -124,6 +124,7 @@ void PageVerticalScroll::resetScroll(PageContent *contents, int length) {
         (contents + i)->updatePos(newPos);
       }
     }
+    cursorRow = cursorDefaultRow;
   }
   else {
     for (int i = 0; i < length; i++){

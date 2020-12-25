@@ -11,7 +11,7 @@ SettingPage::~SettingPage() {
 }
 
 void SettingPage::mountPage() {
-  scroll.resetScroll(contents, 7);
+  scroll.resetScroll(contents, contentSize);
 }
 
 void SettingPage::getContents(PageContent **contents, int *length) {
@@ -25,9 +25,9 @@ void SettingPage::updateContents() {
 }
 
 void SettingPage::interactiveUpdate(int counter, bool isPress) {
-  scroll.updateScroll(contents, 7, counter);
+  scroll.updateScroll(contents, contentSize, counter);
   if (isPress) {
-    int8_t index = scroll.getCurrentArrowRow(contents, 7);
+    int8_t index = scroll.getCurrentArrowRow(contents, contentSize);
     switch (index) {
       case 0:
         LOG_ERROR("Enter Time Setting");
