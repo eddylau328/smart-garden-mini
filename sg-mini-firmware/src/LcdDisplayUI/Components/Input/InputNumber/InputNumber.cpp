@@ -56,3 +56,7 @@ bool InputNumber::interactiveUpdate(int counter, bool isPress){
   connectContent->updateContent(inputNumber, keptZero);
   return false;
 }
+
+int8_t InputNumber::getInputValue() {
+  return inputNumber;
+}

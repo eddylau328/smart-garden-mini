@@ -84,3 +84,7 @@ bool InputAlphabet::isUpperCase(char value){
 bool InputAlphabet::isLowerCase(char value){
   return Helper::intInRange((int)value, 97, 122);
 }
+
+char* InputAlphabet::getInputValue() {
+  return inputValue;
+}

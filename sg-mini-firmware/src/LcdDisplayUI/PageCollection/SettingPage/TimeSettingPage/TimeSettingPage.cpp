@@ -44,14 +44,10 @@ void TimeSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
-        char *temp;
         int hour, minute, second;
-        temp = contents[InputIndex::Hour].getContent();
-        Helper::convertStrToNum(temp, hour);
-        temp = contents[InputIndex::Minute].getContent();
-        Helper::convertStrToNum(temp, minute);
-        temp = contents[InputIndex::Second].getContent();
-        Helper::convertStrToNum(temp, second);
+        hour = input[InputIndex::Hour].getInputValue();
+        minute = input[InputIndex::Minute].getInputValue();
+        second = input[InputIndex::Second].getInputValue();
         DeviceSetting::setTime(hour, minute, second);
       }
       Page::interactiveUpdate(counter, isPress);

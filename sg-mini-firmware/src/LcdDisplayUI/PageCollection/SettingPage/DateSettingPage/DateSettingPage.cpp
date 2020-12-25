@@ -49,11 +49,10 @@ void DateSettingPage::interactiveUpdate(int counter, bool isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
         int year, month, dayOfMonth, dayOfWeek;
-        Helper::convertStrToNum(contents[InputIndex::Year].getContent(), year);
-        year += 2000;
-        Helper::convertStrToNum(contents[InputIndex::Month].getContent(), month);
-        Helper::convertStrToNum(contents[InputIndex::DayOfMonth].getContent(), dayOfMonth);
-        Helper::convertStrToNum(contents[InputIndex::DayOfWeek].getContent(), dayOfWeek);
+        year = input[InputIndex::Year].getInputValue() + 2000;
+        month = input[InputIndex::Month].getInputValue();
+        dayOfMonth = input[InputIndex::DayOfMonth].getInputValue();
+        dayOfWeek = input[InputIndex::DayOfWeek].getInputValue();
         DeviceSetting::setDate(year, month, dayOfMonth, dayOfWeek);
       }
       Page::interactiveUpdate(counter, isPress);
@@ -70,10 +69,9 @@ void DateSettingPage::interactiveUpdate(int counter, bool isPress) {
       else {
         if (inputIndex == InputIndex::DayOfMonth) {
           int year, month, dayOfMonth;
-          Helper::convertStrToNum(contents[InputIndex::Year].getContent(), year);
-          year += 2000;
-          Helper::convertStrToNum(contents[InputIndex::Month].getContent(), month);
-          Helper::convertStrToNum(contents[InputIndex::DayOfMonth].getContent(), dayOfMonth);
+          year = input[InputIndex::Year].getInputValue() + 2000;
+          month = input[InputIndex::Month].getInputValue();
+          dayOfMonth = input[InputIndex::DayOfMonth].getInputValue();
           if (month == 2) {
             if (Helper::isLeapYear(year))
               input[inputIndex].set((int8_t)min(dayOfMonth, 29), 1, 29);

@@ -19,3 +19,7 @@ bool InputBoolean::interactiveUpdate(int counter, bool isPress) {
 
   return false;
 }
+
+bool InputBoolean::getInputValue() {
+  return inputBool;
+}

@@ -46,3 +46,7 @@ bool InputAscii::interactiveUpdate(int counter, bool isPress) {
   connectContent->updateContent(inputValue, stringLength);
   return false;
 }
+
+char* InputAscii::getInputValue() {
+  return inputValue;
+}
