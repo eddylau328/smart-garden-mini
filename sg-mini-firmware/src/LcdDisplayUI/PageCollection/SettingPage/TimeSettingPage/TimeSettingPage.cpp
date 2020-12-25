@@ -24,6 +24,7 @@ void TimeSettingPage::mountPage() {
   input[InputIndex::Second].set((int8_t)second, 0, 59, true);
   contents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Hour;
+  input[inputIndex].startBlink();
   scroll.resetScroll(contents, contentSize);
 }
 
@@ -32,11 +33,26 @@ void TimeSettingPage::getContents(PageContent **contents, int *length) {
   *length = contentSize;
 }
 
+void TimeSettingPage::updateContents() {
+  if (inputIndex != InputIndex::Arrow)
+    input[inputIndex].blinkUpdate();
+}
+
 void TimeSettingPage::interactiveUpdate(int counter, bool isPress) {
   if (inputIndex == InputIndex::Arrow) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-      LOG_ERROR(row);
+      if (row == 1) {
+        char *temp;
+        int hour, minute, second;
+        temp = contents[InputIndex::Hour].getContent();
+        Helper::convertStrToNum(temp, hour);
+        temp = contents[InputIndex::Minute].getContent();
+        Helper::convertStrToNum(temp, minute);
+        temp = contents[InputIndex::Second].getContent();
+        Helper::convertStrToNum(temp, second);
+        DeviceSetting::setTime(hour, minute, second);
+      }
       Page::interactiveUpdate(counter, isPress);
     }
     else
@@ -48,6 +64,8 @@ void TimeSettingPage::interactiveUpdate(int counter, bool isPress) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
         contents[InputIndex::Arrow].updateContent(">", 1);
+      else
+        input[inputIndex].startBlink();
     }
   }
 }

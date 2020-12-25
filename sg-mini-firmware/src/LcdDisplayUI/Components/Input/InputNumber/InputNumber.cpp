@@ -8,11 +8,24 @@ void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber, b
   this->keptZero = keptZero;
 }
 
+void InputNumber::blinkUpdate() {
+  if (isBlink && connectContent) {
+    if (isBlinking)
+      connectContent->updateContent(inputNumber, keptZero);
+    else
+      connectContent->updateContent("    ", 4);
+    isBlinking = !isBlinking;
+  }
+}
 
 bool InputNumber::interactiveUpdate(int counter, bool isPress){
 
-  if (isPress)
+  if (isPress) {
+    this->isBlink = false;
+    this->isBlinking = false;
+    connectContent->updateContent(inputNumber, keptZero);
     return true;
+  }
     
   if (!connectContent)
     return true;

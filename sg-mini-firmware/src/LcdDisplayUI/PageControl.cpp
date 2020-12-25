@@ -34,7 +34,7 @@ void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
 }
 
 void PageControl::mainLoop() {
-  if (millis() - lastUpdate > 2000) {
+  if (millis() - lastUpdate > 500) {
     handleUpdateContents();
     lastUpdate = millis();
   }

@@ -14,7 +14,10 @@ class InputTool {
 
     void setLinkage(PageContent *pageContent);
     void setCircleLoop(bool isCircleLoop);
-    
+    void startBlink();
+
+    virtual void blinkUpdate();
+
     /**
      * @param counter number of rotation
      * @param isPress whether the button is Pressed
@@ -26,6 +29,8 @@ class InputTool {
     bool isCircleLoop = true;
     int8_t stringLength = 0;
     PageContent *connectContent;
+    bool isBlink = false;
+    bool isBlinking = false;
 };
 
 #endif
