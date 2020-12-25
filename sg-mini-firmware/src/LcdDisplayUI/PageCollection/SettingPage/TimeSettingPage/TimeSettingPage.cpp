@@ -11,7 +11,7 @@ TimeSettingPage::TimeSettingPage() {
 
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 1));
-  scroll.setCursor(&contents[3], 1);
+  scroll.setCursor(&contents[InputIndex::Arrow], 1);
 }
 
 TimeSettingPage::~TimeSettingPage() {}
@@ -26,6 +26,7 @@ void TimeSettingPage::mountPage() {
   inputIndex = InputIndex::Hour;
   input[inputIndex].startBlink();
   scroll.resetScroll(contents, contentSize);
+  changeTopic();
 }
 
 void TimeSettingPage::getContents(PageContent **contents, int *length) {
@@ -66,6 +67,24 @@ void TimeSettingPage::interactiveUpdate(int counter, bool isPress) {
         contents[InputIndex::Arrow].updateContent(">", 1);
       else
         input[inputIndex].startBlink();
+      changeTopic();
     }
+  }
+}
+
+void TimeSettingPage::changeTopic() {
+  switch(inputIndex) {
+    case InputIndex::Hour:
+      contents[4].updateContent("Set Hour", 8);
+      break;
+    case InputIndex::Minute:
+      contents[4].updateContent("Set Minute", 10);
+      break;
+    case InputIndex::Second:
+      contents[4].updateContent("Set Second", 10);
+      break;
+    case InputIndex::Arrow:
+      contents[4].updateContent("Set Time", 8);
+      break;
   }
 }

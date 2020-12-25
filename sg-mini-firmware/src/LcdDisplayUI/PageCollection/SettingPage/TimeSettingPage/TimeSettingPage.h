@@ -30,7 +30,7 @@ class TimeSettingPage : public Page {
       PageContent(2, PageLayoutPosition(3, 1)),
       PageContent(2, PageLayoutPosition(6, 1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
-      PageContent("Set Time",  8, PageLayoutPosition(0, 0)),
+      PageContent(10, PageLayoutPosition(0, 0)),
       PageContent(":", 1, PageLayoutPosition(2, 1)),
       PageContent(":", 1, PageLayoutPosition(5, 1)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
@@ -40,6 +40,8 @@ class TimeSettingPage : public Page {
 
     InputNumber input[3];
     PageVerticalScroll scroll;
+
+    void changeTopic();
 };
 
 #endif
