@@ -31,7 +31,7 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
     switch (index) {
       case 0:
         LOG_ERROR("Enter Time Setting");
-         Page::nextPageCallback(PageControl::TimeSettingPageKey);
+        Page::nextPageCallback(PageControl::TimeSettingPageKey);
         break;
       case 1:
         LOG_ERROR("Enter Date Setting");
@@ -48,6 +48,7 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
         break;
       case 5:
         LOG_ERROR("Enter User Name Setting");
+        Page::nextPageCallback(PageControl::UsernameSettingPageKey);
         break;
       case 6:
         LOG_ERROR("Return");

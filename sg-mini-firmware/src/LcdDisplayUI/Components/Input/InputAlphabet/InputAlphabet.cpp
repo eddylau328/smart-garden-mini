@@ -4,6 +4,20 @@ InputAlphabet::~InputAlphabet() {
   delete inputValue;
 }
 
+void InputAlphabet::blinkUpdate() {
+  if (isBlink && connectContent && millis() - lastInputTrigger > 500) {
+    if (isBlinking) {
+      Helper::copyString(copyBuffer, connectContent->getContent(), stringLength);
+      *(copyBuffer + valueIndex) = '_';
+      connectContent->updateContent(copyBuffer, stringLength);
+    }
+    else
+      connectContent->updateContent(inputValue, stringLength);
+    isBlinking = !isBlinking;
+    lastInputTrigger = millis();
+  }
+}
+
 void InputAlphabet::set(const char* defaultValue, int8_t stringLength) {
   valueIndex = 0;
   inputValue = new char[stringLength];
@@ -18,8 +32,11 @@ void InputAlphabet::set(const char* defaultValue, int8_t stringLength) {
 bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
   if (isPress) {
     valueIndex++;
+    connectContent->updateContent(inputValue, stringLength);
     if (valueIndex >= stringLength) {
       valueIndex = 0;
+      this->isBlink = false;
+      this->isBlinking = false;
       return true;
     }
     return false;
@@ -74,6 +91,7 @@ bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
   value = value == 123 ? ' ' : value;
   *(inputValue + valueIndex) = value;
   connectContent->updateContent(inputValue, stringLength);
+  lastInputTrigger = millis();
   return false;
 }
 

@@ -31,6 +31,9 @@ class InputTool {
     PageContent *connectContent;
     bool isBlink = false;
     bool isBlinking = false;
+
+    static char copyBuffer[20];
+    static unsigned long lastInputTrigger;
 };
 
 #endif

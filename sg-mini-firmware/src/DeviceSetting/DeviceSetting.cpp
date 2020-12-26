@@ -7,11 +7,12 @@ uint8_t DeviceSetting::date[4];
 unsigned long DeviceSetting::lastTimeRecord;
 
 void DeviceSetting::init() {
+  Storage::init();
   clock.begin();
 
   byte *data = Storage::get(Storage::Key::UserName);
   for (int i = 0; i < UserNameLength; i++) {
-    *(userName + i) = *(data + i);
+    *(userName + i) = char(*(data + i));
   }
   delete data;
 }
@@ -32,7 +33,10 @@ void DeviceSetting::setUserName(char *newUserName, int length) {
     else
       *(userName + i) = ' ';
   byte *target = new byte[UserNameLength];
+  for (int i = 0; i < UserNameLength; i++)
+    *(target + i) = byte(*(userName + i));
   Storage::set(Storage::Key::UserName, target);
+  delete[] target;
 }
 
 void DeviceSetting::setTime(int hour, int minute, int second) {

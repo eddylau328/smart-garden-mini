@@ -34,6 +34,7 @@ void setup() {
   sensors.init();
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
+
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -52,6 +53,7 @@ void setup() {
 */ 
 
 }
+
 
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED

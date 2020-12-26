@@ -1,5 +1,8 @@
 #include "InputTool.h"
 
+char InputTool::copyBuffer[20];
+unsigned long InputTool::lastInputTrigger;
+
 InputTool::InputTool() {}
 
 InputTool::~InputTool() {}
@@ -16,4 +19,5 @@ void InputTool::setCircleLoop(bool isCircleLoop) {
 
 void InputTool::startBlink() {
   this->isBlink = true;
+  lastInputTrigger = millis();
 }
