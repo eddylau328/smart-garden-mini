@@ -36,12 +36,7 @@ void setup() {
   sensors.init();
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
-  // DeviceSetting::setUserName(nameSample, 4);
-  DeviceSetting::getUserName(&name, &nameSize);
-  Serial.println();
-  for (int i = 0; i < nameSize; i++)
-    Serial.print(*(name + i));
-  Serial.println();
+
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){

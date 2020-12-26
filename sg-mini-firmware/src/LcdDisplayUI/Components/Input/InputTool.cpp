@@ -1,5 +1,7 @@
 #include "InputTool.h"
 
+char InputTool::copyBuffer[20];
+
 InputTool::InputTool() {}
 
 InputTool::~InputTool() {}
