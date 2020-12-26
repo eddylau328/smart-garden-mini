@@ -16,9 +16,7 @@ Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
-char *name;
-char nameSample[4] = {'e', 'd', 'd', 'y'};
-int nameSize;
+
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
   // put your setup code here, to run once:

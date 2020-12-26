@@ -5,7 +5,7 @@ InputAscii::~InputAscii() {
 }
 
 void InputAscii::blinkUpdate() {
-  if (isBlink && connectContent) {
+  if (isBlink && connectContent && millis() - lastInputTrigger > 500) {
     if (isBlinking) {
       Helper::copyString(copyBuffer, connectContent->getContent(), stringLength);
       *(copyBuffer + valueIndex) = '_';
@@ -14,6 +14,7 @@ void InputAscii::blinkUpdate() {
     else
       connectContent->updateContent(inputValue, stringLength);
     isBlinking = !isBlinking;
+    lastInputTrigger = millis();
   }
 }
 
@@ -60,6 +61,7 @@ bool InputAscii::interactiveUpdate(int counter, bool isPress) {
   }
   *(inputValue + valueIndex) = value;
   connectContent->updateContent(inputValue, stringLength);
+  lastInputTrigger = millis();
   return false;
 }
 

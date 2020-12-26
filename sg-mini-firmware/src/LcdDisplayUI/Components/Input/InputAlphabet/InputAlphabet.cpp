@@ -5,7 +5,7 @@ InputAlphabet::~InputAlphabet() {
 }
 
 void InputAlphabet::blinkUpdate() {
-  if (isBlink && connectContent) {
+  if (isBlink && connectContent && millis() - lastInputTrigger > 500) {
     if (isBlinking) {
       Helper::copyString(copyBuffer, connectContent->getContent(), stringLength);
       *(copyBuffer + valueIndex) = '_';
@@ -14,6 +14,7 @@ void InputAlphabet::blinkUpdate() {
     else
       connectContent->updateContent(inputValue, stringLength);
     isBlinking = !isBlinking;
+    lastInputTrigger = millis();
   }
 }
 
@@ -90,6 +91,7 @@ bool InputAlphabet::interactiveUpdate(int counter, bool isPress) {
   value = value == 123 ? ' ' : value;
   *(inputValue + valueIndex) = value;
   connectContent->updateContent(inputValue, stringLength);
+  lastInputTrigger = millis();
   return false;
 }
 
