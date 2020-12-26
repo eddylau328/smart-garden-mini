@@ -16,7 +16,9 @@ Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
-
+char *name;
+char nameSample[4] = {'e', 'd', 'd', 'y'};
+int nameSize;
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
   // put your setup code here, to run once:
@@ -34,6 +36,12 @@ void setup() {
   sensors.init();
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
+  // DeviceSetting::setUserName(nameSample, 4);
+  DeviceSetting::getUserName(&name, &nameSize);
+  Serial.println();
+  for (int i = 0; i < nameSize; i++)
+    Serial.print(*(name + i));
+  Serial.println();
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -52,6 +60,7 @@ void setup() {
 */ 
 
 }
+
 
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED

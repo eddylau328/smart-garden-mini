@@ -32,7 +32,10 @@ void DeviceSetting::setUserName(char *newUserName, int length) {
     else
       *(userName + i) = ' ';
   byte *target = new byte[UserNameLength];
+  for (int i = 0; i < UserNameLength; i++)
+    *(target + i) = (byte)*(userName + i);
   Storage::set(Storage::Key::UserName, target);
+  delete[] target;
 }
 
 void DeviceSetting::setTime(int hour, int minute, int second) {

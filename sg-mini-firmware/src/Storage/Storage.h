@@ -4,7 +4,7 @@
 #include <EEPROM.h>
 #include <Arduino.h>
 
-#define UserNameLength 10
+#define UserNameLength 8
 
 class Storage {
   

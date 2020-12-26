@@ -20,12 +20,14 @@ void PageControl::init(Sensors *sensors) {
   pages[PageControl::PageKey::SettingPageKey] = new SettingPage();
   pages[PageControl::PageKey::TimeSettingPageKey] = new TimeSettingPage();
   pages[PageControl::PageKey::DateSettingPageKey] = new DateSettingPage();
+  pages[PageControl::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
 
   pages[PageControl::PageKey::MainPageKey]->setNextPageCallback(PageControl::PageKey::SensorPageKey, &nextPageCallback);
   pages[PageControl::PageKey::SensorPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageControl::PageKey::SettingPageKey]->setNextPageCallback(PageControl::PageKey::MainPageKey, &nextPageCallback);
   pages[PageControl::PageKey::TimeSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageControl::PageKey::DateSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageControl::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
   this->display->init();
 }
 

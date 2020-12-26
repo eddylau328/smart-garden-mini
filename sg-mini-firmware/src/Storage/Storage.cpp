@@ -17,7 +17,7 @@ void Storage::set(Storage::Key key, byte* target) {
   switch (key) {
   case Storage::Key::UserName:
     for (int i = 0 ; i < UserNameLength; i++)
-        EEPROM.write(key + i, *(target+i));
+      EEPROM.write(key + i, *(target+i));
     break;
   default:
     break;
