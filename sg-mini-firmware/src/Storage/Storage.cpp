@@ -30,7 +30,7 @@ void Storage::set(Storage::Key key, byte* target) {
 void Storage::copyByte(int address, byte *target, int length) {
   for (int i = 0; i < length ; i++) {
     *(target + i) = EEPROM.read(address + i);
-    LOG_ERROR(EEPROM.read(address + i));
+    // LOG_ERROR(EEPROM.read(address + i));
   }
 }
 
@@ -38,6 +38,6 @@ void Storage::writeByte(int address, byte *target, int length) {
   for (int i = 0; i < length; i++) {
     EEPROM.write(address + i, *(target+i));
     EEPROM.commit();
-    LOG_ERROR(*(target + i));
+    // LOG_ERROR(*(target + i));
   }
 }

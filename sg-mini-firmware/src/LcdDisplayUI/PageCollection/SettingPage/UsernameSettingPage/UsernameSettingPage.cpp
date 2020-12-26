@@ -15,7 +15,7 @@ void UsernameSettingPage::mountPage() {
   char *name;
   int length;
   DeviceSetting::getUserName(&name, &length);
-  input.set(name, (int8_t)length);
+  input.set(name, UserNameLength);
   contents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Name;
   input.startBlink();
@@ -37,7 +37,7 @@ void UsernameSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1)
-        DeviceSetting::setUserName(input.getInputValue(), 8);
+        DeviceSetting::setUserName(input.getInputValue(), UserNameLength);
       Page::interactiveUpdate(counter, isPress);
     }
     else

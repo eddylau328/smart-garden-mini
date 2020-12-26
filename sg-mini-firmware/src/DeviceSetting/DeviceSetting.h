@@ -5,6 +5,7 @@
 #include "DS1307.h"
 #include "../Helper/Helper.h"
 #include "../Storage/Storage.h"
+#include "../Storage/StorageConstant.h"
 class DeviceSetting {
 
   public:

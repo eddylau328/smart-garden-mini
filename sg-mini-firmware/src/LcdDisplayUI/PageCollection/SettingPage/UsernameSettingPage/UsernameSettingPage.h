@@ -5,7 +5,7 @@
 #include "../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../Components/Input/InputAlphabet/InputAlphabet.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
-
+#include "../../../../Storage/StorageConstant.h"
 class UsernameSettingPage : public Page {
   public:
     UsernameSettingPage();
@@ -24,7 +24,7 @@ class UsernameSettingPage : public Page {
 
     const int8_t contentSize = 7;
     PageContent contents[7] = {
-      PageContent(8, PageLayoutPosition(1, 1)),
+      PageContent(UserNameLength, PageLayoutPosition(1, 1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Set Name", 8, PageLayoutPosition(0, 0)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),

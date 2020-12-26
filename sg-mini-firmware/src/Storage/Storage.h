@@ -4,9 +4,7 @@
 #include <EEPROM.h>
 #include <Arduino.h>
 #include <DebugLog.h>
-
-#define UserNameLength 8
-#define TotalStorageSize 8
+#include "StorageConstant.h"
 class Storage {
   
   public:
