@@ -9,7 +9,6 @@ unsigned long lastclock;
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
 #include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
-<<<<<<< HEAD
 #include "src/LcdDisplayUI/RotaryEncoder.h"
 #include "src/DeviceSetting/DeviceSetting.h"
 #include "src/Controller/Controller.h"
@@ -18,11 +17,6 @@ Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
-=======
-#include "src/Controller/Controller.h"
-
-Sensors sensors;
->>>>>>> origin/feature/controller-init
 Controller controller;
 
 //---------------------------------------SET UP--------------------------------------------------------------------
@@ -40,12 +34,9 @@ void setup() {
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
 
   sensors.init();
-<<<<<<< HEAD
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
 
-=======
->>>>>>> origin/feature/controller-init
   controller.init(&sensors);
 // SD card file name create
 /*  char filename[] = "data00.txt";
@@ -73,10 +64,6 @@ void loop() {
   pageControl.mainLoop();
   display.render();
   controller.update();
-  if (millis() - lastclock > 2000) {
-    sensors.read();
-    lastclock = millis();
-  }
   DeviceSetting::mainLoop();
 }
 
