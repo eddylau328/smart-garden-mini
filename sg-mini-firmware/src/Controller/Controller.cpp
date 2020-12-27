@@ -15,17 +15,12 @@ void Controller::init(Sensors *sensors) {
   initInterval();
 }
 
-void Controller::update() {
+void Controller::mainLoop() {
   if (interruptCounter > 0) {
- 
     portENTER_CRITICAL(&timerMux);
     interruptCounter--;
     portEXIT_CRITICAL(&timerMux);
-
-    LOG_WARNING("Interrupt Start");
-    LOG_WARNING("Read all sensors");
-    this->sensors->read();
-    LOG_WARNING("Interrupt End");
+    scheduleTask();
   }
 }
 
@@ -42,3 +37,7 @@ void Controller::initInterval() {
   timerAlarmEnable(timer);
 }
 
+void Controller::scheduleTask() {
+  LOG_WARNING("Read all sensors");
+  this->sensors->read();
+}

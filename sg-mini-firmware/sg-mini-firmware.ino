@@ -63,7 +63,7 @@ void loop() {
 
   pageControl.mainLoop();
   display.render();
-  controller.update();
+  controller.mainLoop();
   DeviceSetting::mainLoop();
 }
 

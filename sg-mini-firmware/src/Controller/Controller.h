@@ -13,10 +13,12 @@ class Controller {
     ~Controller();
 
     void init(Sensors *sensors);
-    void update();
+    void mainLoop();
   
   private:
     void initInterval();
+    void scheduleTask();
+
     static void onTimer();
 
     hw_timer_t *timer = NULL;
