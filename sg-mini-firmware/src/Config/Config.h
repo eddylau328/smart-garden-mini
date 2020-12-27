@@ -40,5 +40,7 @@
 // LCD Screen Size
 #define LCDScreenWidth 16
 #define LCDScreenHeight 2
+// Define the reading time for sensors
+#define ReadingInterval 5000000  // 5s = 5000ms = 5000 000 micro sec
 
 #endif
