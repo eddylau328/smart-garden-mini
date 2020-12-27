@@ -37,7 +37,7 @@ void setup() {
   pageControl.init(&sensors);
   pageControl.initInput(&rotaryEncoder);
 
-  controller.init();
+  controller.init(&sensors);
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){

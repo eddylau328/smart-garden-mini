@@ -5,9 +5,13 @@ volatile int Controller::interruptCounter = 0;
 
 Controller::Controller() {}
 
-Controller::~Controller() {}
+Controller::~Controller() {
+  delete sensors;
+}
 
-void Controller::init() {
+void Controller::init(Sensors *sensors) {
+  this->sensors = sensors; 
+
   initInterval();
 }
 
@@ -17,9 +21,11 @@ void Controller::update() {
     portENTER_CRITICAL(&timerMux);
     interruptCounter--;
     portEXIT_CRITICAL(&timerMux);
- 
-    totalInterruptCounter++;
-    LOG_WARNING("An interrupt as occurred. Total number: ", totalInterruptCounter);
+
+    LOG_WARNING("Interrupt Start");
+    LOG_WARNING("Read all sensors");
+    this->sensors->read();
+    LOG_WARNING("Interrupt End");
   }
 }
 
