@@ -40,6 +40,7 @@ void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
 void PageControl::mainLoop() {
   if (millis() - lastUpdate > 500) {
     handleUpdateContents();
+    LOG_ERROR(millis() - lastUpdate);
     lastUpdate = millis();
   }
   handleUI();

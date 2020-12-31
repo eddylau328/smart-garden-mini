@@ -30,12 +30,31 @@ void Sensors::init() {
   LOG_WARNING("Total Connected Sensors:", sensorCount);
 }
 
-void Sensors::read() {
-  bool isSuccess;
-  for (int i = 0 ; i < TotalSensors; i++) {
-    isSuccess = sensorList[i]->read();
-    LOG_WARNING(SensorCollection::getSensorName(i), "Read", isSuccess? "Success" : "Failed");
+void Sensors::mainLoop() {
+  if (millis() - lastBatchRead > 5000 && !isStartRead) {
+    isStartRead = true;
+    lastBatchRead = millis();
   }
+  if (isStartRead){
+    if (millis() - lastSensorRead > 100) {
+      LOG_ERROR(currentReadIndex, millis() - lastSensorRead);
+      read(currentReadIndex);
+      LOG_ERROR(currentReadIndex, millis() - lastSensorRead);
+      currentReadIndex++;
+      lastSensorRead = millis();
+
+      if (currentReadIndex >= TotalSensors) {
+        isStartRead = false;
+        currentReadIndex = 0;
+      }
+    }
+  }
+}
+
+void Sensors::read(uint8_t index) {
+  bool isSuccess;
+  isSuccess = sensorList[index]->read();
+  LOG_WARNING(SensorCollection::getSensorName(index), "Read", isSuccess? "Success" : "Failed");
 }
 
 bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &data) {

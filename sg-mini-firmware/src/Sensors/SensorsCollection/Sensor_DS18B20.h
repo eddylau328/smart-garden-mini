@@ -19,6 +19,7 @@ class Sensor_DS18B20 : public Sensor {
     bool get(SensorCollection::SensorDataType dataType, float &measureValue);
     
   private:
+    const uint8_t address[8] = {40,66,102,7,214,1,60,31};
     float soilTemp;
     OneWire *oneWire;
     DallasTemperature *sensor;

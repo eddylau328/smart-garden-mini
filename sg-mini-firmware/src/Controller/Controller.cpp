@@ -38,6 +38,6 @@ void Controller::initInterval() {
 }
 
 void Controller::scheduleTask() {
-  LOG_WARNING("Read all sensors");
-  this->sensors->read();
+
+
 }
