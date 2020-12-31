@@ -63,6 +63,7 @@ void loop() {
 
   pageControl.mainLoop();
   display.render();
+  sensors.mainLoop();
   controller.mainLoop();
   DeviceSetting::mainLoop();
 }

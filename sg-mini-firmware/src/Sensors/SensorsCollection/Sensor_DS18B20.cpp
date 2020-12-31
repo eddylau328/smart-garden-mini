@@ -16,12 +16,14 @@ Sensor_DS18B20::~Sensor_DS18B20() {
 
 // nothing to init
 bool Sensor_DS18B20::init() {
+  // sensor->getAddress(address, 0);
+  sensor->setResolution(address, 9);
   return read(); // for now
 }
 
 bool Sensor_DS18B20::read() {
   sensor->requestTemperatures(); 
-  soilTemp = sensor->getTempCByIndex(0);
+  soilTemp = sensor->getTempC(address);
   LOG_VERBOSE("Soil Temp", soilTemp, "deg C");
 
   isConnect = true;

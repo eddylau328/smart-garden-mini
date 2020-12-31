@@ -24,11 +24,16 @@ class Sensors {
     ~Sensors();
 
     void init();
-    void read();
+    void mainLoop();
+    void read(uint8_t index);
     bool getSensorData(SensorCollection::SensorDataType dataType, float &data);
 
   private:
     Sensor *sensorList[TotalSensors];
+    unsigned long lastBatchRead;
+    unsigned long lastSensorRead;
+    uint8_t currentReadIndex = 0;
+    bool isStartRead = true;
 };
 
 #endif
