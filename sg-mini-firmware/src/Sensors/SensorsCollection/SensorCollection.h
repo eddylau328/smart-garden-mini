@@ -21,7 +21,20 @@ class SensorCollection {
       Power,
     };
 
+    /**
+     * @brief Get the Sensor List Key object
+     * 
+     * @param dataType - sensor data type
+     * @return uint8_t - the index of the sensor in sensor object array
+     */
     static uint8_t getSensorListKey(SensorCollection::SensorDataType dataType);
+
+    /**
+     * @brief Get the Sensor Name object
+     * 
+     * @param key - the index of the sensor in sensor object array
+     * @return char* - the name of the sensor
+     */
     static char* getSensorName(uint8_t key);
 };
 
