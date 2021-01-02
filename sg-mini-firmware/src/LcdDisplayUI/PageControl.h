@@ -32,19 +32,35 @@ class PageControl {
       UsernameSettingPageKey = 5,
     };
 
+    /**
+     * @brief Construct a new Page Control object
+     * 
+     * @param display - the LcdDisplayUI Object for accessing the update()
+     */
     PageControl(LcdDisplayUI *display);
     ~PageControl();
 
     /** Parse in all the object pointer that you need to use to call in page object
      * @param sensors Sensors Class Object for reading all the sensors data 
      */
+
+    /**
+     * @brief It creates the Page object array and assign the default page
+     * 
+     */
     void init();
 
-    /** Parse in the object pointer that you need to use to call in page object
-     * @param RotaryEncoder RotaryEncoder Class Object for reading all the input data 
+    /**
+     * @brief It saves a reference pointer to the RotaryEncoder object for accessing the object methods
+     * 
+     * @param rotaryEncoder - RotaryEncoder Class Object for reading all the input data 
      */
     void initInput(RotaryEncoder *rotaryEncoder);
 
+    /**
+     * @brief It allows the PageControl to update the page content in a designed period of time and update the Page by user input
+     * 
+     */
     void mainLoop();
 
   private:
@@ -57,12 +73,36 @@ class PageControl {
 
     unsigned long lastUpdate;
 
-    // Main loop function for controlling all the page
+    /**
+     * @brief It helps to assign the page which is going to display to the LCD Monitor
+     * 
+     */
     void handleUI();
+
+    /**
+     * @brief It helps to invoke the Page updateContents() in a designed period of time
+     * 
+     */
     void handleUpdateContents();
 
+    /**
+     * @brief This is a callback function which will invoke when the rotary encoder has rotate interrupt event.
+     * 
+     * @param counter - the counter is the rotary encoder detect how many clockwise/anti-clockwise steps the rotary encoder has been triggered
+     */
     static void rotateInputCallback(int counter);
+
+    /**
+     * @brief This is a callback function which will invoke when the rotary encoder receive a press down interrupt event.
+     * 
+     */
     static void pressInputCallback();
+
+    /**
+     * @brief This is a callback function for Page object to tell the PageControl object to swap to different page
+     * 
+     * @param pageKey - the page index that you want to swap to after certain trigger or events 
+     */
     static void nextPageCallback(uint8_t pageKey);
 };
 

@@ -14,15 +14,33 @@
 class LcdDisplayUI {
 
   public:
+
     /**
-     * @param rowSize the number of character LCD can show in one row
-     * @param colSize the number of character LCD can show in one column
-    */
+     * @brief Construct a new Lcd Display U I object
+     * 
+     * @param colSize - the number of character the LCD can show in one row
+     * @param rowSize - the number of character the LCD can show in one column
+     */
     LcdDisplayUI(int8_t colSize, int8_t rowSize);
     ~LcdDisplayUI();
 
+    /**
+     * @brief It invokes the communication between the LCD display and set the backlight of the screen to turn on.
+     * 
+     */
     void init();
+
+    /**
+     * @brief It updates the LCD display by changing the PageContent source from a Page object.
+     * 
+     * @param page - pointer of a Page object that you want to show
+     */
     void update(Page *page);
+
+    /**
+     * @brief It provides a rendering function that keeps checking whether anything display on the screen is updated or not.
+     * 
+     */
     void render();
 
   private:
