@@ -16,7 +16,6 @@
 // -----------------------------------------------------
 
 // Class you need to display data / information --------
-#include "../Sensors/Sensors.h"
 #include "RotaryEncoder.h"
 // -----------------------------------------------------
 
@@ -39,7 +38,7 @@ class PageControl {
     /** Parse in all the object pointer that you need to use to call in page object
      * @param sensors Sensors Class Object for reading all the sensors data 
      */
-    void init(Sensors *sensors);
+    void init();
 
     /** Parse in the object pointer that you need to use to call in page object
      * @param RotaryEncoder RotaryEncoder Class Object for reading all the input data 

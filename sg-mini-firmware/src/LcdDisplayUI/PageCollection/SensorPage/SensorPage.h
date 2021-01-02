@@ -9,7 +9,7 @@
 class SensorPage : public Page {
 
   public:
-    SensorPage(Sensors *sensors);
+    SensorPage();
     ~SensorPage();
 
     void mountPage();
@@ -35,8 +35,6 @@ class SensorPage : public Page {
     };
 
     PageVerticalScroll scroll;
-
-    Sensors *sensors; // no need to free this pointer, as you are just referencing it
 
     void updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex);
 

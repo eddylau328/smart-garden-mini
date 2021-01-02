@@ -14,9 +14,9 @@ PageControl::~PageControl() {
   }
 }
 
-void PageControl::init(Sensors *sensors) {
-  pages[PageControl::PageKey::MainPageKey] = new MainPage(sensors);
-  pages[PageControl::PageKey::SensorPageKey] = new SensorPage(sensors);
+void PageControl::init() {
+  pages[PageControl::PageKey::MainPageKey] = new MainPage();
+  pages[PageControl::PageKey::SensorPageKey] = new SensorPage();
   pages[PageControl::PageKey::SettingPageKey] = new SettingPage();
   pages[PageControl::PageKey::TimeSettingPageKey] = new TimeSettingPage();
   pages[PageControl::PageKey::DateSettingPageKey] = new DateSettingPage();
