@@ -1,9 +1,7 @@
 #include "MainPage.h"
 
 
-MainPage::MainPage(Sensors *sensors) {
-  this->sensors = sensors;
-}
+MainPage::MainPage() {}
 
 MainPage::~MainPage() {}
 
@@ -25,15 +23,14 @@ void MainPage::updateContents() {
   contents[0].updateContent(hour, true);
   contents[2].updateContent(min, true);
   contents[1].updateContent(sec % 2 == 1? " " : ":", 1);
-  if (sensors) {
-    updateSensorData(SensorCollection::SensorDataType::Temp, 4);
-    updateSensorData(SensorCollection::SensorDataType::Hum, 6);
-  }
+  
+  updateSensorData(SensorCollection::SensorDataType::Temp, 4);
+  updateSensorData(SensorCollection::SensorDataType::Hum, 6);
 }
 
 void MainPage::updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex) {
   float value;
-  bool isCorrect = sensors->getSensorData(dataType, value);
+  bool isCorrect = Sensors::getSensorData(dataType, value);
   if (isCorrect)
     this->contents[contentIndex].updateContent((int)round(value));
   else

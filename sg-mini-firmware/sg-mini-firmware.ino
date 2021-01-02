@@ -13,7 +13,6 @@ unsigned long lastclock;
 #include "src/DeviceSetting/DeviceSetting.h"
 #include "src/Controller/Controller.h"
 
-Sensors sensors;
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
@@ -33,11 +32,11 @@ void setup() {
 
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
 
-  sensors.init();
-  pageControl.init(&sensors);
+  Sensors::init();
+  pageControl.init();
   pageControl.initInput(&rotaryEncoder);
 
-  controller.init(&sensors);
+  controller.init();
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -63,8 +62,8 @@ void loop() {
 
   pageControl.mainLoop();
   display.render();
-  sensors.mainLoop();
   controller.mainLoop();
+  Sensors::mainLoop();
   DeviceSetting::mainLoop();
 }
 

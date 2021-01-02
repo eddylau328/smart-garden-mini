@@ -8,7 +8,7 @@
 
 class MainPage : public Page {
   public:
-    MainPage(Sensors *sensors);
+    MainPage();
     ~MainPage();
     void mountPage();
     void getContents(PageContent **contents, int *length);
@@ -24,7 +24,7 @@ class MainPage : public Page {
       PageContent("H", 1, PageLayoutPosition(5, 1)),
       PageContent(3, PageLayoutPosition(7, 1))
     };
-    Sensors *sensors;
+    
     void updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex);
 };
 

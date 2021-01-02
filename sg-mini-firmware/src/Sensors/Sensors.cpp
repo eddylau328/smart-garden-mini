@@ -4,22 +4,20 @@
 
 #include "Sensors.h"
 
-Sensors::Sensors() {
+Sensor *Sensors::sensorList[TotalSensors];
+unsigned long Sensors::lastBatchRead;
+unsigned long Sensors::lastSensorRead;
+uint8_t Sensors::currentReadIndex = 0;
+bool Sensors::isStartRead = true;
+
+void Sensors::init() {
   sensorList[DHT_Key] = new Sensor_DHT();
   sensorList[DS18B20_Key] = new Sensor_DS18B20();
   sensorList[SoilHumidity_Key] = new Sensor_SoilHumidity();
   sensorList[MAX44009_Key] = new Sensor_MAX44009();
   sensorList[UltraSound_Key] = new Sensor_UltraSound();
   sensorList[INA219_Key] = new Sensor_INA219();
-}
 
-Sensors::~Sensors() {
-  // free the allocated memory and delete the object
-  for (int i = 0 ; i < TotalSensors; i++)
-    delete sensorList[i];
-}
-
-void Sensors::init() {
   int8_t sensorCount = 0;
   bool isConnected = false;
   for (int i = 0 ; i < TotalSensors; i++) {
@@ -51,13 +49,13 @@ void Sensors::mainLoop() {
   }
 }
 
+bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &data) {
+  return (sensorList[SensorCollection::getSensorListKey(dataType)]->get(dataType, data) &&
+          sensorList[SensorCollection::getSensorListKey(dataType)]->isConnected());
+}
+
 void Sensors::read(uint8_t index) {
   bool isSuccess;
   isSuccess = sensorList[index]->read();
   LOG_WARNING(SensorCollection::getSensorName(index), "Read", isSuccess? "Success" : "Failed");
-}
-
-bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &data) {
-  return (sensorList[SensorCollection::getSensorListKey(dataType)]->get(dataType, data) &&
-          sensorList[SensorCollection::getSensorListKey(dataType)]->isConnected());
 }

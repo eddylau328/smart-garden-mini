@@ -5,13 +5,9 @@ volatile int Controller::interruptCounter = 0;
 
 Controller::Controller() {}
 
-Controller::~Controller() {
-  delete sensors;
-}
+Controller::~Controller() {}
 
-void Controller::init(Sensors *sensors) {
-  this->sensors = sensors; 
-
+void Controller::init() {
   initInterval();
 }
 

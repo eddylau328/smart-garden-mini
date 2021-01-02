@@ -20,20 +20,35 @@
 
 class Sensors {
   public:
-    Sensors();
-    ~Sensors();
+    /**
+     * @brief It creates the Sensor object array and initializes all the sensor objects by invoking the sensor init()
+     * 
+     */
+    static void init();
 
-    void init();
-    void mainLoop();
-    void read(uint8_t index);
-    bool getSensorData(SensorCollection::SensorDataType dataType, float &data);
+    /**
+     * @brief It will invokes all the sensor read() from sensor array within a period 
+     * 
+     */
+    static void mainLoop();
+
+    /**
+     * @brief Get the sensor measure data 
+     * 
+     * @param dataType - the sensor data type you want to get
+     * @param data - the actual sensor data will be assigned to the variable you parse into
+     * @return true - indicates the data is correct
+     * @return false - indicates the data is corrupted or the sensor lost connection
+     */
+    static bool getSensorData(SensorCollection::SensorDataType dataType, float &data);
 
   private:
-    Sensor *sensorList[TotalSensors];
-    unsigned long lastBatchRead;
-    unsigned long lastSensorRead;
-    uint8_t currentReadIndex = 0;
-    bool isStartRead = true;
+    static Sensor *sensorList[TotalSensors];
+    static unsigned long lastBatchRead;
+    static unsigned long lastSensorRead;
+    static uint8_t currentReadIndex;
+    static bool isStartRead;
+    static void read(uint8_t index);
 };
 
 #endif
