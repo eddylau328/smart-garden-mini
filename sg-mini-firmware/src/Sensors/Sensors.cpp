@@ -35,9 +35,7 @@ void Sensors::mainLoop() {
   }
   if (isStartRead){
     if (millis() - lastSensorRead > 100) {
-      LOG_ERROR(currentReadIndex, millis() - lastSensorRead);
       read(currentReadIndex);
-      LOG_ERROR(currentReadIndex, millis() - lastSensorRead);
       currentReadIndex++;
       lastSensorRead = millis();
 
