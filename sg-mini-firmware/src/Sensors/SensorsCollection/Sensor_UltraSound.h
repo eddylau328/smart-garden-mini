@@ -8,6 +8,10 @@
 #include "Sensor.h"
 #include <DebugLog.h>
 
+/**
+ * @brief Sensor derived class for measuring the water level of the water container
+ * 
+ */
 class Sensor_UltraSound : public Sensor {
 
   public:

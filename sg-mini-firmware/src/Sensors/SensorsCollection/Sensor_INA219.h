@@ -11,6 +11,10 @@
 #include "../../Helper/Helper.h"
 #include <DebugLog.h>
 
+/**
+ * @brief Sensor derived class for measuring the voltage, current and power of the device
+ * 
+ */
 class Sensor_INA219 : public Sensor {
 
   public:

@@ -10,6 +10,10 @@
 #include <DallasTemperature.h>
 #include <DebugLog.h>
 
+/**
+ * @brief Sensor derived class for measuring the temperature of the soil
+ * 
+ */
 class Sensor_DS18B20 : public Sensor {
   public:
     Sensor_DS18B20();

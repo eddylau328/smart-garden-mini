@@ -8,6 +8,10 @@
 #include "Sensor.h"
 #include <DebugLog.h>
 
+/**
+ * @brief Sensor derived class for measuring the humidity of the soil 
+ * 
+ */
 class Sensor_SoilHumidity : public Sensor {
 
   public:
