@@ -13,7 +13,7 @@ class PageContent {
      * @brief Construct a new Page Content object
      * 
      * @param content - the constant character pointer of the content want to display, e.g. "Hello World"
-     * @param length - the length of the content
+     * @param length - the length of the content (Noted: null character is excluded)
      * @param pos - the PageLayoutPosition Object that contains the position of the content
      */
     PageContent(const char* content, int length, PageLayoutPosition pos);
@@ -21,7 +21,7 @@ class PageContent {
     /**
      * @brief Construct a new Page Content object without pre-assigning the content, for case such as variable or condition rendering
      * 
-     * @param length - the length of the content
+     * @param length - the length of the content (Noted: null character is excluded)
      * @param pos - the PageLayoutPosition Object that contains the position of the content 
      */
     PageContent(int length, PageLayoutPosition pos);
