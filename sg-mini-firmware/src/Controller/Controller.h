@@ -5,6 +5,10 @@
 #include <DebugLog.h>
 #include "../Config/Config.h"
 
+/**
+ * @brief provides functions for the smart-garden-mini kit control actions, e.g. watering the plants
+ * 
+ */
 class Controller {
 
   public:
