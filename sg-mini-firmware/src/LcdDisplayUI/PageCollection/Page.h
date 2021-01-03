@@ -7,6 +7,10 @@
 #include "../Components/PageContent/PageContent.h"
 #include "../Components/PageLayoutPosition/PageLayoutPosition.h"
 
+/**
+ * @brief provides the base structure for creating a Page
+ * 
+ */
 class Page {
   public:
 

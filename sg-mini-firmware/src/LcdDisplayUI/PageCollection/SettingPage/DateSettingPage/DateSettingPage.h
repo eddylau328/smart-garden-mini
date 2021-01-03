@@ -6,6 +6,10 @@
 #include "../../../Components/Input/InputNumber/InputNumber.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 
+/**
+ * @brief Page derived class use to set the date of the device
+ * 
+ */
 class DateSettingPage : public Page {
   public:
     DateSettingPage();

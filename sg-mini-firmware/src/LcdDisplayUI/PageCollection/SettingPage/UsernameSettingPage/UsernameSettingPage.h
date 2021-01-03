@@ -6,6 +6,11 @@
 #include "../../../Components/Input/InputAlphabet/InputAlphabet.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../Storage/StorageConstant.h"
+
+/**
+ * @brief Page derived class use to change the user name 
+ * 
+ */
 class UsernameSettingPage : public Page {
   public:
     UsernameSettingPage();
