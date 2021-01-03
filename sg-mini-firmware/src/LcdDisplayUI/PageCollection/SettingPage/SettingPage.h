@@ -5,6 +5,10 @@
 #include "../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../Components/PageLayoutRange/PageLayoutRange.h"
 
+/**
+ * @brief Page derived class use to show the user which settings can be alter
+ * 
+ */
 class SettingPage : public Page {
 
   public:

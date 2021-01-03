@@ -6,6 +6,10 @@
 #include "../../../Sensors/Sensors.h"
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
 
+/**
+ * @brief Page derived class use to show to the user when the system is idle
+ * 
+ */
 class MainPage : public Page {
   public:
     MainPage();

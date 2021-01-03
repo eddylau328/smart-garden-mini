@@ -8,6 +8,10 @@
 #include "../../Config/Config.h"
 #include "SensorCollection.h"
 
+/**
+ * @brief provides a base structure for a newly added sensor to inherit
+ * 
+ */
 class Sensor {
   public:
 

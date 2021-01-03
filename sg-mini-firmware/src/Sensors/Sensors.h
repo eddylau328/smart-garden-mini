@@ -18,6 +18,10 @@
 #include "SensorsCollection/Sensor_UltraSound.h"
 #include <DebugLog.h>
 
+/**
+ * @brief provides functions for other class to get the sensors data
+ * 
+ */
 class Sensors {
   public:
     /**

@@ -9,6 +9,10 @@
 #include <Max44009.h>
 #include <DebugLog.h>
 
+/**
+ * @brief Sensor derived class for measuing the light intensity
+ * 
+ */
 class Sensor_MAX44009 : public Sensor {
 
   public:

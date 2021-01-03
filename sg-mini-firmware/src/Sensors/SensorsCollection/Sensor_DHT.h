@@ -9,6 +9,10 @@
 #include <DHT.h>
 #include <DebugLog.h>
 
+/**
+ * @brief Sensor derived class for measuring the temperature and humidity
+ * 
+ */
 class Sensor_DHT : public Sensor {
 
   public:

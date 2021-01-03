@@ -4,6 +4,10 @@
 #include <Arduino.h>
 #include "../../Config/Config.h"
 
+/**
+ * @brief provides function for accessing the sensor data types and the sensor names  
+ * 
+ */
 class SensorCollection {
   public:
     // Follow the Array Number

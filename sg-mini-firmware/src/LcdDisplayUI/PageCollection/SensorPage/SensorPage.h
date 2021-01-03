@@ -6,6 +6,11 @@
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
 #include "../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../Components/PageLayoutRange/PageLayoutRange.h"
+
+/**
+ * @brief Page derived class use to show the sensor data 
+ * 
+ */
 class SensorPage : public Page {
 
   public:
