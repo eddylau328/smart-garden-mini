@@ -3,6 +3,10 @@
 
 #include "../PageScroll.h"
 
+/**
+ * @brief provides a vertical scroll ultility function for Page object to use
+ * 
+ */
 class PageVerticalScroll : public PageScroll {
 
   public:

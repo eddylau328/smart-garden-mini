@@ -6,6 +6,10 @@
 #include "../PageContent/PageContent.h"
 #include "../../../Helper/Helper.h"
 
+/**
+ * @brief provides the base structure for an input tool to inherit with
+ * 
+ */
 class InputTool {
 
   public:

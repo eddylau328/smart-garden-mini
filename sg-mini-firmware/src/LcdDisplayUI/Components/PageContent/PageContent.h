@@ -6,6 +6,11 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 
+/**
+ * @brief provides attributes and methods for storing and updating the content of the Page
+ * 
+ * (Noted: it is the only object accept by the LcdDisplayUI for rendering)
+ */
 class PageContent {
 
   public:

@@ -11,6 +11,10 @@
 #include "Components/PageContent/PageContent.h"
 #include "Components/PageLayoutPosition/PageLayoutPosition.h"
 
+/**
+ * @brief provides LCD screen render and udpate function
+ * 
+ */
 class LcdDisplayUI {
 
   public:

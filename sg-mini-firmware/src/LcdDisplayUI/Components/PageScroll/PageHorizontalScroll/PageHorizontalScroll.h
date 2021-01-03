@@ -4,6 +4,10 @@
 #include "../PageScroll.h"
 #include "../../PageLayoutPosition/PageLayoutPosition.h"
 
+/**
+ * @brief provides a horizontal scroll ultility function for Page object to use
+ * 
+ */
 class PageHorizontalScroll : public PageScroll {
 
   public:

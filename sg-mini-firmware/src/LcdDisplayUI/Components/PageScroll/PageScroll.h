@@ -9,6 +9,10 @@
 
 #define PageScrollMaxSize 10
 
+/**
+ * @brief provides the attributes and methods of a scroll ultility component
+ * 
+ */
 class PageScroll {
 
   public:

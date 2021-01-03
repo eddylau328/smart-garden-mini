@@ -6,6 +6,10 @@
 
 #include "../Helper/Helper.h"
 
+/**
+ * @brief provides interrupt function setup and callback function when rotate and press event trigger by Rotary Encoder Hardware
+ * 
+ */
 class RotaryEncoder {
 
   public:

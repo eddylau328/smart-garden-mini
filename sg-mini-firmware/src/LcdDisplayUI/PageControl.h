@@ -19,6 +19,10 @@
 #include "RotaryEncoder.h"
 // -----------------------------------------------------
 
+/**
+ * @brief provides the control logic of the page and initialize all the pages that will show to the display
+ * 
+ */
 class PageControl {
 
   public:
@@ -46,7 +50,7 @@ class PageControl {
 
     /**
      * @brief It creates the Page object array and assign the default page
-     * 
+     * - Add new Page derived class in here for displaying new page 
      */
     void init();
 
