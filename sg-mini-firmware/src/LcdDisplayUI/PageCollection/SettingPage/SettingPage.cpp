@@ -1,5 +1,4 @@
 #include "SettingPage.h"
-#include "../../PageControl.h"
 
 SettingPage::SettingPage() {
   scroll.init(LCDScreenWidth, LCDScreenHeight);
@@ -31,11 +30,11 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
     switch (index) {
       case 0:
         LOG_ERROR("Enter Time Setting");
-        Page::nextPageCallback(PageControl::TimeSettingPageKey);
+        Page::nextPageCallback(PageCollection::PageKey::TimeSettingPageKey);
         break;
       case 1:
         LOG_ERROR("Enter Date Setting");
-        Page::nextPageCallback(PageControl::DateSettingPageKey);
+        Page::nextPageCallback(PageCollection::PageKey::DateSettingPageKey);
         break;
       case 2:
         LOG_ERROR("Enter WiFi Setting");
@@ -48,7 +47,7 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
         break;
       case 5:
         LOG_ERROR("Enter User Name Setting");
-        Page::nextPageCallback(PageControl::UsernameSettingPageKey);
+        Page::nextPageCallback(PageCollection::PageKey::UsernameSettingPageKey);
         break;
       case 6:
         LOG_ERROR("Return");

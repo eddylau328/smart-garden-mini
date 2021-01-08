@@ -1,5 +1,5 @@
 #include "PageControl.h"
-#include "PageCollection.h"
+
 
 Page *PageControl::pages[TotalPage];
 uint8_t PageControl::currentPageKey = PageCollection::PageKey::SensorPageKey;

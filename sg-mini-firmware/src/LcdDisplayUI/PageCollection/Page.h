@@ -6,7 +6,7 @@
 #include "../../Config/Config.h"
 #include "../Components/PageContent/PageContent.h"
 #include "../Components/PageLayoutPosition/PageLayoutPosition.h"
-
+#include "PageCollection.h"
 /**
  * @brief provides the base structure for creating a Page
  * 

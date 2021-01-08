@@ -1,9 +1,7 @@
 #ifndef PageCollection_h
 #define PageCollection_h
 
-#include <Arduino.h>
-
-class Page {
+class PageCollection {
 
   public:
     // Add PageKey if you add a new page
