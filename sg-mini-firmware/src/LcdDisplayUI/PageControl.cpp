@@ -1,8 +1,9 @@
 #include "PageControl.h"
 
+
 Page *PageControl::pages[TotalPage];
-uint8_t PageControl::currentPageKey = PageControl::PageKey::SensorPageKey;
-uint8_t PageControl::newPageKey = PageControl::PageKey::MainPageKey;
+uint8_t PageControl::currentPageKey = PageCollection::PageKey::SensorPageKey;
+uint8_t PageControl::newPageKey = PageCollection::PageKey::MainPageKey;
 
 PageControl::PageControl(LcdDisplayUI *display) {
   this->display = display;
@@ -15,19 +16,19 @@ PageControl::~PageControl() {
 }
 
 void PageControl::init() {
-  pages[PageControl::PageKey::MainPageKey] = new MainPage();
-  pages[PageControl::PageKey::SensorPageKey] = new SensorPage();
-  pages[PageControl::PageKey::SettingPageKey] = new SettingPage();
-  pages[PageControl::PageKey::TimeSettingPageKey] = new TimeSettingPage();
-  pages[PageControl::PageKey::DateSettingPageKey] = new DateSettingPage();
-  pages[PageControl::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
+  pages[PageCollection::PageKey::MainPageKey] = new MainPage();
+  pages[PageCollection::PageKey::SensorPageKey] = new SensorPage();
+  pages[PageCollection::PageKey::SettingPageKey] = new SettingPage();
+  pages[PageCollection::PageKey::TimeSettingPageKey] = new TimeSettingPage();
+  pages[PageCollection::PageKey::DateSettingPageKey] = new DateSettingPage();
+  pages[PageCollection::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
 
-  pages[PageControl::PageKey::MainPageKey]->setNextPageCallback(PageControl::PageKey::SensorPageKey, &nextPageCallback);
-  pages[PageControl::PageKey::SensorPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageControl::PageKey::SettingPageKey]->setNextPageCallback(PageControl::PageKey::MainPageKey, &nextPageCallback);
-  pages[PageControl::PageKey::TimeSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageControl::PageKey::DateSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageControl::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageControl::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::MainPageKey]->setNextPageCallback(PageCollection::PageKey::SensorPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::SensorPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::SettingPageKey]->setNextPageCallback(PageCollection::PageKey::MainPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::TimeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::DateSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   this->display->init();
 }
 

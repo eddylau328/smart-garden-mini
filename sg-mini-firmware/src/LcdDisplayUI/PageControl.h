@@ -6,6 +6,7 @@
 
 // Page Collection -------------------------------------
 #define TotalPage 6 // Modify it if you want to add page
+#include "PageCollection/PageCollection.h"
 #include "PageCollection/Page.h"
 #include "PageCollection/MainPage/MainPage.h"
 #include "PageCollection/SensorPage/SensorPage.h"
@@ -27,14 +28,6 @@ class PageControl {
 
   public:
     // Add PageKey if you add a new page
-    enum PageKey {
-      MainPageKey = 0,
-      SensorPageKey = 1,
-      SettingPageKey = 2,
-      TimeSettingPageKey= 3,
-      DateSettingPageKey = 4,
-      UsernameSettingPageKey = 5,
-    };
 
     /**
      * @brief Construct a new Page Control object
