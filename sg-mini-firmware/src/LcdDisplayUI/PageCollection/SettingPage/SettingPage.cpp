@@ -41,6 +41,7 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
         break;
       case 3:
         LOG_ERROR("Enter Watering Setting");
+        Page::nextPageCallback(PageCollection::PageKey::ControlPagePageKey);
         break;
       case 4:
         LOG_ERROR("Enter Idle Time Setting");

@@ -22,6 +22,11 @@ void PageControl::init() {
   pages[PageCollection::PageKey::TimeSettingPageKey] = new TimeSettingPage();
   pages[PageCollection::PageKey::DateSettingPageKey] = new DateSettingPage();
   pages[PageCollection::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
+  pages[PageCollection::PageKey::ControlPagePageKey] = new ControlPage();
+    pages[PageCollection::PageKey::ModeSettingPageKey] = new ModeSettingPage();
+  pages[PageCollection::PageKey::ManualSettingPageKey] = new ManualSettingPage();
+  pages[PageCollection::PageKey::AutoSettingPageKey] = new AutoSettingPage();
+  pages[PageCollection::PageKey::ScheduleSettingPageKey] = new ScheduleSettingPage();
 
   pages[PageCollection::PageKey::MainPageKey]->setNextPageCallback(PageCollection::PageKey::SensorPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::SensorPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
@@ -29,7 +34,13 @@ void PageControl::init() {
   pages[PageCollection::PageKey::TimeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::DateSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  this->display->init();
+  pages[PageCollection::PageKey::ControlPagePageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ModeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPagePageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ManualSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPagePageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::AutoSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPagePageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPagePageKey, &nextPageCallback);
+
+ this->display->init();
 }
 
 void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
