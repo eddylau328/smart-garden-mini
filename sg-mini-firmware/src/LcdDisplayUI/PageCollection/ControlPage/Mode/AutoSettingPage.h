@@ -38,7 +38,7 @@ class AutoSettingPage : public Page {
     };
 
     int8_t inputIndex;
-    InputNumber input[1];
+    InputNumber input;
     PageVerticalScroll scroll;
 };
 

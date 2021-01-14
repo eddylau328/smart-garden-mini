@@ -1,8 +1,8 @@
 #include "ManualSettingPage.h"
 
 ManualSettingPage::ManualSettingPage(){
-   input[InputIndex::Second].setLinkage(&contents[InputIndex::Second]);
-   input[InputIndex::Second].setCircleLoop(true);
+   input.setLinkage(&contents[InputIndex::Second]);
+   input.setCircleLoop(true);
 
    scroll.init(LCDScreenWidth, LCDScreenHeight);
    scroll.setCoverArea(PageLayoutRange(0, 1));
@@ -13,11 +13,11 @@ ManualSettingPage::~ManualSettingPage(){}
 
 void ManualSettingPage::mountPage() {
   int second;
-  input[InputIndex::Second].set((int8_t)second, 0, 20, true);
+  input.set((int8_t)second, 0, 20, true);
   
   contents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Second;
-  input[inputIndex].startBlink();
+  input.startBlink();
   scroll.resetScroll(contents, contentSize);
   
 }
@@ -29,7 +29,7 @@ void ManualSettingPage::getContents(PageContent **contents, int *length) {
 
 void ManualSettingPage::updateContents() {
    if (inputIndex != InputIndex::Arrow)
-    input[inputIndex].blinkUpdate();
+    input.blinkUpdate();
 }
 
 void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
@@ -38,7 +38,7 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
         int second;
-        second = input[InputIndex::Second].getInputValue();
+        second = input.getInputValue();
      
       }
       Page::interactiveUpdate(counter, isPress);
@@ -47,13 +47,13 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
       scroll.updateScroll(contents, contentSize, counter);
   }
   else {
-    bool isFinish = input[inputIndex].interactiveUpdate(counter, isPress);
+    bool isFinish = input.interactiveUpdate(counter, isPress);
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
         contents[InputIndex::Arrow].updateContent(">", 1);
       else {
-        input[inputIndex].startBlink();
+        input.startBlink();
       }
      
     }

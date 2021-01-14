@@ -23,7 +23,7 @@ void PageControl::init() {
   pages[PageCollection::PageKey::DateSettingPageKey] = new DateSettingPage();
   pages[PageCollection::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
   pages[PageCollection::PageKey::ControlPagePageKey] = new ControlPage();
-    pages[PageCollection::PageKey::ModeSettingPageKey] = new ModeSettingPage();
+  pages[PageCollection::PageKey::ModeSettingPageKey] = new ModeSettingPage();
   pages[PageCollection::PageKey::ManualSettingPageKey] = new ManualSettingPage();
   pages[PageCollection::PageKey::AutoSettingPageKey] = new AutoSettingPage();
   pages[PageCollection::PageKey::ScheduleSettingPageKey] = new ScheduleSettingPage();

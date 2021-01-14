@@ -1,8 +1,8 @@
 #include "AutoSettingPage.h"
 
 AutoSettingPage::AutoSettingPage(){
-   input[InputIndex::Humidity].setLinkage(&contents[InputIndex::Humidity]);
-   input[InputIndex::Humidity].setCircleLoop(true);
+   input.setLinkage(&contents[InputIndex::Humidity]);
+   input.setCircleLoop(true);
 
    scroll.init(LCDScreenWidth, LCDScreenHeight);
    scroll.setCoverArea(PageLayoutRange(0, 1));
@@ -13,11 +13,11 @@ AutoSettingPage::~AutoSettingPage(){}
 
 void AutoSettingPage::mountPage() {
   int humidity;
-  input[InputIndex::Humidity].set((int8_t)humidity, 0, 99, true);
+  input.set((int8_t)humidity, 0, 99, true);
   
   contents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Humidity;
-  input[inputIndex].startBlink();
+  input.startBlink();
   scroll.resetScroll(contents, contentSize);
   
 }
@@ -29,7 +29,7 @@ void AutoSettingPage::getContents(PageContent **contents, int *length) {
 
 void AutoSettingPage::updateContents() {
    if (inputIndex != InputIndex::Arrow)
-    input[inputIndex].blinkUpdate();
+    input.blinkUpdate();
 }
 
 void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
@@ -38,7 +38,7 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
         int humidity;
-        humidity = input[InputIndex::Humidity].getInputValue();
+        humidity = input.getInputValue();
         
       }
       Page::interactiveUpdate(counter, isPress);
@@ -47,13 +47,13 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
       scroll.updateScroll(contents, contentSize, counter);
   }
   else {
-    bool isFinish = input[inputIndex].interactiveUpdate(counter, isPress);
+    bool isFinish = input.interactiveUpdate(counter, isPress);
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
         contents[InputIndex::Arrow].updateContent(">", 1);
       else {
-        input[inputIndex].startBlink();
+        input.startBlink();
       }
      
     }
