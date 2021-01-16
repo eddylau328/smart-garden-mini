@@ -12,6 +12,7 @@ unsigned long lastclock;
 #include "src/LcdDisplayUI/RotaryEncoder.h"
 #include "src/DeviceSetting/DeviceSetting.h"
 #include "src/Controller/Controller.h"
+#include "src/WifiController/WifiController.h"
 
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
@@ -24,10 +25,11 @@ void setup() {
   lastclock = millis();
 
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::WARNINGS); // all log is printed
   
   DeviceSetting::init();
-  
+  WifiController::init();
+
   pinMode(12, OUTPUT); //On board LED
 
   digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
@@ -53,9 +55,9 @@ void setup() {
     datafile.println("Time, ,Soil humidity,Soil Temperature, ,Light level,Air temperature,Air humidity,INA226 ,Bus Voltage,Pump current,Shunt power, ,UntraSound distance");
   }
 */ 
-
 }
 
+unsigned long lastTimeCheck;
 
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED
@@ -65,6 +67,11 @@ void loop() {
   controller.mainLoop();
   Sensors::mainLoop();
   DeviceSetting::mainLoop();
+
+  if (millis() - lastTimeCheck > 10000) {
+    WifiController::scanNetworks();
+    lastTimeCheck = millis();
+  }
 }
 
 
