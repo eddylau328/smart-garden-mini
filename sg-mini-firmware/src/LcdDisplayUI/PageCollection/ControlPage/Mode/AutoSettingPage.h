@@ -29,12 +29,12 @@ class AutoSettingPage : public Page {
     };
     const int8_t contentSize = 6;
     PageContent contents[6] = {
+      PageContent(2, PageLayoutPosition(9,1)),
+      PageContent(" ", 1, PageLayoutPosition(11, 1)),
       PageContent("Set Auto", 8, PageLayoutPosition(0,0)),
       PageContent("Humidity", 8, PageLayoutPosition(0,1)),
-      PageContent(2, PageLayoutPosition(9,0)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
       PageContent("Save", 4, PageLayoutPosition(12, 1)),
-      PageContent(">", 1, PageLayoutPosition(0, 1))
     };
 
     int8_t inputIndex;
