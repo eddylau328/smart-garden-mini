@@ -20,7 +20,7 @@ class ManualSettingPage : public Page {
     void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
-    void dismountPage();
+   
 
   private:
     enum InputIndex{
@@ -29,12 +29,13 @@ class ManualSettingPage : public Page {
     };
     const int8_t contentSize = 6;
     PageContent contents[6] = {
+      PageContent(2, PageLayoutPosition(7,1)),
+      PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Sec2Water", 9, PageLayoutPosition(0,0)),
       PageContent("Second", 6, PageLayoutPosition(0,1)),
-      PageContent(2, PageLayoutPosition(9,0)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
       PageContent("Save", 4, PageLayoutPosition(12, 1)),
-      PageContent(">", 1, PageLayoutPosition(0, 1))
+     
     };
 
     int8_t inputIndex;

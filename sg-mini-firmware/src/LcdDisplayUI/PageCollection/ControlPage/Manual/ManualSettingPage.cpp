@@ -61,4 +61,3 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
 
 }
 
-void ManualSettingPage::dismountPage() {}
