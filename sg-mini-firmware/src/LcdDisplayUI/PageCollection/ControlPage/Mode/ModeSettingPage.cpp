@@ -4,7 +4,7 @@ ModeSettingPage::ModeSettingPage(){}
 
 void ModeSettingPage::mountPage() {
   scroll.init(LCDScreenWidth, LCDScreenHeight);
-  scroll.setCoverArea(PageLayoutRange(0, 6));
+  scroll.setCoverArea(PageLayoutRange(0, 2));
   scroll.setCursor(&contents[3], 0);
 }
 
@@ -30,7 +30,7 @@ void ModeSettingPage::interactiveUpdate(int counter, bool isPress) {
           break;
         case 1:
           LOG_ERROR("Enter Schedule Setting");
-          Page::nextPageCallback(PageCollection::PageKey::ManualSettingPageKey);
+          Page::nextPageCallback(PageCollection::PageKey::ScheduleSettingPageKey);
           break;
         case 2:
           LOG_ERROR("Return");

@@ -23,10 +23,10 @@ class ModeSettingPage : public Page {
   private:
     const int8_t contentSize = 4;
     PageContent contents[4] = {
-      PageContent("Auto", 4, PageLayoutPosition(2,1)),
-      PageContent("Schedule", 8, PageLayoutPosition(2,2)),
-      PageContent("Back", 4, PageLayoutPosition(2, 3)),
-      PageContent(">", 1, PageLayoutPosition(0, 1))
+      PageContent("Auto", 4, PageLayoutPosition(2,0)),
+      PageContent("Schedule", 8, PageLayoutPosition(2,1)),
+      PageContent("Back", 4, PageLayoutPosition(2, 2)),
+      PageContent(">", 1, PageLayoutPosition(0, 0))
     };
 
     PageVerticalScroll scroll;

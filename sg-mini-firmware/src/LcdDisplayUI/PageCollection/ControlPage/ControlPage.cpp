@@ -2,7 +2,7 @@
 
 ControlPage::ControlPage(){
   scroll.init(LCDScreenWidth, LCDScreenHeight);
-  scroll.setCoverArea(PageLayoutRange(0, 2));
+  scroll.setCoverArea(PageLayoutRange(0, 1));
   scroll.setCursor(&contents[2], 0);
 }
 
