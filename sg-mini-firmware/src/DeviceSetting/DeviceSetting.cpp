@@ -79,3 +79,33 @@ void DeviceSetting::mainLoop() {
     date[3] = clock.dayOfWeek;
   }
 }
+
+void DeviceSetting::ControllerModeUpdate (DeviceSetting::ControllerMode CurrentMode, DeviceSetting::ControllerMode UpdatedMode){
+  if (!(CurrentMode == UpdatedMode)){
+  switch (UpdatedMode)
+  {
+  case DeviceSetting::ControllerMode::HumidMode:
+    //DeviceSetting::HumiditySetlevel == something;
+    DeviceSetting::WateringSettime = 2000;  // 2000ms i guess the unit is     
+    break;
+
+  case DeviceSetting::ControllerMode::ScheduleMode:
+    /* code */
+    DeviceSetting::WateringSettime = 5000;
+    break;
+
+  case DeviceSetting::ControllerMode::ManualMode:
+    /* code */
+    DeviceSetting::WateringSettime = 0;
+    break;
+  }
+  CurrentMode == UpdatedMode;
+  }
+
+}
+
+float DeviceSetting::getHumiditylevel(){
+  float humiditylevel;
+  Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, humiditylevel);
+  return(humiditylevel);
+}
