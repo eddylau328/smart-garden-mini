@@ -6,7 +6,6 @@
 #include "../Helper/Helper.h"
 #include "../Storage/Storage.h"
 #include "../Storage/StorageConstant.h"
-#include "../Sensors/Sensors.h"
 
 /**
  * @brief provides sets of functions for accessing the settings stored in the board or temporary stored in the device
@@ -81,22 +80,6 @@ class DeviceSetting {
      * 
      */
     static void mainLoop();
-
-    enum ControllerMode{
-      HumidMode=1,
-      ScheduleMode,
-      ManualMode,
-    } ;
-
-
-    static int Wateringtime; //time pass after water on
-    static int WateringSettime; // Set time for watering length
-    static int HumiditySetlevel;
-    static int ScheduleSettime;
-
-    static void ControllerModeUpdate(ControllerMode CurrentMode, ControllerMode UpdatedMode);
-    float getHumiditylevel();
-    static void getTime();
 
   private:
     static DS1307 clock;
