@@ -18,6 +18,7 @@ void Controller::mainLoop() {
     portEXIT_CRITICAL(&timerMux);
     scheduleTask();
   }
+  // if()
 }
 
 void Controller::onTimer() {
@@ -35,5 +36,16 @@ void Controller::initInterval() {
 
 void Controller::scheduleTask() {
 
+}
+
+void Controller::AutomodeTask(){
+
+}
+
+void Controller::ScheduleModeTask(){
+
+}
+
+void Controller::ManualModeTask(){
 
 }
