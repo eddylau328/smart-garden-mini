@@ -37,8 +37,8 @@ void PageControl::init() {
   pages[PageCollection::PageKey::ControlPagePageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::ModeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::ManualSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::AutoSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::AutoSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
 
  this->display->init();
 }
