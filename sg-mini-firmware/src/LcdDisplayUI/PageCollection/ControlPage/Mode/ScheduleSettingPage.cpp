@@ -49,8 +49,14 @@ void ScheduleSettingPage::interactiveUpdate(int counter, bool isPress) {
         minute = input[InputIndex::Minute].getInputValue();
         second = input[InputIndex::Second].getInputValue();
         
-      }
+      
       Page::interactiveUpdate(counter, isPress);
+      }
+      else
+      {
+       Page::nextPageCallback(PageCollection::PageKey::ModeSettingPageKey);
+      }
+      
     }
     else
       scroll.updateScroll(contents, contentSize, counter);

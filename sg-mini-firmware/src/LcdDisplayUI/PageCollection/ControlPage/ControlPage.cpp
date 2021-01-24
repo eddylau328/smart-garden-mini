@@ -2,8 +2,8 @@
 
 ControlPage::ControlPage(){
   scroll.init(LCDScreenWidth, LCDScreenHeight);
-  scroll.setCoverArea(PageLayoutRange(0, 1));
-  scroll.setCursor(&contents[2], 0);
+  scroll.setCoverArea(PageLayoutRange(0, 2));
+  scroll.setCursor(&contents[3], 0);
 }
 
 ControlPage::~ControlPage(){
@@ -33,6 +33,10 @@ void ControlPage::interactiveUpdate(int counter, bool isPress) {
       case 1:
         LOG_ERROR("Enter Manual Setting");
         Page::nextPageCallback(PageCollection::PageKey::ManualSettingPageKey); 
+        break;
+      case 2:
+        LOG_ERROR("Go Back to Setting Page");
+        Page::nextPageCallback(PageCollection::PageKey::SettingPageKey); 
         break;
       default:
         Page::nextPageCallback(Page::defaultPageKey);

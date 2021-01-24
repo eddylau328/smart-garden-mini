@@ -39,9 +39,14 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
       if (row == 1) {
         int humidity;
         humidity = input.getInputValue();
-        
+        Page::interactiveUpdate(counter, isPress);  
       }
-      Page::interactiveUpdate(counter, isPress);
+      
+      else
+      {
+        Page::nextPageCallback(PageCollection::PageKey::ModeSettingPageKey);
+      }
+      
     }
     else
       scroll.updateScroll(contents, contentSize, counter);

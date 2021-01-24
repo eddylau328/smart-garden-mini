@@ -23,11 +23,12 @@ class ControlPage : public Page {
 
   private:
     
-    const int8_t contentSize = 3;
-    PageContent contents[3] = {
+    const int8_t contentSize = 4;
+    PageContent contents[4] = {
       PageContent("Mode", 4, PageLayoutPosition(2,0)),
       PageContent("Manual", 6, PageLayoutPosition(2,1)),
-      PageContent(">", 1, PageLayoutPosition(0, 0))
+      PageContent("...", 3, PageLayoutPosition(2,2)),
+      PageContent(">", 1, PageLayoutPosition(0, 0)),
     };
 
     PageVerticalScroll scroll;

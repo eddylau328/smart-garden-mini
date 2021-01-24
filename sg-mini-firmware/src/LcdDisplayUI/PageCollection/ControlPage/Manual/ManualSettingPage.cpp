@@ -39,9 +39,14 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
       if (row == 1) {
         int second;
         second = input.getInputValue();
-     
-      }
+    
       Page::interactiveUpdate(counter, isPress);
+      }
+      else
+      {
+        Page::nextPageCallback(PageCollection::PageKey::ControlPagePageKey);
+      }
+      
     }
     else
       scroll.updateScroll(contents, contentSize, counter);

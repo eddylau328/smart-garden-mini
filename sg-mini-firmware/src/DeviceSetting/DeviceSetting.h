@@ -75,6 +75,8 @@ class DeviceSetting {
      */
     static void setTime(int hour, int minute, int second);
 
+    static void  getMode(int *mode);
+    static void setMode(int mode);
     /**
      * @brief performs functions that need to call in a period of time, e.g. getting the time 
      * 
@@ -87,6 +89,7 @@ class DeviceSetting {
     static unsigned long lastTimeRecord;
     static uint8_t time[3];
     static uint8_t date[4];
+    static uint8_t mode; 
 };
 
 #endif
