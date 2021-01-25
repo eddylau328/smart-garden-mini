@@ -4,7 +4,11 @@ char DeviceSetting::userName[UserNameLength];
 DS1307 DeviceSetting::clock;
 uint8_t DeviceSetting::time[3];
 uint8_t DeviceSetting::date[4];
+uint8_t DeviceSetting::mode;
 unsigned long DeviceSetting::lastTimeRecord;
+uint8_t DeviceSetting::WateringDuration; //set the second the pump will be on
+uint8_t DeviceSetting::ScheduleTime[3];// set what time the pump will be on
+uint8_t DeviceSetting::HumidityLevel;
 
 void DeviceSetting::init() {
   Storage::init();
@@ -67,6 +71,8 @@ void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
   }
 }
 
+
+
 void DeviceSetting::mainLoop() {
   if (millis() - lastTimeRecord > 200) {
     clock.getTime();
@@ -80,32 +86,28 @@ void DeviceSetting::mainLoop() {
   }
 }
 
-void DeviceSetting::ControllerModeUpdate (DeviceSetting::ControllerMode CurrentMode, DeviceSetting::ControllerMode UpdatedMode){
-  if (!(CurrentMode == UpdatedMode)){
-  switch (UpdatedMode)
-  {
-  case DeviceSetting::ControllerMode::HumidMode:
-    //DeviceSetting::HumiditySetlevel == something;
-    DeviceSetting::WateringSettime = 2000;  // 2000ms i guess the unit is     
-    break;
 
-  case DeviceSetting::ControllerMode::ScheduleMode:
-    /* code */
-    DeviceSetting::WateringSettime = 5000;
-    break;
-
-  case DeviceSetting::ControllerMode::ManualMode:
-    /* code */
-    DeviceSetting::WateringSettime = 0;
-    break;
+void DeviceSetting::setScheduleTime(int hour, int minute, int second) {
+  if (Helper::intInRange(hour, 0, 23) && Helper::intInRange(minute, 0, 59) && Helper::intInRange(second, 0, 59)) {
+    
   }
-  CurrentMode == UpdatedMode;
-  }
-
 }
 
-float DeviceSetting::getHumiditylevel(){
-  float humiditylevel;
-  Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, humiditylevel);
-  return(humiditylevel);
+void DeviceSetting::getScheduleTime(int *hour, int *minute, int *second) {
+  *hour = ScheduleTime[0];
+  *minute = ScheduleTime[1];
+  *second = ScheduleTime[2];
 }
+
+void DeviceSetting::setHumiditySetLevel(int HumidityLevel){
+  if(Helper::intInRange(HumidityLevel,0,100)){
+
+  }
+  
+
+}
+float DeviceSetting::getHumiditySetLevel(int *humidity){
+  *humidity = HumidityLevel;
+  return(HumidityLevel);
+}
+

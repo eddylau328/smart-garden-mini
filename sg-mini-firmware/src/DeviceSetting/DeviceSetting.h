@@ -80,30 +80,41 @@ class DeviceSetting {
      * @brief performs functions that need to call in a period of time, e.g. getting the time 
      * 
      */
+    static void getControllerMode(int *mode);
+    static void setControllerMode(int mode);
+
+    static void getWateringDuration(int *second);
+    static void setWateringDuration(int second);
+
+    static void getScheduleTime(int *hour, int *minute, int *second);
+    static void setScheduleTime(int hour, int minute, int second);
+
+    static float getHumiditySetLevel(int *humidity);
+    static void setHumiditySetLevel(int humidity);
+
+
     static void mainLoop();
 
     enum ControllerMode{
-      HumidMode=1,
+      HumidMode=0,
       ScheduleMode,
       ManualMode,
     } ;
 
-
-    static int Wateringtime; //time pass after water on
-    static int WateringSettime; // Set time for watering length
-    static int HumiditySetlevel;
-    static int ScheduleSettime;
-
-    static void ControllerModeUpdate(ControllerMode CurrentMode, ControllerMode UpdatedMode);
-    float getHumiditylevel();
-    static void getTime();
-
+    
   private:
     static DS1307 clock;
     static char userName[UserNameLength];
     static unsigned long lastTimeRecord;
     static uint8_t time[3];
     static uint8_t date[4];
+    static uint8_t mode;
+    static uint8_t WateringDuration; //set the second the pump will be on
+    static uint8_t ScheduleTime[3];// set what time the pump will be on
+    static uint8_t HumidityLevel;// set which humidity point the pump will be on
+   
+    
+    
 };
 
 #endif
