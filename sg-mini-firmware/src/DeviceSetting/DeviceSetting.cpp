@@ -4,7 +4,6 @@ char DeviceSetting::userName[UserNameLength];
 DS1307 DeviceSetting::clock;
 uint8_t DeviceSetting::time[3];
 uint8_t DeviceSetting::date[4];
-uint8_t DeviceSetting::mode;
 unsigned long DeviceSetting::lastTimeRecord;
 
 void DeviceSetting::init() {
@@ -67,15 +66,6 @@ void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
     clock.setTime();
   }
 }
-
-void DeviceSetting::setMode(int mode) {
-  
-}
-
-void DeviceSetting::getMode(int *mode) {
-
-}
-
 
 void DeviceSetting::mainLoop() {
   if (millis() - lastTimeRecord > 200) {
