@@ -5,7 +5,7 @@
 #include "LcdDisplayUI.h"
 
 // Page Collection -------------------------------------
-#define TotalPage 6 // Modify it if you want to add page
+#define TotalPage 13// Modify it if you want to add page
 #include "PageCollection/PageCollection.h"
 #include "PageCollection/Page.h"
 #include "PageCollection/MainPage/MainPage.h"
@@ -14,6 +14,12 @@
 #include "PageCollection/SettingPage/TimeSettingPage/TimeSettingPage.h"
 #include "PageCollection/SettingPage/DateSettingPage/DateSettingPage.h"
 #include "PageCollection/SettingPage/UsernameSettingPage/UsernameSettingPage.h"
+#include "PageCollection/ControlPage/ControlPage.h"
+#include "PageCollection/ControlPage/Mode/ModeSettingPage.h"
+#include "PageCollection/ControlPage/Mode/AutoSettingPage.h"
+#include "PageCollection/ControlPage/Mode/ScheduleSettingPage.h"
+#include "PageCollection/ControlPage/Manual/ManualSettingPage.h"
+
 // -----------------------------------------------------
 
 // Class you need to display data / information --------

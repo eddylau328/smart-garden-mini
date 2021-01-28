@@ -12,6 +12,12 @@ class PageCollection {
       TimeSettingPageKey= 3,
       DateSettingPageKey = 4,
       UsernameSettingPageKey = 5,
+      ControlPagePageKey = 6,
+      ModeSettingPageKey = 7,
+      ManualSettingPageKey = 8,
+      AutoSettingPageKey = 9,
+      ScheduleSettingPageKey = 10,
+      
     };
 };
 
