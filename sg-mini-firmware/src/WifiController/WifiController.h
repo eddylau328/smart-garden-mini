@@ -10,22 +10,18 @@
 #include "../Helper/Helper.h"
 
 #include "WifiScan.h"
+#include "WifiConnect.h"
 
 /**
  * @brief provides wifi connection functions for connecting to the backend server for receiving/sending data
  * 
  */
-class WifiController: public WifiScan {
+class WifiController: public WifiScan, public WifiConnect {
 
   public:
     static void init();
     static void getIsConnected();
-    static void connect(char *ssid, char *password);
-    static void disconnect();
     static void mainLoop();
-
-  private:
-    static void handleConnected(WiFiEvent_t event, WiFiEventInfo_t info);
 };
 
 #endif
