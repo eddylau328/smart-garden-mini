@@ -57,8 +57,6 @@ void setup() {
 */ 
 }
 
-unsigned long lastTimeCheck;
-
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED
 
@@ -67,11 +65,8 @@ void loop() {
   controller.mainLoop();
   Sensors::mainLoop();
   DeviceSetting::mainLoop();
+  WifiController::mainLoop();
 
-  if (millis() - lastTimeCheck > 10000) {
-    WifiController::scanNetworks();
-    lastTimeCheck = millis();
-  }
 }
 
 

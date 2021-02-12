@@ -7,27 +7,34 @@
 
 // Own Library
 #include "../DeviceSetting/DeviceSetting.h"
+#include "../Helper/Helper.h"
+
+#include "WifiInfo.h"
 
 /**
  * @brief provides wifi connection functions for connecting to the backend server for receiving/sending data
  * 
  */
-class WifiController {
+class WifiController: public WifiInfo {
 
   public:
     static void init();
     static void getIsConnected();
-    static void getAccessPoint();
     static void connect(char *ssid, char *password);
-    static void scanNetworks();
     static void disconnect();
     static void mainLoop();
+    static void startScanNetwork(uint8_t rescanCount=3);
+    static void stopScanNetwork();
 
   private:
-    static int networkCount;
     static void handleConnected(WiFiEvent_t event, WiFiEventInfo_t info);
+    static void scanNetworks();
     static void handleScanNetworks(WiFiEvent_t event, WiFiEventInfo_t info);
-    static String ssids;
+    static unsigned long lastActionCheck;
+    static bool isScanNetwork;
+    static int scanNetworkCount;
+    static uint8_t rescanNetworkCount;
+
 };
 
 #endif

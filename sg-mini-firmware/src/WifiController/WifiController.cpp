@@ -1,7 +1,10 @@
 #include "WifiController.h"
+#include <Arduino.h>
 
-int WifiController::networkCount = 0;
-String WifiController::ssids;
+unsigned long WifiController::lastActionCheck;
+bool WifiController::isScanNetwork = false;
+uint8_t WifiController::rescanNetworkCount = 0;
+int WifiController::scanNetworkCount = 0;
 
 void WifiController::init() {
   WiFi.disconnect(true);
@@ -16,22 +19,44 @@ void WifiController::connect(char *ssid, char *password) {
   WiFi.begin(ssid, password);
 }
 
+void WifiController::startScanNetwork(uint8_t rescanCount) {
+  isScanNetwork = true;
+  rescanNetworkCount = rescanCount;
+}
+
+void WifiController::stopScanNetwork() {
+  isScanNetwork = false;
+  rescanNetworkCount = 0;
+}
+
+
+/* Private Methods */
 void WifiController::scanNetworks() {
-  networkCount = WiFi.scanNetworks();
+  scanNetworkCount = WiFi.scanNetworks();
 }
 
 void WifiController::handleScanNetworks(WiFiEvent_t event, WiFiEventInfo_t info) {
-  if (networkCount == 0) {
+  initializeNetworks(scanNetworkCount);
+  LOG_WARNING("Finish scan network");
+  if (getNetworkCount() == 0)
     LOG_WARNING("No networks found");
-  }
-  else {
-    for (int i = 0 ; i < networkCount; i++) {
-      ssids = WiFi.SSID(i);
-      LOG_WARNING(ssids);
-    }
-  }
+  else
+    for (int i = 0 ; i < getNetworkCount(); i++)
+      setNetwork(WiFi.SSID(i), i);
 }
 
 void WifiController::handleConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
   LOG_WARNING("Connected to Access Point");
+}
+
+void WifiController::mainLoop() {
+  if (millis() - lastActionCheck > 2000) {
+    if (isScanNetwork) {
+      scanNetworks();
+      rescanNetworkCount--;
+      if (rescanNetworkCount <= 0)
+        isScanNetwork = false;
+    }
+    lastActionCheck = millis();
+  }
 }
