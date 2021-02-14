@@ -80,7 +80,6 @@ class WifiScan{
 
     static char **networks;
     static int networkCount;
-    static unsigned long lastAction;
     static bool isScanNetwork;
     static int scanNetworkCount;
     static uint8_t rescanNetworkCount;

@@ -2,7 +2,6 @@
 
 char **WifiScan::networks;
 int WifiScan::networkCount = 0;
-unsigned long WifiScan::lastAction;
 bool WifiScan::isScanNetwork = false;
 int WifiScan::scanNetworkCount = 0;
 uint8_t WifiScan::rescanNetworkCount = 0;
@@ -74,13 +73,10 @@ void WifiScan::handleScanNetworks(WiFiEvent_t event, WiFiEventInfo_t info) {
 
 /* Protected Methods */
 void WifiScan::mainLoop() {
-  if (millis() - lastAction > 2000) {
-    if (isScanNetwork) {
-      scanNetworks();
-      rescanNetworkCount--;
-      if (rescanNetworkCount <= 0)
-        isScanNetwork = false;
-    }
-    lastAction = millis();
+  if (isScanNetwork) {
+    scanNetworks();
+    rescanNetworkCount--;
+    if (rescanNetworkCount <= 0)
+      isScanNetwork = false;
   }
 }

@@ -20,8 +20,11 @@ class WifiController: public WifiScan, public WifiConnect {
 
   public:
     static void init();
-    static void getIsConnected();
-    static void mainLoop();
+  
+  private:
+    static TaskHandle_t wifiMainLoop;
+    static void mainLoop(void * pvParameters );
+
 };
 
 #endif
