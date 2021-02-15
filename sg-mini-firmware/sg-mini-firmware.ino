@@ -65,7 +65,6 @@ void loop() {
   controller.mainLoop();
   Sensors::mainLoop();
   DeviceSetting::mainLoop();
-  WifiController::mainLoop();
 
 }
 
