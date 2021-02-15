@@ -76,6 +76,21 @@ class DeviceSetting {
     static void setTime(int hour, int minute, int second);
 
     /**
+     * @brief Set the Wifi Mode 
+     * 
+     * @param isWifiMode - true if user want to use wifi, vice versa
+     */
+    static void setWifiMode(bool isWifiMode);
+
+    /**
+     * @brief Get whether the user is chose to use Wifi 
+     * 
+     * @return true - use wifi 
+     * @return false - not use wifi 
+     */
+    static bool getWifiMode();
+
+    /**
      * @brief performs functions that need to call in a period of time, e.g. getting the time 
      * 
      */
@@ -87,6 +102,7 @@ class DeviceSetting {
     static unsigned long lastTimeRecord;
     static uint8_t time[3];
     static uint8_t date[4];
+    static bool wifiMode;
 };
 
 #endif
