@@ -36,6 +36,10 @@ void WifiScan::stopScanNetwork() {
   rescanNetworkCount = 0;
 }
 
+bool WifiScan::isScanningNetwork() {
+  return isScanNetwork;
+}
+
 /* Private Methods */
 void WifiScan::setNetwork(String networkName, int index) {
   Helper::assignStrValue(networks[index], ' ', BufferSize);

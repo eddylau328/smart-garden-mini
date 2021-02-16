@@ -41,6 +41,12 @@ class WifiScan{
      */
     static void stopScanNetwork();
 
+    /**
+     * @brief is scanning network
+     * 
+     */
+    static bool isScanningNetwork();
+
   protected:
     /**
      * @brief performs the scanning task inside a event loop that will be trigger every 2 seconds
