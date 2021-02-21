@@ -12,14 +12,11 @@
  */
 class MainPage : public Page {
   public:
-    MainPage();
-    ~MainPage();
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
 
   private:
-    PageContent contents[7] = {
+    PageContent staticContents[7] = {
       PageContent(2, PageLayoutPosition(0, 0)),
       PageContent(":", 1, PageLayoutPosition(2, 0)),
       PageContent(2, PageLayoutPosition(3, 0)),

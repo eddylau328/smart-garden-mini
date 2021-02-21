@@ -18,7 +18,7 @@ void PageVerticalScroll::setCursor(PageContent *content, int defaultRow = 0 ) {
     cursorRow = (screenHeight - 1) / 2;
 }
 
-void PageVerticalScroll::updateScroll(PageContent *contents, int length, int counter) {
+void PageVerticalScroll::updateScroll(PageContent **contents, int length, int counter) {
   PageLayoutPosition newPos;
   int8_t adjustCounter = (int8_t)counter;
   int8_t rowMaxIndex = screenHeight - 1;
@@ -93,54 +93,54 @@ void PageVerticalScroll::updateScroll(PageContent *contents, int length, int cou
   if (newOrigin != currentOrigin) {
     if (cursor) {
       for (int i = 0; i < length; i++){
-        if (cursor != contents+i) {
-          newPos = (contents + i)->getNewPos();
+        if (cursor != contents[i]) {
+          newPos = contents[i]->getNewPos();
           newPos.row += (newOrigin - currentOrigin);
-          (contents + i)->updatePos(newPos);
+          contents[i]->updatePos(newPos);
         }
       }
     }
     else {
       for (int i = 0; i < length; i++){
-        newPos = (contents + i)->getNewPos();
+        newPos = contents[i]->getNewPos();
         newPos.row += (newOrigin - currentOrigin);
-        (contents + i)->updatePos(newPos);
+        contents[i]->updatePos(newPos);
       }
     }
     currentOrigin = newOrigin;
   }
 }
 
-void PageVerticalScroll::resetScroll(PageContent *contents, int length) {
+void PageVerticalScroll::resetScroll(PageContent **contents, int length) {
   PageLayoutPosition newPos;
   if (cursor) {
     newPos = cursor->getNewPos();
     newPos.row = cursorDefaultRow;
     cursor->updatePos(newPos);
     for (int i = 0; i < length; i++){
-      if (cursor != contents+i) {
-        newPos = (contents + i)->getNewPos();
+      if (cursor != contents[i]) {
+        newPos = contents[i]->getNewPos();
         newPos.row -= currentOrigin;
-        (contents + i)->updatePos(newPos);
+        contents[i]->updatePos(newPos);
       }
     }
     cursorRow = cursorDefaultRow;
   }
   else {
     for (int i = 0; i < length; i++){
-      newPos = (contents + i)->getNewPos();
+      newPos = contents[i]->getNewPos();
       newPos.row -= currentOrigin;
-      (contents + i)->updatePos(newPos);
+      contents[i]->updatePos(newPos);
     }
   }
   currentOrigin = 0;
 }
 
-int8_t PageVerticalScroll::getCurrentArrowRow(PageContent *contents, int length) {
+int8_t PageVerticalScroll::getCurrentArrowRow(PageContent **contents, int length) {
   PageLayoutPosition newPos;
   for (int i = 0; i < length; i++) {
-    if (cursor != contents+i) {
-      newPos = (contents + i)->getNewPos();
+    if (cursor != contents[i]) {
+      newPos = contents[i]->getNewPos();
       if (newPos.row == cursorRow)
         return newPos.row - currentOrigin;
     }

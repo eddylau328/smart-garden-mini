@@ -15,16 +15,13 @@ class SensorPage : public Page {
 
   public:
     SensorPage();
-    ~SensorPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
 
   private:
-    const int8_t contentSize = 12;
-    PageContent contents[12] = {
+    PageContent staticContents[12] = {
       PageContent("Temp",  4, PageLayoutPosition(0, 0)),
       PageContent("Hum",   3, PageLayoutPosition(0, 1)),
       PageContent("STemp", 5, PageLayoutPosition(0, 2)),

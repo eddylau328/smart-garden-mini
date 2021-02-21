@@ -11,14 +11,12 @@ class TemplatePage : public Page {
 
   public:
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
     void dismountPage();
 
   private:
-    const int8_t contentSize = 2;
-    PageContent contents[2] = {
+    PageContent staticContents[2] = {
       PageContent("Template", 8, PageLayoutPosition(0,0)),
       PageContent("Page", 4, PageLayoutPosition(0,1))
     };

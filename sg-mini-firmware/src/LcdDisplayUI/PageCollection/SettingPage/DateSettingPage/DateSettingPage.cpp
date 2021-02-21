@@ -1,10 +1,10 @@
 #include "DateSettingPage.h"
 
 DateSettingPage::DateSettingPage() {
-  input[InputIndex::Year].setLinkage(&contents[InputIndex::Year]);
-  input[InputIndex::Month].setLinkage(&contents[InputIndex::Month]);
-  input[InputIndex::DayOfMonth].setLinkage(&contents[InputIndex::DayOfMonth]);
-  input[InputIndex::DayOfWeek].setLinkage(&contents[InputIndex::DayOfWeek]);
+  input[InputIndex::Year].setLinkage(&staticContents[InputIndex::Year]);
+  input[InputIndex::Month].setLinkage(&staticContents[InputIndex::Month]);
+  input[InputIndex::DayOfMonth].setLinkage(&staticContents[InputIndex::DayOfMonth]);
+  input[InputIndex::DayOfWeek].setLinkage(&staticContents[InputIndex::DayOfWeek]);
 
   input[InputIndex::Year].setCircleLoop(true);
   input[InputIndex::Month].setCircleLoop(true);
@@ -13,12 +13,14 @@ DateSettingPage::DateSettingPage() {
 
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 1));
-  scroll.setCursor(&contents[InputIndex::Arrow], 1);
+  scroll.setCursor(&staticContents[InputIndex::Arrow], 1);
 }
 
 DateSettingPage::~DateSettingPage() {}
 
 void DateSettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 11);
+
   int year, month, dayOfMonth, dayOfWeek;
   DeviceSetting::getDate(&year, &month, &dayOfMonth, &dayOfWeek);
   input[InputIndex::Year].set((int8_t)(year-2000), 0, 99, true);
@@ -26,16 +28,11 @@ void DateSettingPage::mountPage() {
   input[InputIndex::DayOfMonth].set((int8_t)dayOfMonth, 1, 31, true);
   input[InputIndex::DayOfWeek].set((int8_t)dayOfWeek, 1, 7, true);
 
-  contents[InputIndex::Arrow].updateContent(" ", 1);
+  staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Year;
   input[inputIndex].startBlink();
   scroll.resetScroll(contents, contentSize);
   changeTopic();
-}
-
-void DateSettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
 }
 
 void DateSettingPage::updateContents() {
@@ -65,7 +62,7 @@ void DateSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
-        contents[InputIndex::Arrow].updateContent(">", 1);
+        staticContents[InputIndex::Arrow].updateContent(">", 1);
       else {
         if (inputIndex == InputIndex::DayOfMonth) {
           int year, month, dayOfMonth;
@@ -95,19 +92,19 @@ void DateSettingPage::interactiveUpdate(int counter, bool isPress) {
 void DateSettingPage::changeTopic() {
   switch(inputIndex) {
     case InputIndex::Year:
-      contents[5].updateContent("Set Year", 8);
+      staticContents[5].updateContent("Set Year", 8);
       break;
     case InputIndex::Month:
-      contents[5].updateContent("Set Month", 9);
+      staticContents[5].updateContent("Set Month", 9);
       break;
     case InputIndex::DayOfMonth:
-      contents[5].updateContent("Set Day", 7);
+      staticContents[5].updateContent("Set Day", 7);
       break;
     case InputIndex::DayOfWeek:
-      contents[5].updateContent("Mon=1 Sun=7", 11);
+      staticContents[5].updateContent("Mon=1 Sun=7", 11);
       break;
     case InputIndex::Arrow:
-      contents[5].updateContent("Set Date", 8);
+      staticContents[5].updateContent("Set Date", 8);
       break;
   }
 }

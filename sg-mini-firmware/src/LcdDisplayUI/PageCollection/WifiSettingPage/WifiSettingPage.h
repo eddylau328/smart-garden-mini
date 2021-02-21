@@ -21,7 +21,6 @@ class WifiSettingPage : public Page {
   public:
     WifiSettingPage();
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
 
@@ -33,11 +32,7 @@ class WifiSettingPage : public Page {
       ScanWifiInput = 4,
     };
 
-    // Contents
-    int8_t contentSize = 4;
-    PageContent *showContents;
-
-    PageContent contents[5] = {
+    PageContent staticContents[5] = {
       PageContent("Wifi Mode", 9, PageLayoutPosition(2, 0)),
       PageContent(3, PageLayoutPosition(13, 0)),
       PageContent("...      ", 9, PageLayoutPosition(2, 1)),

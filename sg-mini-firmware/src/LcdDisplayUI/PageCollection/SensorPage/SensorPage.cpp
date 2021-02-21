@@ -5,16 +5,9 @@ SensorPage::SensorPage() {
   scroll.setCoverArea(PageLayoutRange(0, 5));
 }
 
-SensorPage::~SensorPage() {
-}
-
 void SensorPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 12);
   scroll.resetScroll(contents, contentSize);
-}
-
-void SensorPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
 }
 
 void SensorPage::updateContents() {
@@ -35,7 +28,7 @@ void SensorPage::updateSensorData(SensorCollection::SensorDataType dataType, int
   float value;
   bool isCorrect = Sensors::getSensorData(dataType, value);
   if (isCorrect)
-    this->contents[contentIndex].updateContent(value, 1);
+    staticContents[contentIndex].updateContent(value, 1);
   else
-    this->contents[contentIndex].updateContent("NULL", 4);
+    staticContents[contentIndex].updateContent("NULL", 4);
 }

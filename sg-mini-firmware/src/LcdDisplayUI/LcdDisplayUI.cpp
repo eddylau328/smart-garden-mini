@@ -27,31 +27,32 @@ void LcdDisplayUI::render() {
   if (millis() - lastRender > 100) {
     if (renderPage) {
       // Retrieve page contents array
-      PageContent *contents;
+      PageContent **contents;
       int length;
-      renderPage->getContents(&contents, &length);
+      bool isClearAll;
+      renderPage->getContents(&contents, &length, &isClearAll);
       // render the page
-      if (isUpdatePage) {
+      if (isUpdatePage || isClearAll) {
         lcd->clear();
         for (int i = 0; i < length; i++) {
-          printContent(contents+i);
+          printContent(contents[i]);
           // tell that content is updated
-          (contents+i)->confirmUpdate();
+          contents[i]->confirmUpdate();
         }
         isUpdatePage = false;
       }
       else {
         for (int i = 0; i < length; i++) {
-          if ((contents+i)->getIsUpdate()) {
-            LOG_WARNING("Update Content id:", (contents+i)->getId());
-            clearContent(contents+i);
+          if (contents[i]->getIsUpdate()) {
+            LOG_WARNING("Update Content id:", contents[i]->getId());
+            clearContent(contents[i]);
           }
         }
         for (int i = 0; i < length; i++) {
-          if ((contents+i)->getIsUpdate()) {
-            printContent(contents+i);
+          if (contents[i]->getIsUpdate()) {
+            printContent(contents[i]);
             // tell that content is updated
-            (contents+i)->confirmUpdate();
+            contents[i]->confirmUpdate();
           }
         }
       }

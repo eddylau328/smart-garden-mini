@@ -1,9 +1,9 @@
 #include "ScheduleSettingPage.h"
 
 ScheduleSettingPage::ScheduleSettingPage() {
-  input[InputIndex::Hour].setLinkage(&contents[InputIndex::Hour]);
-  input[InputIndex::Minute].setLinkage(&contents[InputIndex::Minute]);
-  input[InputIndex::Second].setLinkage(&contents[InputIndex::Second]);
+  input[InputIndex::Hour].setLinkage(&staticContents[InputIndex::Hour]);
+  input[InputIndex::Minute].setLinkage(&staticContents[InputIndex::Minute]);
+  input[InputIndex::Second].setLinkage(&staticContents[InputIndex::Second]);
 
   input[InputIndex::Hour].setCircleLoop(true);
   input[InputIndex::Minute].setCircleLoop(true);
@@ -11,27 +11,22 @@ ScheduleSettingPage::ScheduleSettingPage() {
 
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 1));
-  scroll.setCursor(&contents[InputIndex::Arrow], 1);
+  scroll.setCursor(&staticContents[InputIndex::Arrow], 1);
 }
 
-ScheduleSettingPage::~ScheduleSettingPage() {}
-
 void ScheduleSettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 9);
+
   int hour, minute, second;
 
   input[InputIndex::Hour].set((int8_t)hour, 0, 23, true);
   input[InputIndex::Minute].set((int8_t)minute, 0, 59, true);
   input[InputIndex::Second].set((int8_t)second, 0, 59, true);
-  contents[InputIndex::Arrow].updateContent(" ", 1);
+  staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Hour;
   input[inputIndex].startBlink();
   scroll.resetScroll(contents, contentSize);
   changeTopic();
-}
-
-void ScheduleSettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
 }
 
 void ScheduleSettingPage::updateContents() {
@@ -66,7 +61,7 @@ void ScheduleSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
-        contents[InputIndex::Arrow].updateContent(">", 1);
+        staticContents[InputIndex::Arrow].updateContent(">", 1);
       else
         input[inputIndex].startBlink();
       changeTopic();
@@ -77,16 +72,16 @@ void ScheduleSettingPage::interactiveUpdate(int counter, bool isPress) {
 void ScheduleSettingPage::changeTopic() {
   switch(inputIndex) {
     case InputIndex::Hour:
-      contents[4].updateContent("Set Hour", 8);
+      staticContents[4].updateContent("Set Hour", 8);
       break;
     case InputIndex::Minute:
-      contents[4].updateContent("Set Minute", 10);
+      staticContents[4].updateContent("Set Minute", 10);
       break;
     case InputIndex::Second:
-      contents[4].updateContent("Set Second", 10);
+      staticContents[4].updateContent("Set Second", 10);
       break;
     case InputIndex::Arrow:
-      contents[4].updateContent("Time2Water", 10);
+      staticContents[4].updateContent("Time2Water", 10);
       break;
   }
 }

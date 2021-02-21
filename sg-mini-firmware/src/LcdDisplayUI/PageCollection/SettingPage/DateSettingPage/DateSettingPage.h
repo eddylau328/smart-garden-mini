@@ -16,7 +16,6 @@ class DateSettingPage : public Page {
     ~DateSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
 
@@ -29,8 +28,7 @@ class DateSettingPage : public Page {
       Arrow = 4
     };
 
-    const int8_t contentSize = 11;
-    PageContent contents[11] = {
+    PageContent staticContents[11] = {
       PageContent(2, PageLayoutPosition(0, 1)),
       PageContent(2, PageLayoutPosition(3, 1)),
       PageContent(2, PageLayoutPosition(6, 1)),

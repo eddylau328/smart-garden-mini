@@ -12,7 +12,6 @@ class ScanWifiPage : public Page {
   public:
     ScanWifiPage();
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
     void dismountPage();
@@ -30,9 +29,6 @@ class ScanWifiPage : public Page {
 
     PageVerticalScroll scroll;
 
-    int8_t contentSize = 0;
-    PageContent **contents;
-
     int8_t staticContentSize = 5;
     PageContent staticContents[5] = {
       PageContent("Scan Wifi", 9, PageLayoutPosition(0, 0)),
@@ -48,6 +44,8 @@ class ScanWifiPage : public Page {
     int8_t contentRow = 0;
     void contentSetup();
     void getDynamicContents();
+    void freeDynamicContents();
+    void freeContents();
 };
 
 #endif`

@@ -1,28 +1,21 @@
 #include "MainPage.h"
 
 
-MainPage::MainPage() {}
-
-MainPage::~MainPage() {}
-
 void MainPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 7);
+
   int hour, min, sec;
   DeviceSetting::getTime(&hour, &min, &sec);
-  contents[0].updateContent(hour, true);
-  contents[2].updateContent(min, true);
-}
-
-void MainPage::getContents(PageContent **contents, int *length){
-  *contents = this->contents;
-  *length = *(&(this->contents) + 1) - this->contents;
+  staticContents[0].updateContent(hour, true);
+  staticContents[2].updateContent(min, true);
 }
 
 void MainPage::updateContents() {
   int hour, min, sec;
   DeviceSetting::getTime(&hour, &min, &sec);
-  contents[0].updateContent(hour, true);
-  contents[2].updateContent(min, true);
-  contents[1].updateContent(sec % 2 == 1? " " : ":", 1);
+  staticContents[0].updateContent(hour, true);
+  staticContents[2].updateContent(min, true);
+  staticContents[1].updateContent(sec % 2 == 1? " " : ":", 1);
   
   updateSensorData(SensorCollection::SensorDataType::Temp, 4);
   updateSensorData(SensorCollection::SensorDataType::Hum, 6);
@@ -32,7 +25,7 @@ void MainPage::updateSensorData(SensorCollection::SensorDataType dataType, int c
   float value;
   bool isCorrect = Sensors::getSensorData(dataType, value);
   if (isCorrect)
-    this->contents[contentIndex].updateContent((int)round(value));
+    staticContents[contentIndex].updateContent((int)round(value));
   else
-    this->contents[contentIndex].updateContent("--", 2);
+    staticContents[contentIndex].updateContent("--", 2);
 }

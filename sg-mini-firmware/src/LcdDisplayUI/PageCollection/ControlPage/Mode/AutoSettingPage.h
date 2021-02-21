@@ -13,22 +13,19 @@
 class AutoSettingPage : public Page {
 
   public:
-     AutoSettingPage();
-     ~AutoSettingPage();
+    AutoSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
-    void dismountPage();
 
   private:
     enum InputIndex{
         Humidity = 0,
         Arrow = 1
     };
-    const int8_t contentSize = 6;
-    PageContent contents[6] = {
+    
+    PageContent staticContents[6] = {
       PageContent(2, PageLayoutPosition(9,1)),
       PageContent(" ", 1, PageLayoutPosition(11, 1)),
       PageContent("Set Auto", 8, PageLayoutPosition(0,0)),

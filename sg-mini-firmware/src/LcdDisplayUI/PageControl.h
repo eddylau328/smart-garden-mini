@@ -19,7 +19,7 @@
 #include "PageCollection/ControlPage/Mode/ScheduleSettingPage.h"
 #include "PageCollection/ControlPage/Manual/ManualSettingPage.h"
 #include "PageCollection/WifiSettingPage/WifiSettingPage.h"
-
+#include "PageCollection/WifiSettingPage/ScanWifiPage/ScanWifiPage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------

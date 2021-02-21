@@ -31,7 +31,7 @@ class PageScroll {
      * @param contents - the first PageContent object pointer in your PageContent array which you will show to the display 
      * @param length - the PageContent array length
      */
-    virtual void resetScroll(PageContent *contents, int length) = 0;
+    virtual void resetScroll(PageContent **contents, int length) = 0;
 
     /**
      * @brief Update the position of all the PageContent objects in your PageContent Array and update the tracking origin according to the rotate step count
@@ -40,7 +40,7 @@ class PageScroll {
      * @param length - the PageContent array length
      * @param counter - the clockwise/anti-clockwise step count 
      */
-    virtual void updateScroll(PageContent *contents, int length, int counter) = 0;
+    virtual void updateScroll(PageContent **contents, int length, int counter) = 0;
 
   protected:
     int8_t screenWidth = 0;

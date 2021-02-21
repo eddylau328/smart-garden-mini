@@ -14,10 +14,8 @@ class ManualSettingPage : public Page {
 
   public:
      ManualSettingPage();
-     ~ManualSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
    
@@ -27,8 +25,7 @@ class ManualSettingPage : public Page {
         Second = 0,
         Arrow = 1
     };
-    const int8_t contentSize = 6;
-    PageContent contents[6] = {
+    PageContent staticContents[6] = {
       PageContent(2, PageLayoutPosition(7,1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Sec2Water", 9, PageLayoutPosition(0,0)),
