@@ -31,11 +31,11 @@ class ScanWifiPage : public Page {
 
     int8_t staticContentSize = 5;
     PageContent staticContents[5] = {
-      PageContent("Scan Wifi", 9, PageLayoutPosition(0, 0)),
-      PageContent(2, PageLayoutPosition(14, 0)),
-      PageContent(">", 1, PageLayoutPosition(0, 1)),
-      PageContent("Join Other", 10, PageLayoutPosition(2, 2)),
-      PageContent("...", 3, PageLayoutPosition(2, 3))
+      PageContent("Scan Wifi", 9, PageLayoutPosition(2, 0)),
+      PageContent(1, PageLayoutPosition(15, 0)),
+      PageContent(">", 1, PageLayoutPosition(0, 0)),
+      PageContent("Join Other", 10, PageLayoutPosition(2, 1)),
+      PageContent("...", 3, PageLayoutPosition(2, 2))
     };
 
     int8_t dynamicContentSize = 0;

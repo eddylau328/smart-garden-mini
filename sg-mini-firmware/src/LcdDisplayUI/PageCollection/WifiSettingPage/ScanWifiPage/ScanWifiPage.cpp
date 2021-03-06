@@ -6,8 +6,8 @@ ScanWifiPage::ScanWifiPage() {
 }
 
 void ScanWifiPage::mountPage() {
-  scroll.setCoverArea(PageLayoutRange(1, 2));
-  scroll.setCursor(&staticContents[ContentIndex::Arrow], 1);
+  scroll.setCoverArea(PageLayoutRange(0, 2));
+  scroll.setCursor(&staticContents[ContentIndex::Arrow], 0);
   isCreatedDynamicContent = false;
   contentSetup();
   WifiController::startScanNetwork(5);
@@ -17,7 +17,6 @@ void ScanWifiPage::updateContents() {
   if (!WifiController::isScanningNetwork() && !isCreatedDynamicContent) {
     getDynamicContents();
     contentSetup();
-    LOG_ERROR("pass in here");
   }
 }
 
@@ -51,16 +50,15 @@ void ScanWifiPage::contentSetup() {
   // assign pointer address
   for (int i = 0; i < staticContentSize; i++)
     contents[i] = &staticContents[i];
-  contentRow = 1;
 
   for (int i = staticContentSize; i < dynamicContentSize + staticContentSize; i++)
     contents[i] = dynamicContents[i - staticContentSize];
   // modification
-  contentRow = dynamicContentSize + 2;
+  contentRow = dynamicContentSize + 2; // dynamicContentSize + (scan wifi) + (join other) + (...) - 1 for index
   contents[ContentIndex::JoinOther]->updatePos(PageLayoutPosition(2, contentRow - 1));
   contents[ContentIndex::ReturnInput]->updatePos(PageLayoutPosition(2, contentRow));
 
-  scroll.setCoverArea(PageLayoutRange(1, contentRow));
+  scroll.setCoverArea(PageLayoutRange(0, contentRow));
   scroll.resetScroll(contents, contentSize);
 }
 
@@ -73,7 +71,6 @@ void ScanWifiPage::getDynamicContents() {
   int length = 0;
   for (int i = 0 ; i < dynamicContentSize; i++) {
     WifiController::getNetwork(&str, &length, i);
-    LOG_ERROR(str);
     dynamicContents[i] = new PageContent(length, PageLayoutPosition(2, i + 1));
     dynamicContents[i]->updateContent(str, length);
   }

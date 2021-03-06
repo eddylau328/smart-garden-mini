@@ -23,9 +23,9 @@ void Sensors::init() {
   for (int i = 0 ; i < TotalSensors; i++) {
     isConnected = sensorList[i]->init();
     isConnected ? sensorCount++ : sensorCount;
-    LOG_WARNING(SensorCollection::getSensorName(i), "Connect", isConnected? "Success" : "Failed");
+    LOG_VERBOSE(SensorCollection::getSensorName(i), "Connect", isConnected? "Success" : "Failed");
   }
-  LOG_WARNING("Total Connected Sensors:", sensorCount);
+  LOG_VERBOSE("Total Connected Sensors:", sensorCount);
 }
 
 void Sensors::mainLoop() {
@@ -55,5 +55,5 @@ bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &da
 void Sensors::read(uint8_t index) {
   bool isSuccess;
   isSuccess = sensorList[index]->read();
-  LOG_WARNING(SensorCollection::getSensorName(index), "Read", isSuccess? "Success" : "Failed");
+  LOG_VERBOSE(SensorCollection::getSensorName(index), "Read", isSuccess? "Success" : "Failed");
 }

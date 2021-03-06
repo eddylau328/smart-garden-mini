@@ -15,12 +15,12 @@ int WifiScan::getNetworkCount(){
 void WifiScan::getNetwork(char **name, int *length, int index) {
   if (Helper::intInRange(index, 0, networkCount)) {
     *name = networks[index];
-    *length = BufferSize;
-    for (int i = BufferSize - 1; i >= 0; i--)
-      if (networks[index][i] == ' ')
-        *length--;
-      else
+    *length = 0;
+    for (int i = 0 ; i < BufferSize; i++) {
+      if (networks[index][i] == '\0')
         break;
+      *length += 1;
+    }
   }
   else
     *length = 0;
