@@ -8,6 +8,7 @@
 
 #include "../Helper/Helper.h"
 #include "PageCollection/Page.h"
+#include "CustomCharacter/CustomCharacter.h"
 #include "Components/PageContent/PageContent.h"
 #include "Components/PageLayoutPosition/PageLayoutPosition.h"
 
@@ -58,6 +59,7 @@ class LcdDisplayUI {
     char *strBuffer;
     void clearContent(PageContent *content);
     void printContent(PageContent *content);
+    void createCustomCharacter();
 };
 
 #endif

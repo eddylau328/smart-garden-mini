@@ -18,6 +18,8 @@ void ScanWifiPage::updateContents() {
     getDynamicContents();
     contentSetup();
   }
+  else if (WifiController::isScanningNetwork())
+    updateLoadingSign();
 }
 
 void ScanWifiPage::interactiveUpdate(int counter, bool isPress) {
@@ -28,9 +30,10 @@ void ScanWifiPage::interactiveUpdate(int counter, bool isPress) {
 
     }
     else if (index == contentRow - 1) {
-
+      // JOIN OTHER
     }
     else
+      // Return
       Page::nextPageCallback(Page::defaultPageKey);
   }
 }
@@ -60,6 +63,9 @@ void ScanWifiPage::contentSetup() {
 
   scroll.setCoverArea(PageLayoutRange(0, contentRow));
   scroll.resetScroll(contents, contentSize);
+
+  // reset loading
+  contents[ContentIndex::Loading]->updateContent(" ", 1);
 }
 
 void ScanWifiPage::getDynamicContents() {
@@ -91,4 +97,24 @@ void ScanWifiPage::freeContents() {
   if (contentSize > 0)
     delete [] contents;
   contentSize = 0;
+}
+
+void ScanWifiPage::updateLoadingSign() {
+  if (millis() - lastLoadingUpdate > 500) {
+    switch(loadingIndex) {
+      case 0:
+        contents[ContentIndex::Loading]->updateContent("-", 1);
+        break;
+      case 1:
+        contents[ContentIndex::Loading]->setCustomCharacterIndex(CUSTOM_BACKSLASH);
+        break;
+      case 2:
+        contents[ContentIndex::Loading]->updateContent("|", 1);
+        break;
+      case 3:
+        contents[ContentIndex::Loading]->updateContent("/", 1);
+        break;
+    }
+    loadingIndex = (loadingIndex + 1) % 4;
+  }
 }

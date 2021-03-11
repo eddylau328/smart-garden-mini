@@ -2,10 +2,9 @@
 #define ScanWifiPage_h
 
 #include "../../Page.h"
-
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
-
 #include "../../../../WifiController/WifiController.h"
+#include "../../../CustomCharacter/CustomCharacter.h"
 
 class ScanWifiPage : public Page {
 
@@ -32,7 +31,7 @@ class ScanWifiPage : public Page {
     int8_t staticContentSize = 5;
     PageContent staticContents[5] = {
       PageContent("Scan Wifi", 9, PageLayoutPosition(2, 0)),
-      PageContent(1, PageLayoutPosition(15, 0)),
+      PageContent(" ", 1, PageLayoutPosition(15, 0)),
       PageContent(">", 1, PageLayoutPosition(0, 0)),
       PageContent("Join Other", 10, PageLayoutPosition(2, 1)),
       PageContent("...", 3, PageLayoutPosition(2, 2))
@@ -46,6 +45,10 @@ class ScanWifiPage : public Page {
     void getDynamicContents();
     void freeDynamicContents();
     void freeContents();
+
+    int8_t loadingIndex = 0;
+    unsigned long lastLoadingUpdate;
+    void updateLoadingSign();
 };
 
 #endif`

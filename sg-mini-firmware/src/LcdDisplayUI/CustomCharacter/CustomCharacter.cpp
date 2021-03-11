@@ -1,0 +1,3 @@
+#include "CustomCharacter.h"
+
+unsigned char CustomCharacter::BACKSLASH[8] = { 0x00, 0x10, 0x08, 0x04, 0x02, 0x01, 0x00, 0x00 };    // BACKSLASH

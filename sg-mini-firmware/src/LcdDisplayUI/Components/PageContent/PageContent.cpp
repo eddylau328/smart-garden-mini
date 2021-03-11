@@ -51,6 +51,10 @@ PageLayoutPosition PageContent::getNewPos() {
     return this->newPos;
 }
 
+int8_t PageContent::getCustomCharacterIndex() {
+    return customCharacterIndex;
+}
+
 void PageContent::updatePos(PageLayoutPosition pos) {
     this->newPos = pos;
     isUpdate = true;
@@ -66,6 +70,7 @@ void PageContent::updateContent(int data, bool keptZero){
             break;
         }
     }
+    setCustomCharacterIndex(0, false);
 }
 
 void PageContent::updateContent(float data, int decimalPoints){
@@ -78,6 +83,7 @@ void PageContent::updateContent(float data, int decimalPoints){
             break;
         }
     }
+    setCustomCharacterIndex(0, false);
 }
 
 void PageContent::updateContent(char *data, int length){
@@ -93,6 +99,7 @@ void PageContent::updateContent(char *data, int length){
             break;
         }
     }
+    setCustomCharacterIndex(0, false);
 }
 
 void PageContent::updateContent(const char *data, int length){
@@ -108,6 +115,15 @@ void PageContent::updateContent(const char *data, int length){
             break;
         }
     }
+    setCustomCharacterIndex(0, false);
+}
+
+void PageContent::setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet){
+    this->isSetCustomCharacter = isSet;
+    if (isSet) {
+        this->customCharacterIndex = customCharacterIndex;
+        this->isUpdate = isSet;
+    }
 }
 
 void PageContent::confirmUpdate() {
@@ -117,6 +133,10 @@ void PageContent::confirmUpdate() {
 
 bool PageContent::getIsUpdate() {
   return this->isUpdate;
+}
+
+bool PageContent::getIsCustomCharacter() {
+    return this->isSetCustomCharacter;
 }
 
 // Private ----------------------------------------------------------------------------

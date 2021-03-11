@@ -73,6 +73,13 @@ class PageContent {
      * @return PageLayoutPosition - the PageLayoutPosition Object that contains the next position of the content that will be rendered
      */
     PageLayoutPosition getNewPos();
+
+    /**
+     * @brief Get the Custom Character Index
+     * 
+     * @return int8_t - the index of the corresponding custom character
+     */
+    int8_t getCustomCharacterIndex();
     // -------------------------------------------------
 
     /**
@@ -115,6 +122,13 @@ class PageContent {
     void updateContent(const char *data, int length);
 
     /**
+     * @brief Set the Custom Character index
+     * 
+     * @param customCharacterIndex 
+     */
+    void setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet=true);
+
+    /**
      * @brief Set isUpdate to true to indicate the PageContent does not need to re-render again
      * 
      */
@@ -128,6 +142,14 @@ class PageContent {
      */
     bool getIsUpdate();
 
+    /**
+     * @brief Get the Is Custom Character object
+     * 
+     * @return true - the page content character has set a custom character
+     * @return false - the page content character has not set a custom character 
+     */
+    bool getIsCustomCharacter();
+
   private:
     char *content;
     static char buffer[20];
@@ -137,6 +159,8 @@ class PageContent {
     PageLayoutPosition newPos;
 
     bool isUpdate = true;
+    bool isSetCustomCharacter = false;
+    int8_t customCharacterIndex;
 
     /**
      * @brief Create an id for every PageContent Object (Deprecated)
