@@ -13,11 +13,19 @@ unsigned long lastclock;
 #include "src/DeviceSetting/DeviceSetting.h"
 #include "src/Controller/Controller.h"
 #include "src/WifiController/WifiController.h"
+#include "src/DataTransmitter/WifiTransmitter/WifiTransmitter.h"
 
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 Controller controller;
+
+WifiTransmitter transmitter;
+
+char *ssid = "TP-LINK_953128";
+char *pw = "50675098";
+
+unsigned long lastSend;
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -25,7 +33,7 @@ void setup() {
   lastclock = millis();
 
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::WARNINGS); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::NONE); // all log is printed
   
   DeviceSetting::init();
   WifiController::init();
@@ -39,6 +47,8 @@ void setup() {
   pageControl.initInput(&rotaryEncoder);
 
   controller.init();
+  WifiController::connect(ssid, pw);
+  
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -65,8 +75,11 @@ void loop() {
   controller.mainLoop();
   Sensors::mainLoop();
   DeviceSetting::mainLoop();
-  WifiController::mainLoop();
 
+  if (millis() - lastSend > 5000) {
+    transmitter.send(TransmitAction::SendAction::SensorData);
+    lastSend = millis();
+  }
 }
 
 
