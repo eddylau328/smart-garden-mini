@@ -4,7 +4,7 @@
 #include "../../Page.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../WifiController/WifiController.h"
-#include "../../../CustomCharacter/CustomCharacter.h"
+#include "../../../Components/LoadingSpinner/LoadingSpinner.h"
 
 class ScanWifiPage : public Page {
 
@@ -46,9 +46,7 @@ class ScanWifiPage : public Page {
     void freeDynamicContents();
     void freeContents();
 
-    int8_t loadingIndex = 0;
-    unsigned long lastLoadingUpdate;
-    void updateLoadingSign();
+    LoadingSpinner loadingSpinner;
 };
 
 #endif`

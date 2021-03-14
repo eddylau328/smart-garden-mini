@@ -3,6 +3,7 @@
 
 ScanWifiPage::ScanWifiPage() {
   scroll.init(LCDScreenWidth, LCDScreenHeight);
+  loadingSpinner.setLinkage(&staticContents[ContentIndex::Loading]);
 }
 
 void ScanWifiPage::mountPage() {
@@ -11,15 +12,15 @@ void ScanWifiPage::mountPage() {
   isCreatedDynamicContent = false;
   contentSetup();
   WifiController::startScanNetwork(5);
+  loadingSpinner.spin(true);
 }
 
 void ScanWifiPage::updateContents() {
+  loadingSpinner.updateSpinner();
   if (!WifiController::isScanningNetwork() && !isCreatedDynamicContent) {
     getDynamicContents();
     contentSetup();
   }
-  else if (WifiController::isScanningNetwork())
-    updateLoadingSign();
 }
 
 void ScanWifiPage::interactiveUpdate(int counter, bool isPress) {
@@ -31,6 +32,7 @@ void ScanWifiPage::interactiveUpdate(int counter, bool isPress) {
     }
     else if (index == contentRow - 1) {
       // JOIN OTHER
+      Page::nextPageCallback(PageCollection::PageKey::WifiNamePageKey);
     }
     else
       // Return
@@ -65,7 +67,8 @@ void ScanWifiPage::contentSetup() {
   scroll.resetScroll(contents, contentSize);
 
   // reset loading
-  contents[ContentIndex::Loading]->updateContent(" ", 1);
+  loadingSpinner.spin(false);
+  loadingSpinner.clear();
 }
 
 void ScanWifiPage::getDynamicContents() {
@@ -97,24 +100,4 @@ void ScanWifiPage::freeContents() {
   if (contentSize > 0)
     delete [] contents;
   contentSize = 0;
-}
-
-void ScanWifiPage::updateLoadingSign() {
-  if (millis() - lastLoadingUpdate > 500) {
-    switch(loadingIndex) {
-      case 0:
-        contents[ContentIndex::Loading]->updateContent("-", 1);
-        break;
-      case 1:
-        contents[ContentIndex::Loading]->setCustomCharacterIndex(CUSTOM_BACKSLASH);
-        break;
-      case 2:
-        contents[ContentIndex::Loading]->updateContent("|", 1);
-        break;
-      case 3:
-        contents[ContentIndex::Loading]->updateContent("/", 1);
-        break;
-    }
-    loadingIndex = (loadingIndex + 1) % 4;
-  }
 }

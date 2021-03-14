@@ -29,6 +29,9 @@ void PageControl::init() {
   pages[PageCollection::PageKey::ScheduleSettingPageKey] = new ScheduleSettingPage();
   pages[PageCollection::PageKey::WifiSettingPageKey] = new WifiSettingPage();
   pages[PageCollection::PageKey::ScanWifiPageKey] = new ScanWifiPage();
+  pages[PageCollection::PageKey::WifiNamePageKey] = new WifiNamePage();
+  pages[PageCollection::PageKey::WifiPasswordPageKey] = new WifiPasswordPage();
+  pages[PageCollection::PageKey::WifiConnectPageKey] = new WifiConnectPage();
 
   pages[PageCollection::PageKey::MainPageKey]->setNextPageCallback(PageCollection::PageKey::SensorPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::SensorPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
@@ -44,6 +47,9 @@ void PageControl::init() {
   pages[PageCollection::PageKey::AutoSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::ScanWifiPageKey]->setNextPageCallback(PageCollection::PageKey::WifiSettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::WifiNamePageKey]->setNextPageCallback(PageCollection::PageKey::WifiPasswordPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::WifiPasswordPageKey]->setNextPageCallback(PageCollection::PageKey::WifiConnectPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::WifiConnectPageKey]->setNextPageCallback(PageCollection::PageKey::WifiSettingPageKey, &nextPageCallback);
 
   this->display->init();
 }
