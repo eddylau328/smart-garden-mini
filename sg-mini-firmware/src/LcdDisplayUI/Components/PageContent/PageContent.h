@@ -40,13 +40,6 @@ class PageContent {
 
     // getter function  --------------------------------
     /**
-     * @brief Get the Id object (Deprecated)
-     * 
-     * @return uint8_t - the id of the object
-     */
-    uint8_t getId();
-
-    /**
      * @brief Get the Content Length object
      * 
      * @return int - the length of the content
@@ -110,8 +103,9 @@ class PageContent {
      * 
      * @param data - character pointer contains the update strings you want to show
      * @param length - the length of the update string (Noted: if your new string length is shorter than the assigned string length, the left out will be automatically assigned a whitespace ' ')
+     * @param startIndex - the index for accessing the character array, normally it start from 0, for case you want to use substring of the character array, it will be useful
      */
-    void updateContent(char *data, int length);
+    void updateContent(char *data, int length, int startIndex=0);
 
     /**
      * @brief Update the content with constant character pointer data
@@ -154,21 +148,12 @@ class PageContent {
     char *content;
     static char buffer[20];
     uint8_t contentLength;
-    uint8_t id;
     PageLayoutPosition pos;
     PageLayoutPosition newPos;
 
     bool isUpdate = true;
     bool isSetCustomCharacter = false;
     int8_t customCharacterIndex;
-
-    /**
-     * @brief Create an id for every PageContent Object (Deprecated)
-     * 
-     * @return uint8_t - an unique unsigned 8-bit integer id
-     */
-    static uint8_t createId();
-
 };
 
 #endif

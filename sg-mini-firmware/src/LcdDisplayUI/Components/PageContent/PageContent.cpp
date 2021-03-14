@@ -9,7 +9,6 @@ PageContent::PageContent(const char* content, int length, PageLayoutPosition pos
     this->contentLength = length;
     this->pos = pos;
     this->newPos = pos;
-    this->id = createId();
 }
 
 PageContent::PageContent(int length, PageLayoutPosition pos) {
@@ -18,7 +17,6 @@ PageContent::PageContent(int length, PageLayoutPosition pos) {
     this->contentLength = length;
     this->pos = pos;
     this->newPos = pos;
-    this->id = createId();
 }
 
 PageContent::PageContent() {
@@ -28,11 +26,7 @@ PageContent::PageContent() {
 }
 
 PageContent::~PageContent() {
-    delete content;
-}
-
-uint8_t PageContent::getId(){
-    return this->id;
+    delete[] content;
 }
 
 int PageContent::getContentLength(){
@@ -86,11 +80,11 @@ void PageContent::updateContent(float data, int decimalPoints){
     setCustomCharacterIndex(0, false);
 }
 
-void PageContent::updateContent(char *data, int length){
+void PageContent::updateContent(char *data, int length, int startIndex){
     Helper::assignStrValue(buffer, ' ', contentLength);
     for (int i = 0; i < length; i++){
         if (i < contentLength)
-            *(buffer+i) = *(data+i);
+            *(buffer+i) = *(data+startIndex+i);
     }
     for (int i = 0; i < contentLength; i++) {
         if (*(buffer+i) != *(content+i)) {
@@ -137,10 +131,4 @@ bool PageContent::getIsUpdate() {
 
 bool PageContent::getIsCustomCharacter() {
     return this->isSetCustomCharacter;
-}
-
-// Private ----------------------------------------------------------------------------
-uint8_t PageContent::createId() {
-  static uint8_t id = 0;
-  return id++;
 }

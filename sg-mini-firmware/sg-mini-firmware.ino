@@ -25,7 +25,7 @@ void setup() {
   lastclock = millis();
 
   Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::WARNINGS); // all log is printed
+  LOG_SET_LEVEL(DebugLogLevel::NONE); // all log is printed
   
   DeviceSetting::init();
   WifiController::init();
