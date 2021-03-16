@@ -2,6 +2,7 @@
 #define TempStorage_h
 
 #include <Arduino.h>
+#include "../../Helper/Helper.h"
 
 class TempStorage {
   public:

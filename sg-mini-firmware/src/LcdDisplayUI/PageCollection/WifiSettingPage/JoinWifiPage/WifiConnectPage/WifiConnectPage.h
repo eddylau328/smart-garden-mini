@@ -31,7 +31,7 @@ class WifiConnectPage : public Page {
     };
     LoadingSpinner loadingSpinner;
     char *wifiName;
-    int wifiNamelength;
+    int wifiNameLength;
 };
 
 #endif

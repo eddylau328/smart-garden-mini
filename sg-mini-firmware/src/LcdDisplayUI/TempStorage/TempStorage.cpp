@@ -12,8 +12,8 @@ void TempStorage::getSelectWifiName(char **str, int *length) {
 
 void TempStorage::setSelectWifiName(char *name, int length) {
   selectWifiName = new char[length];
-  for (int i = 0; i < length; i++)
-    *(selectWifiName + i) = *(name + i);
+  Helper::copyString(selectWifiName, name, length);
+  selectWifiNameLength = length;
 }
 
 void TempStorage::freeSelectWifiName() {
@@ -31,8 +31,8 @@ void TempStorage::getSelectWifiPassword(char **str, int *length) {
 
 void TempStorage::setSelectWifiPassword(char *password, int length) {
   selectWifiPassword = new char[length];
-  for (int i = 0; i < length; i++)
-    *(selectWifiPassword + i) = *(password + i);
+  Helper::copyString(selectWifiName, password, length);
+  selectWifiPasswordLength = length;
 }
 
 void TempStorage::freeSelectWifiPassword() {

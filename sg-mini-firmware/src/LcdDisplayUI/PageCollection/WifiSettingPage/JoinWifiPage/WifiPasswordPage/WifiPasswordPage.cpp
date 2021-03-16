@@ -11,7 +11,7 @@ WifiPasswordPage::WifiPasswordPage() {
 
 void WifiPasswordPage::mountPage() {
   Page::allocateStaticContents(staticContents, staticContentSize);
-  input.init(8, 20);
+  input.init(8, 15);
   input.startBlink();
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Password;
@@ -31,7 +31,7 @@ void WifiPasswordPage::interactiveUpdate(int counter, bool isPress) {
         int length;
         char *wifiName;
         input.getInputValue(&wifiName, &length);
-        TempStorage::setSelectWifiName(wifiName, length);
+        TempStorage::setSelectWifiPassword(wifiName, length);
       }
       Page::interactiveUpdate(counter, isPress);
     }

@@ -7,10 +7,13 @@ WifiConnectPage::WifiConnectPage() {
 void WifiConnectPage::mountPage() {
   Page::allocateStaticContents(staticContents, staticContentSize);
 
-  TempStorage::getSelectWifiName(&wifiName, &wifiNamelength);
-  
-  staticContents[2] = PageContent(wifiNamelength, PageLayoutPosition(0, 0));
-  staticContents[2].updateContent(wifiName, wifiNamelength);
+  TempStorage::getSelectWifiName(&wifiName, &wifiNameLength);
+  for (int i = 0 ; i < wifiNameLength; i++) 
+    Serial.print(wifiName[i]);
+  Serial.println();
+  Serial.println(wifiNameLength);
+  staticContents[ContentIndex::WifiName] = PageContent(wifiNameLength, PageLayoutPosition(0, 1));
+  staticContents[ContentIndex::WifiName].updateContent(wifiName, wifiNameLength);
 
   loadingSpinner.spin(true);
 }

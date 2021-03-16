@@ -11,7 +11,7 @@ WifiNamePage::WifiNamePage() {
 
 void WifiNamePage::mountPage() {
   Page::allocateStaticContents(staticContents, staticContentSize);
-  input.init(8, 20);
+  input.init(8, 15);
   input.startBlink();
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Name;

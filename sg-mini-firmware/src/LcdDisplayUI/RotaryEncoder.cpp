@@ -92,7 +92,7 @@ void RotaryEncoder::rotate() {
 }
 
 void RotaryEncoder::press() {
-  if (millis() - lastPress > 500) {
+  if (millis() - lastPress > 250) {
     eventTrigger = Helper::modifyBit(eventTrigger, 4, 1);
     lastPress = millis();
   }

@@ -13,7 +13,7 @@ void InputCharacter::init(int8_t displayRange, int8_t bufferSize) {
   this->displayRange = displayRange;
   for (int i = 0 ; i < bufferSize; i++)
     *(buffer + i) = ' ';
-  *(buffer + bufferSize) = '/0';
+  *(buffer + bufferSize) = '\0';
   connectContent->updateContent(buffer, displayRange, showIndex); 
 }
 
@@ -50,9 +50,11 @@ void InputCharacter::blinkUpdate() {
 bool InputCharacter::interactiveUpdate(int counter, bool isPress) {
   if (isPress) {
     valueIndex++;
-    showIndex = valueIndex - displayRange < 0 ? 0 : valueIndex - displayRange + 1;
-    connectContent->updateContent(buffer, displayRange, showIndex);
-    if (valueIndex >= bufferSize) {
+    if (valueIndex < bufferSize) {
+      showIndex = valueIndex - displayRange < 0 ? 0 : valueIndex - displayRange + 1;
+      connectContent->updateContent(buffer, displayRange, showIndex);
+    }
+    else {
       valueIndex = 0;
       this->isBlink = false;
       this->isBlinking = false;
@@ -87,7 +89,7 @@ bool InputCharacter::interactiveUpdate(int counter, bool isPress) {
 void InputCharacter::getInputValue(char **ptr, int *length) {
   for (int i = bufferSize - 1; i > 0; i--)
     if (*(buffer + i) != ' ') {
-      *(buffer + i + 1) = '/0';
+      *(buffer + i + 1) = '\0';
       *length = i + 1;
       break;
     }
