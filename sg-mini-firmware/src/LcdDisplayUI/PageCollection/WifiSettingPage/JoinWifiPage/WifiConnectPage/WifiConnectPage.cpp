@@ -8,18 +8,22 @@ void WifiConnectPage::mountPage() {
   Page::allocateStaticContents(staticContents, staticContentSize);
 
   TempStorage::getSelectWifiName(&wifiName, &wifiNameLength);
-  for (int i = 0 ; i < wifiNameLength; i++) 
-    Serial.print(wifiName[i]);
-  Serial.println();
-  Serial.println(wifiNameLength);
   staticContents[ContentIndex::WifiName] = PageContent(wifiNameLength, PageLayoutPosition(0, 1));
   staticContents[ContentIndex::WifiName].updateContent(wifiName, wifiNameLength);
 
   loadingSpinner.spin(true);
+  char *wifiPassword;
+  int passwordLength;
+  TempStorage::getSelectWifiPassword(&wifiPassword, &passwordLength);
+  WifiController::connect(wifiName, wifiPassword);
 }
 
 void WifiConnectPage::updateContents() {
   loadingSpinner.updateSpinner();
+  if (loadingSpinner.isSpinning() && WifiController::isConnectedNetwork()) {
+    loadingSpinner.spin(false);
+    loadingSpinner.clear();
+  }
 }
 
 void WifiConnectPage::dismountPage() {

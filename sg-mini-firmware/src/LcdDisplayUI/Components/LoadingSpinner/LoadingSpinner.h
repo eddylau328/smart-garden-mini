@@ -14,6 +14,7 @@ class LoadingSpinner {
      */
     void setLinkage(PageContent *pageContent);
     void updateSpinner();
+    bool isSpinning();
     void spin(bool isSpin);
     void clear();
 

@@ -31,3 +31,7 @@ void LoadingSpinner::updateSpinner() {
     loadingIndex = (loadingIndex + 1) % 4;
   }
 }
+
+bool LoadingSpinner::isSpinning() {
+  return isEnableSpin;
+}

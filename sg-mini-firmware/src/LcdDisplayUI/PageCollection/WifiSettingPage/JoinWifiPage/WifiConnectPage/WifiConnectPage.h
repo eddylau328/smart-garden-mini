@@ -5,6 +5,7 @@
 #include "../../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../../TempStorage/TempStorage.h"
 #include "../../../../Components/LoadingSpinner/LoadingSpinner.h"
+#include "../../../../../WifiController/WifiController.h"
 
 /**
  * @brief Page derived class use to show to the user when the system is idle
