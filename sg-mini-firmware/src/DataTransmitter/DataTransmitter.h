@@ -6,8 +6,9 @@
 class DataTransmitter {
 
     public:
-        virtual void listen() = 0;
-        virtual void send(TransmitAction::SendAction actionType) = 0;
+        virtual void init();
+        virtual void mainLoop();
+        virtual void send(TransmitAction::SendAction actionType);
         bool getIsEnableTransmission();
         void setIsEnableTransmission(bool isEnable);
 

@@ -3,21 +3,27 @@
 void JsonParser::writeSensorData(String &str) {
     const size_t capacity = JSON_OBJECT_SIZE(5);
     StaticJsonDocument<capacity> doc;
-    bool isCorrect;
-    float value;
-    isCorrect = Sensors::getSensorData(SensorCollection::SensorDataType::Temp, value);
-    doc["temp"] = isCorrect? value : 0;
-    Serial.println(value);
-    isCorrect = Sensors::getSensorData(SensorCollection::SensorDataType::Hum, value);
-    doc["hum"] = isCorrect? value : 0;
-    Serial.println(value);
-    isCorrect = Sensors::getSensorData(SensorCollection::SensorDataType::SoilTemp, value);
-    doc["soilTemp"] = isCorrect? value : 0;
-    Serial.println(value);
-    isCorrect = Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, value);
-    doc["soilHum"] = isCorrect? value : 0;
-    isCorrect = Sensors::getSensorData(SensorCollection::SensorDataType::Light, value);
-    doc["light"] = isCorrect? value : 0;
+    setupSensorData(doc);
     serializeJson(doc, str);
-    Serial.println(str);
+}
+
+void JsonParser::writeSensorData(char **str, size_t outputSize) {
+    const size_t capacity = JSON_OBJECT_SIZE(5);
+    StaticJsonDocument<capacity> doc;
+    setupSensorData(doc);
+    serializeJson(doc, *str, outputSize);
+}
+
+void JsonParser::setupSensorData(JsonDocument &doc) {
+    setupSingleSensorData(doc, "temp", SensorCollection::SensorDataType::Temp);
+    setupSingleSensorData(doc, "hum", SensorCollection::SensorDataType::Hum);
+    setupSingleSensorData(doc, "soilTemp", SensorCollection::SensorDataType::SoilTemp);
+    setupSingleSensorData(doc, "soilHum", SensorCollection::SensorDataType::SoilHum);
+    setupSingleSensorData(doc, "light", SensorCollection::SensorDataType::Light);
+}
+
+void JsonParser::setupSingleSensorData(JsonDocument &doc, const char* dataName, SensorCollection::SensorDataType dataType) {
+    float value;
+    bool isCorrect = Sensors::getSensorData(dataType, value);
+    doc.getOrAddMember(dataName).set(isCorrect? value : 0);
 }

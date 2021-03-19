@@ -10,7 +10,6 @@
 class WifiTransmitter : public DataTransmitter {
 
     public:
-        void listen();
         void send(TransmitAction::SendAction actionType);
     
     private:

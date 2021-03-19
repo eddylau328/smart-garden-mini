@@ -48,6 +48,11 @@ void Helper::copyString(char *target, const char *copy, int length) {
         *(target + i) = *(copy + i);
 }
 
+void Helper::copyString(char *target, byte *copy, int length) {
+  for (int i = 0; i < length; i++)
+    *(target + i) = (char)*(copy + i);
+}
+
 bool Helper::compareString(char *target, char *compare, int targetLength) {
   for (int i = 0; i < targetLength; i++)
     if (*(target + i) != *(compare + i))

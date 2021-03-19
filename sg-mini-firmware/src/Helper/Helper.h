@@ -85,6 +85,15 @@ class Helper {
     static void copyString(char *target, const char *copy, int length);
 
     /**
+     * @brief copy the byte character array
+     * 
+     * @param target - the character array you store the result
+     * @param copy - the byte array you want to copy
+     * @param length - the length of your target array
+     */
+    static void copyString(char *target, byte *copy, int length);
+
+    /**
      * @brief compare the character array value by value
      * 
      * @param target - the character array you want to test

@@ -1,9 +1,5 @@
 #include "WifiTransmitter.h"
 
-void WifiTransmitter::listen() {
-
-}
-
 void WifiTransmitter::send(TransmitAction::SendAction actionType) {
     switch(actionType) {
         case TransmitAction::SendAction::SensorData:
