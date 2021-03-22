@@ -23,6 +23,7 @@ class WifiSettingPage : public Page {
     void mountPage();
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
+    void dismountPage();
 
   private:
     enum ContentIndex {

@@ -5,6 +5,7 @@ void PageVerticalScroll::setCoverArea(PageLayoutRange rowRange) {
   this->rowRange = rowRange;
   upScrollMax = -(rowRange.max - screenHeight + 1);
   downScrollMax = rowRange.min;
+  currentOrigin = 0;
 }
 
 void PageVerticalScroll::setCursor(PageContent *content, int defaultRow = 0 ) {

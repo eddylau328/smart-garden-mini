@@ -18,6 +18,11 @@ void WifiSettingPage::mountPage() {
   scroll.resetScroll(contents, contentSize);
 }
 
+void WifiSettingPage::dismountPage() {
+  scroll.resetScroll(contents, contentSize);
+  Page::dismountPage();
+}
+
 void WifiSettingPage::updateContents() {
   if (wifiMode != DeviceSetting::getWifiMode()) {
     wifiMode = DeviceSetting::getWifiMode();
