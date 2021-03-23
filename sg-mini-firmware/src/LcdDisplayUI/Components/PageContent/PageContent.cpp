@@ -112,11 +112,12 @@ void PageContent::updateContent(const char *data, int length){
     setCustomCharacterIndex(0, false);
 }
 
-void PageContent::setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet){
+void PageContent::setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet, int8_t customCharacterContentIndex){
     this->isSetCustomCharacter = isSet;
     if (isSet) {
         this->customCharacterIndex = customCharacterIndex;
         this->isUpdate = isSet;
+        this->customCharacterContentIndex = customCharacterContentIndex;
     }
 }
 
@@ -129,6 +130,6 @@ bool PageContent::getIsUpdate() {
   return this->isUpdate;
 }
 
-bool PageContent::getIsCustomCharacter() {
-    return this->isSetCustomCharacter;
+bool PageContent::getIsCustomCharacter(int8_t contentIndex) {
+    return this->isSetCustomCharacter && contentIndex == customCharacterContentIndex;
 }

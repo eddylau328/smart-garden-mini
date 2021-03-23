@@ -120,7 +120,7 @@ class PageContent {
      * 
      * @param customCharacterIndex 
      */
-    void setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet=true);
+    void setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet=true, int8_t customCharacterContentIndex=0);
 
     /**
      * @brief Set isUpdate to true to indicate the PageContent does not need to re-render again
@@ -139,10 +139,12 @@ class PageContent {
     /**
      * @brief Get the Is Custom Character object
      * 
+     * @param contentIndex the index of the custom character in the char array of the content
+     * 
      * @return true - the page content character has set a custom character
      * @return false - the page content character has not set a custom character 
      */
-    bool getIsCustomCharacter();
+    bool getIsCustomCharacter(int8_t contentIndex);
 
   private:
     char *content;
@@ -154,6 +156,7 @@ class PageContent {
     bool isUpdate = true;
     bool isSetCustomCharacter = false;
     int8_t customCharacterIndex;
+    int8_t customCharacterContentIndex;
 };
 
 #endif

@@ -10,6 +10,11 @@
 class CustomCharacter {
   public:
     static unsigned char BACKSLASH[8];
+    static unsigned char ENTER[8];
+    static unsigned char BACKSPACE[8];
+    static unsigned char WIFICONNECTED[8];
+    static unsigned char WIFIDISCONNECTED[8];
+    static unsigned char WIFIOFF[8];
 };
 
 #endif

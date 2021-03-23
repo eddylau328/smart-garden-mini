@@ -66,11 +66,7 @@ void LcdDisplayUI::clearContent(PageContent *content) {
   pos = content->getPos();
   if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
-    int8_t endIndex;
-    if (content->getIsCustomCharacter())
-      endIndex = 1;
-    else
-      endIndex = (int8_t)content->getContentLength();
+    int8_t endIndex = (int8_t)content->getContentLength();
 
     if (pos.col >= 0) {
       lcd->setCursor(pos.col, pos.row);
@@ -94,11 +90,7 @@ void LcdDisplayUI::printContent(PageContent *content) {
   strncpy(strBuffer, content->getContent(), content->getContentLength());
   if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
-    int8_t endIndex;
-    if (content->getIsCustomCharacter())
-      endIndex = 1;
-    else
-      endIndex = (int8_t)content->getContentLength();
+    int8_t endIndex = (int8_t)content->getContentLength();
 
     if (pos.col >= 0 ) {
       lcd->setCursor(pos.col, pos.row);
@@ -112,7 +104,7 @@ void LcdDisplayUI::printContent(PageContent *content) {
         endIndex = colSize;
     }
     for (int8_t i = startIndex ; i < endIndex; i++)
-      if (content->getIsCustomCharacter())
+      if (content->getIsCustomCharacter(i))
         lcd->write(content->getCustomCharacterIndex());
       else
         lcd->print(*(strBuffer+i));
