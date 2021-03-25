@@ -92,15 +92,7 @@ class DeviceSetting {
     static float getHumiditySetLevel(int *humidity);
     static void setHumiditySetLevel(int humidity);
 
-
     static void mainLoop();
-
-    enum ControllerMode{
-      HumidMode=0,
-      ScheduleMode,
-      ManualMode,
-    } ;
-
     
   private:
     static DS1307 clock;
