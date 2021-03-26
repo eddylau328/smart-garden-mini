@@ -7,7 +7,7 @@ volatile int WaterController::interruptCounter = 0;
 
 WaterPumpController WaterController::waterPumpController;
 ModeController **WaterController::modeControllers = new ModeController *[TOTAL_WATER_MODE];
-WaterController::WaterMode WaterController::currentMode;
+WaterController::WaterMode WaterController::currentMode = WaterMode::ManualMode;
 
 WaterController::WaterController() {}
 
@@ -57,7 +57,7 @@ void WaterController::onTimer() {
 void WaterController::initInterval() {
     timer = timerBegin(0, 80, true);
     timerAttachInterrupt(timer, &onTimer, true);
-    timerAlarmWrite(timer, ReadingInterval, true);
+    timerAlarmWrite(timer, WATER_CONTROLLER_INTERVAL, true);
     timerAlarmEnable(timer);
 }
 

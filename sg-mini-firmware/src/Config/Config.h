@@ -47,5 +47,6 @@
 #define LCDScreenHeight 2
 // Define the reading time for sensors
 #define ReadingInterval 5000000  // 5s = 5000ms = 5000 000 micro sec
+#define WATER_CONTROLLER_INTERVAL 500000 // 0.5s = 500 ms = 500 000 micro sec
 
 #endif

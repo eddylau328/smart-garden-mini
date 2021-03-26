@@ -22,10 +22,10 @@ bool WaterPumpController::getIsWaterPumpOn() {
 void WaterPumpController::mainLoop() {
     switch(controlState) {
         case ControlState::TurnOff:
-            waterPumpOnAction();
+            waterPumpOffAction();
             break;
         case ControlState::TurnOn:
-            waterPumpOffAction();
+            waterPumpOnAction();
             break;
         case ControlState::Working:
             waterPumpWorkingAction();
@@ -63,5 +63,9 @@ void WaterPumpController::waterPumpWorkingAction() {
 
 void WaterPumpController::setWaterPumpOnOff(bool isTurnOn) {
     this->isTurnOn = isTurnOn;
+    if (isTurnOn)
+        Serial.println("Water is On");
+    else
+        Serial.println("Water is Off");
     digitalWrite(WATER_PUMP_PIN, isTurnOn? WATER_PUMP_ON : WATER_PUMP_OFF);
 }

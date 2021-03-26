@@ -131,6 +131,17 @@ class Helper {
     static void convertStrToNum(char *target, float &number);
 
     /**
+     * @brief check whether the 8-bit unsigned integer is within the range
+     * 
+     * @param target - the 8-bit unsigned integer variable you want to check
+     * @param min - the minimum of the target can have
+     * @param max - the maximum of the target can have
+     * @return true - the target is within the range
+     * @return false - the target is out of range
+     */
+    static bool uint8_tInRange(uint8_t target, uint8_t min, uint8_t max);
+
+    /**
      * @brief check whether the 8-bit integer is within the range
      * 
      * @param target - the 8-bit integer variable you want to check
