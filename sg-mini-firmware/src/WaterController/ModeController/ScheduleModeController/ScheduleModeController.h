@@ -2,6 +2,7 @@
 #define ScheduleModeController_h
 
 #include "../ModeController.h"
+#include <RTClib.h>
 
 class ScheduleModeController : public ModeController {
     public:
