@@ -1,12 +1,14 @@
 #include "ScheduleModeController.h"
 
+
 void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
     // reach the next water time
-    DateTime currentTime = DateTime(2021, 3, 28, 10, 30, 0);
-    DateTime nextWaterTime = DateTime(2021, 3, 28, 10, 30, 0);
+    //DateTime currentTime = DateTime(2021, 3, 28, 22, 30, 0);
+    // DateTime nextWaterTime = DateTime(2021, 3, 28, 22, 30, 0);
 
     // the duration between each watering event
-    unsigned long scheduleDuration = 86400;
+    // unsigned long scheduleDuration = 86400;
+    
 
     /**
      *  waterPump - WaterPumpController object that allows you to control the water valve
@@ -33,4 +35,23 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
      */
 
     /* write your code below here */
+    currentTime = RTC_DS1307::now();
+    TimeSpan timeinterval (scheduleDuration);
+
+    if (currentTime.operator>=(nextWaterTime) )
+        {
+          Serial.println(String("Water is on by time : "+ currentTime.timestamp()  ));
+          waterPump.waterOn(waterDuration);
+          nextWaterTime = currentTime + timeinterval;
+          // Why i can't use waterPump.operator+(timeinterval); at upper line? it modify nothing
+          Serial.println(String("The next watering time is : " + nextWaterTime.timestamp() ));
+        }
 }
+
+void ScheduleModeController::setwaterDuration(unsigned long Duration){ // Maybe better call from devicesetting?
+    waterDuration = Duration;
+}
+
+void ScheduleModeController::updateSchedule(unsigned long schedule){
+    scheduleDuration = schedule;
+};
