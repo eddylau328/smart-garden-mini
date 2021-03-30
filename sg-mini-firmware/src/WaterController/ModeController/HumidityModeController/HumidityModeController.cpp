@@ -6,6 +6,8 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
     // min, max are the acceptable value for not turn on the water valve
     uint8_t minHumidityLevel = 45;
     uint8_t maxHumidityLevel = 65;
+    unsigned long duration = 1000;
+    atuo currentHumidity = Sensors::sensorList[SoilHumidity_Key]:
 
     /**
      *  waterPump - WaterPumpController object that allows you to control the water valve
