@@ -6,8 +6,13 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
     // min, max are the acceptable value for not turn on the water valve
     uint8_t minHumidityLevel = 45;
     uint8_t maxHumidityLevel = 65;
-    unsigned long duration = 1000;
-    atuo currentHumidity = Sensors::sensorList[SoilHumidity_Key]:
+   // uint8_t number = 1.1 * maxHumidityLevel;
+    unsigned long duration = 5000;
+    
+   float currentHumidityLevel;
+   Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, currentHumidityLevel);
+    
+    
 
     /**
      *  waterPump - WaterPumpController object that allows you to control the water valve
@@ -22,6 +27,20 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
      */
 
     /* write your code below here */
+
+  if (currentHumidityLevel < minHumidityLevel && waterPump.getIsWaterPumpOn()== false ){
+            
+            waterPump.waterOn(duration);
+    
+    }
+    else if (currentHumidityLevel > maxHumidityLevel && waterPump.getIsWaterPumpOn()== true) {
+        waterPump.waterOff();
+
+    }
+    
+
+             
+
 }
 
 /*
@@ -37,4 +56,6 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
     continue water the plant again
     it will go to 70%
     last longer, maybe 2hours later
+    Phase 2 currentHumidity > 1.1max
+    consdier difussing time & evaporating time 
 */
