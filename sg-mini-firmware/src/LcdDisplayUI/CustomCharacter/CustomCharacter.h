@@ -6,6 +6,8 @@
 #define CustomCharacter_h
 
 #define CUSTOM_BACKSLASH 0
+#define CUSTOM_ENTER 1
+#define CUSTOM_BACKSPACE 2
 
 class CustomCharacter {
   public:

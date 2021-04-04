@@ -120,7 +120,7 @@ class PageContent {
      * 
      * @param customCharacterIndex 
      */
-    void setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet=true, int8_t customCharacterContentIndex=0);
+    void setCustomCharacterIndex(int8_t customCharacterIndex, int8_t customCharacterContentIndex=0, bool isSet=true);
 
     /**
      * @brief Set isUpdate to true to indicate the PageContent does not need to re-render again

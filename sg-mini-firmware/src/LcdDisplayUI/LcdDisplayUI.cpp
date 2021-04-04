@@ -113,4 +113,6 @@ void LcdDisplayUI::printContent(PageContent *content) {
 
 void LcdDisplayUI::createCustomCharacter() {
   lcd->createChar(CUSTOM_BACKSLASH, CustomCharacter::BACKSLASH);
+  lcd->createChar(CUSTOM_ENTER, CustomCharacter::ENTER);
+  lcd->createChar(CUSTOM_BACKSPACE, CustomCharacter::BACKSPACE);
 }

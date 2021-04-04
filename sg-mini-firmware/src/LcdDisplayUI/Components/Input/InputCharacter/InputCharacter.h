@@ -5,6 +5,7 @@
 
 #include "../InputTool.h"
 #include <Arduino.h>
+#include "../../../CustomCharacter/CustomCharacter.h"
 
 /**
  * @brief InputTool for inputting ASCII character
@@ -52,6 +53,12 @@ class InputCharacter : public InputTool {
     int8_t displayRange;
     int8_t bufferSize;
     char *buffer = NULL;
+
+    bool isSpecialCharValue(char value);
+    int8_t getSpecialCharIndex(char value);
+    char validateCircleLoopCharValue(char value);
+    char validateCharValue(char value);
+    void resetInput();
 };
 
 #endif

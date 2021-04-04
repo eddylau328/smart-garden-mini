@@ -64,7 +64,7 @@ void PageContent::updateContent(int data, bool keptZero){
             break;
         }
     }
-    setCustomCharacterIndex(0, false);
+    setCustomCharacterIndex(0, 0, false);
 }
 
 void PageContent::updateContent(float data, int decimalPoints){
@@ -77,7 +77,7 @@ void PageContent::updateContent(float data, int decimalPoints){
             break;
         }
     }
-    setCustomCharacterIndex(0, false);
+    setCustomCharacterIndex(0, 0, false);
 }
 
 void PageContent::updateContent(char *data, int length, int startIndex){
@@ -93,7 +93,7 @@ void PageContent::updateContent(char *data, int length, int startIndex){
             break;
         }
     }
-    setCustomCharacterIndex(0, false);
+    setCustomCharacterIndex(0, 0, false);
 }
 
 void PageContent::updateContent(const char *data, int length){
@@ -109,15 +109,15 @@ void PageContent::updateContent(const char *data, int length){
             break;
         }
     }
-    setCustomCharacterIndex(0, false);
+    setCustomCharacterIndex(0, 0, false);
 }
 
-void PageContent::setCustomCharacterIndex(int8_t customCharacterIndex, bool isSet, int8_t customCharacterContentIndex){
+void PageContent::setCustomCharacterIndex(int8_t customCharacterIndex, int8_t customCharacterContentIndex, bool isSet){
     this->isSetCustomCharacter = isSet;
     if (isSet) {
         this->customCharacterIndex = customCharacterIndex;
-        this->isUpdate = isSet;
         this->customCharacterContentIndex = customCharacterContentIndex;
+        this->isUpdate = isSet;
     }
 }
 
