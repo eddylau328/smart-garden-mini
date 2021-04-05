@@ -4,6 +4,8 @@
 #include "../ModeController.h"
 #include <RTClib.h>
 #include "../../../DeviceSetting/DeviceSetting.h"
+#include "../../../Sensors/Sensors.h"
+
 
 class ScheduleModeController : public ModeController {
     public:
@@ -18,6 +20,9 @@ class ScheduleModeController : public ModeController {
     private:
         unsigned long waterDuration = 1000;
         unsigned long scheduleDuration = 86400;
+        bool doneWater = false;
+        unsigned int wateringBreak = 5000;
+        unsigned long lastWatering;
 };
 
 #endif

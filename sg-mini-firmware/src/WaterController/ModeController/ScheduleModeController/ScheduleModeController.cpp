@@ -1,9 +1,10 @@
 #include "ScheduleModeController.h"
 
 
+
 void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
     // reach the next water time
-    //DateTime currentTime = DateTime(2021, 3, 28, 22, 30, 0);
+    // DateTime currentTime = DateTime(2021, 3, 28, 22, 30, 0);
     // DateTime nextWaterTime = DateTime(2021, 3, 28, 22, 30, 0);
 
     // the duration between each watering event
@@ -38,14 +39,35 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
     currentTime = RTC_DS1307::now();
     TimeSpan timeinterval (scheduleDuration);
 
-    if (currentTime.operator>=(nextWaterTime) )
-        {
-          Serial.println(String("Water is on by time : "+ currentTime.timestamp()  ));
-          waterPump.waterOn(waterDuration);
-          nextWaterTime = currentTime + timeinterval;
-          // Why i can't use waterPump.operator+(timeinterval); at upper line? it modify nothing
-          Serial.println(String("The next watering time is : " + nextWaterTime.timestamp() ));
-        }
+    if (currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn() )
+        { 
+          float humidityLevel = 100.0;
+          Sensors::getSensorData(SensorCollection::SoilHum,humidityLevel);
+          int humiditySetLevel = 70;
+         // DeviceSetting::getHumiditySetLevel(humiditySetLevel);
+          
+          doneWater = (  humiditySetLevel <= humidityLevel );
+          switch (doneWater)
+          {
+          case false:
+            if (millis() - lastWatering >= wateringBreak) {  // Watering gap of some seconds      
+              waterPump.waterOn(waterDuration);
+              Serial.println(String("Water is on by time : "+ currentTime.timestamp()  ));
+              lastWatering = millis();
+            }
+              break;
+          case true:
+              nextWaterTime = currentTime + timeinterval;
+              Serial.println(String("The next watering time is : " + nextWaterTime.timestamp() ));
+              break;
+          
+          default:
+              Serial.println("It somehow trigger the default, Check bug for switch (doneWater) in ScheduleModeController.cpp =(");
+              break;
+          }
+          
+          
+        } 
 }
 
 void ScheduleModeController::setwaterDuration(unsigned long Duration){ // Maybe better call from devicesetting?
