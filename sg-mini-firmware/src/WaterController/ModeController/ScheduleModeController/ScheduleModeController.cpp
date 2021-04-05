@@ -1,4 +1,5 @@
 #include "ScheduleModeController.h"
 
-void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
+
+void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
 }

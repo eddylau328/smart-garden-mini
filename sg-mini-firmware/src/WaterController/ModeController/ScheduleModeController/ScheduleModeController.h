@@ -3,9 +3,10 @@
 
 #include "../ModeController.h"
 
+
 class ScheduleModeController : public ModeController {
     public:
-        void mainLoop(WaterPumpController &waterPump);
+        void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting);
 };
 
 #endif
