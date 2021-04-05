@@ -6,7 +6,10 @@
 class ManualModeController : public ModeController {
 
     public:
-        void mainLoop(WaterPumpController &waterPump);
+        void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting);
+    
+    private:
+        bool isTurnOn = true;
 };
 
 #endif

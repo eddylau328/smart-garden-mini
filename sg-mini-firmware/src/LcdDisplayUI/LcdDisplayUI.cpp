@@ -63,7 +63,7 @@ void LcdDisplayUI::render() {
 void LcdDisplayUI::clearContent(PageContent *content) {
   PageLayoutPosition pos;
   pos = content->getPos();
-  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+  if (Helper::isInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
     int8_t endIndex = (int8_t)content->getContentLength();
     if (pos.col >= 0) {
@@ -86,7 +86,7 @@ void LcdDisplayUI::printContent(PageContent *content) {
   PageLayoutPosition pos;
   pos = content->getNewPos();
   strncpy(strBuffer, content->getContent(), content->getContentLength());
-  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+  if (Helper::isInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
     int8_t endIndex = (int8_t)content->getContentLength();
     if (pos.col >= 0 ) {

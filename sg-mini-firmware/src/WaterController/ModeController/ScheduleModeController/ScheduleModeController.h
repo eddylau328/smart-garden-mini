@@ -7,15 +7,15 @@
 #include "../../../Sensors/Sensors.h"
 
 
+
 class ScheduleModeController : public ModeController {
     public:
-        void mainLoop(WaterPumpController &waterPump);
+        void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting);
         void setwaterDuration(unsigned long Duration);
         void updateSchedule(unsigned long schedule);
 
-    DateTime currentTime = DateTime(2021, 3, 28, 12, 12, 12);
-    DateTime nextWaterTime = DateTime(2021, 3, 28, 12, 12, 12);
-        
+        DateTime currentTime = DateTime(2021, 3, 28, 12, 12, 12);
+        DateTime nextWaterTime = DateTime(2021, 3, 28, 12, 12, 12);
 
     private:
         unsigned long waterDuration = 1000;

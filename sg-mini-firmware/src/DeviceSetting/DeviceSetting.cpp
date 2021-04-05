@@ -44,7 +44,7 @@ void DeviceSetting::setUserName(char *newUserName, int length) {
 }
 
 void DeviceSetting::setTime(int hour, int minute, int second) {
-  if (Helper::intInRange(hour, 0, 23) && Helper::intInRange(minute, 0, 59) && Helper::intInRange(second, 0, 59)) {
+  if (Helper::isInRange(hour, 0, 23) && Helper::isInRange(minute, 0, 59) && Helper::isInRange(second, 0, 59)) {
     clock.fillByHMS(hour, minute, second);
     clock.setTime();//write time to the RTC chip
   }
@@ -64,7 +64,7 @@ void DeviceSetting::getDate(int *year, int *month, int *day, int *dayOfWeek) {
 }
 
 void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
-  if (Helper::isValidDate(year, month, day) && Helper::intInRange(dayOfWeek, MON , SUN)) {
+  if (Helper::isValidDate(year, month, day) && Helper::isInRange(dayOfWeek, MON , SUN)) {
     clock.fillByYMD(year, month, day);
     clock.fillDayOfWeek(dayOfWeek);//Saturday
     clock.setTime();
@@ -88,7 +88,7 @@ void DeviceSetting::mainLoop() {
 
 
 void DeviceSetting::setScheduleTime(int hour, int minute, int second) {
-  if (Helper::intInRange(hour, 0, 23) && Helper::intInRange(minute, 0, 59) && Helper::intInRange(second, 0, 59)) {
+  if (Helper::isInRange(hour, 0, 23) && Helper::isInRange(minute, 0, 59) && Helper::isInRange(second, 0, 59)) {
     
   }
 }
@@ -100,7 +100,7 @@ void DeviceSetting::getScheduleTime(int *hour, int *minute, int *second) {
 }
 
 void DeviceSetting::setHumiditySetLevel(int HumidityLevel){
-  if(Helper::intInRange(HumidityLevel,0,100)){
+  if(Helper::isInRange(HumidityLevel,0,100)){
 
   }
   

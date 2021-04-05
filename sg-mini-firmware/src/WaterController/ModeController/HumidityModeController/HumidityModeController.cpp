@@ -1,6 +1,6 @@
 #include "HumidityModeController.h"
 
-void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
+void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
 }
 
 /*

@@ -1,15 +1,13 @@
 #include "ScheduleModeController.h"
 
 
-
-void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
+void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
     // reach the next water time
     // DateTime currentTime = DateTime(2021, 3, 28, 22, 30, 0);
     // DateTime nextWaterTime = DateTime(2021, 3, 28, 22, 30, 0);
 
     // the duration between each watering event
     // unsigned long scheduleDuration = 86400;
-    
 
     /**
      *  waterPump - WaterPumpController object that allows you to control the water valve
@@ -36,38 +34,37 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump) {
      */
 
     /* write your code below here */
+    // ScheduleModeSetting setting = modeSetting.getScheduleModeSetting();
+
+    ScheduleModeSetting setting = ScheduleModeSetting(86400, 50.0);
+
     currentTime = RTC_DS1307::now();
     TimeSpan timeinterval (scheduleDuration);
 
-    if (currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn() )
-        { 
-          float humidityLevel = 100.0;
-          Sensors::getSensorData(SensorCollection::SoilHum,humidityLevel);
-          int humiditySetLevel = 70;
-         // DeviceSetting::getHumiditySetLevel(humiditySetLevel);
-          
-          doneWater = (  humiditySetLevel <= humidityLevel );
-          switch (doneWater)
-          {
-          case false:
-            if (millis() - lastWatering >= wateringBreak) {  // Watering gap of some seconds      
-              waterPump.waterOn(waterDuration);
-              Serial.println(String("Water is on by time : "+ currentTime.timestamp()  ));
-              lastWatering = millis();
-            }
-              break;
-          case true:
-              nextWaterTime = currentTime + timeinterval;
-              Serial.println(String("The next watering time is : " + nextWaterTime.timestamp() ));
-              break;
-          
-          default:
-              Serial.println("It somehow trigger the default, Check bug for switch (doneWater) in ScheduleModeController.cpp =(");
-              break;
-          }
-          
-          
-        } 
+    if (currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn()) { 
+        float humidityLevel = 100.0;
+        Sensors::getSensorData(SensorCollection::SoilHum,humidityLevel);
+        int humiditySetLevel = 70;
+        // DeviceSetting::getHumiditySetLevel(humiditySetLevel);
+
+        doneWater = (  humiditySetLevel <= humidityLevel );
+        switch (doneWater) {
+            case false:
+                if (millis() - lastWatering >= wateringBreak) {  // Watering gap of some seconds      
+                    waterPump.waterOn(waterDuration);
+                    Serial.println(String("Water is on by time : "+ currentTime.timestamp()));
+                    lastWatering = millis();
+                }
+                break;
+            case true:
+                nextWaterTime = currentTime + timeinterval;
+                Serial.println(String("The next watering time is : " + nextWaterTime.timestamp()));
+                break;
+            default:
+                Serial.println("It somehow trigger the default, Check bug for switch (doneWater) in ScheduleModeController.cpp =(");
+                break;
+        }
+    } 
 }
 
 void ScheduleModeController::setwaterDuration(unsigned long Duration){ // Maybe better call from devicesetting?

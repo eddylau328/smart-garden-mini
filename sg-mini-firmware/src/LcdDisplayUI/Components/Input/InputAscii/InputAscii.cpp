@@ -24,7 +24,7 @@ void InputAscii::set(const char* defaultValue, int8_t stringLength) {
   this->stringLength = stringLength;
   Helper::copyString(inputValue, defaultValue, stringLength);
   for (int i = 0 ; i < stringLength ; i++)
-    if (!(Helper::intInRange((int) *(inputValue+i), 32, 126)))
+    if (!(Helper::isInRange((int) *(inputValue+i), 32, 126)))
       *(inputValue + i) = ' ';
   connectContent->updateContent(inputValue, stringLength);
 }
