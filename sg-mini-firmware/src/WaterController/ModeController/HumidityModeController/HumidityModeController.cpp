@@ -1,6 +1,10 @@
 #include "HumidityModeController.h"
 
-void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
+void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
+
+    // HumidityModeSetting setting = modeSetting.getHumidityModeSetting();
+    HumidityModeSetting setting = HumidityModeSetting(54.0, 45.0, 65.0);
+
     // target humidity level is the level you always want to keep your plant at
     uint8_t targetHumidityLevel = 54;
     // min, max are the acceptable value for not turn on the water valve
@@ -9,10 +13,8 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
    // uint8_t number = 1.1 * maxHumidityLevel;
     unsigned long duration = 5000;
     
-   float currentHumidityLevel;
-   Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, currentHumidityLevel);
-    
-    
+    float currentHumidityLevel;
+    Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, currentHumidityLevel);
 
     /**
      *  waterPump - WaterPumpController object that allows you to control the water valve
@@ -28,18 +30,12 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump) {
 
     /* write your code below here */
 
-  if (currentHumidityLevel < minHumidityLevel && waterPump.getIsWaterPumpOn()== false ){
-            
-            waterPump.waterOn(duration);
-    
+    if (currentHumidityLevel < minHumidityLevel && waterPump.getIsWaterPumpOn() == false) {
+        waterPump.waterOn(duration);
     }
-    else if (currentHumidityLevel > maxHumidityLevel && waterPump.getIsWaterPumpOn()== true) {
+    else if (currentHumidityLevel > maxHumidityLevel && waterPump.getIsWaterPumpOn() == true) {
         waterPump.waterOff();
-
     }
-    
-
-             
 
 }
 

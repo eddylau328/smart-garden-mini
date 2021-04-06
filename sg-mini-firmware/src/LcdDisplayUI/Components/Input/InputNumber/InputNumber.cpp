@@ -41,8 +41,8 @@ bool InputNumber::interactiveUpdate(int counter, bool isPress){
       number = maxNumber - (minNumber - number);
   }
   else {
-    if (Helper::int8_tInRange(number, minNumber, maxNumber)) {
-      if (Helper::int8_tInRange(number+counter, minNumber, maxNumber)) {
+    if (Helper::isInRange(number, minNumber, maxNumber)) {
+      if (Helper::isInRange(number+counter, minNumber, maxNumber)) {
         number += counter;
       }
       else {
