@@ -2,6 +2,7 @@
 #define HumidityModeController_h
 
 #include "../ModeController.h"
+#include "../../../Sensors/Sensors.h"
 
 
 class HumidityModeController : public ModeController {
