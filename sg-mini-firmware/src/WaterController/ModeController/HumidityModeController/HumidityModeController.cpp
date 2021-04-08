@@ -31,12 +31,14 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterModeS
     /* write your code below here */
 
     if (currentHumidityLevel < minHumidityLevel && waterPump.getIsWaterPumpOn() == false) {
+        // conditions for checking 
+        // 1. whether the waterPump has just turned off 
+        // 2. whether the water has enough time to diffuse
         waterPump.waterOn(duration);
     }
     else if (currentHumidityLevel > maxHumidityLevel && waterPump.getIsWaterPumpOn() == true) {
         waterPump.waterOff();
     }
-
 }
 
 /*
