@@ -43,6 +43,6 @@ void HumidityModeSetting::operator = (const HumidityModeSetting &setting ) {
     this->maxHumidity = setting.maxHumidity;
 }
 
-bool isValidHumidityLevel(float humidityLevel) {
+bool HumidityModeSetting::isValidHumidityLevel(float humidityLevel) {
     return Helper::isInRange(humidityLevel, 0.0, 100.0);
 }
