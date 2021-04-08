@@ -24,7 +24,7 @@ class HumidityModeSetting {
         float minHumidity = 0;
         float maxHumidity = 0;
 
-        bool isValidHumidityLevel(uint8_t humidityLevel);
+        bool isValidHumidityLevel(float humidityLevel);
 
 };
 
