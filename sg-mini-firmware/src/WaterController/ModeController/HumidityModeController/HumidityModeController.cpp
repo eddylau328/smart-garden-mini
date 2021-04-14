@@ -1,21 +1,33 @@
 #include "HumidityModeController.h"
 
+void HumidityModeController::setDiffuseDelay(millisDelay diffuseDelay) {
+    this->diffuseDelay = diffuseDelay;
+}
+
+millisDelay HumidityModeController::getDiffuseDelay() {
+    return this->diffuseDelay;
+}
+
 void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
 
     // HumidityModeSetting setting = modeSetting.getHumidityModeSetting();
     HumidityModeSetting setting = HumidityModeSetting(54.0, 45.0, 65.0);
 
     // target humidity level is the level you always want to keep your plant at
-    uint8_t targetHumidityLevel = 54;
+    float targetHumidity = 54;
     // min, max are the acceptable value for not turn on the water valve
-    uint8_t minHumidityLevel = 45;
-    uint8_t maxHumidityLevel = 65;
-   // uint8_t number = 1.1 * maxHumidityLevel;
-    unsigned long duration = 5000;
-    
-    float currentHumidityLevel;
-    Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, currentHumidityLevel);
+    float minHumidity = 45;
+    float maxHumidity = 65;
+    float overMaxHumidity = 1.1 * maxHumidity;
+    float currentHumidity;
 
+    unsigned long waterDuration = 5000;
+    unsigned long delayDuration = 10000;
+
+    bool executedMethod = false;
+
+    Sensors::getSensorData(SensorCollection::SensorDataType::SoilHum, currentHumidity);
+     
     /**
      *  waterPump - WaterPumpController object that allows you to control the water valve
      *  
@@ -30,19 +42,35 @@ void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterModeS
 
     /* write your code below here */
 
-    if (currentHumidityLevel < minHumidityLevel && waterPump.getIsWaterPumpOn() == false) {
+    if (diffuseDelay.justFinished() && currentHumidity < minHumidity && !waterPump.getIsWaterPumpOn()) {
         // conditions for checking 
         // 1. whether the waterPump has just turned off 
         // 2. whether the water has enough time to diffuse
-        waterPump.waterOn(duration);
+        waterPump.waterOn(waterDuration);
+        //only wateron once and wait the diffuseDelay
+        executedMethod = true; 
     }
-    else if (currentHumidityLevel > maxHumidityLevel && waterPump.getIsWaterPumpOn() == true) {
+
+    if (currentHumidity > overMaxHumidity && waterPump.getIsWaterPumpOn()) {
         waterPump.waterOff();
     }
+
+    if (currentHumidity < minHumidity && !waterPump.getIsWaterPumpOn()) {
+        if(!diffuseDelay.isRunning() && !executedMethod) {
+            diffuseDelay.start(delayDuration);
+        }
+    }
+    else{
+        //stop timer
+        diffuseDelay.stop();
+        //reset the executedMethod to run when condition is true again
+        executedMethod = false;
+    }
+
 }
 
 /*
-    minimum humidity level = 50%
+    minimum humidity  = 50%
     current humidity level = 49%
     49% < 50 % -> turn on the water valve
     ... waiting the water valve to turn off

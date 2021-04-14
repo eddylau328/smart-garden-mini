@@ -8,8 +8,14 @@
 
 class HumidityModeController : public ModeController {
     public:
+        void init();
+
         void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting);
-    
+
+        void setDiffuseDelay(millisDelay diffuseDelay);
+        
+        millisDelay getDiffuseDelay();
+
     private:
         millisDelay diffuseDelay;
 };
