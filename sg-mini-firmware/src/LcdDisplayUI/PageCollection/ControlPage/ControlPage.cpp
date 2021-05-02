@@ -3,27 +3,18 @@
 ControlPage::ControlPage(){
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 2));
-  scroll.setCursor(&contents[3], 0);
-}
-
-ControlPage::~ControlPage(){
-
+  scroll.setCursor(&staticContents[3], 0);
 }
 
 void ControlPage::mountPage() {
-    scroll.resetScroll(contents, contentSize);
+  Page::allocateStaticContents(staticContents, 4);
+  scroll.resetScroll(contents, contentSize);
 }
 
-void ControlPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
-}
-
-void ControlPage::updateContents() {}
 
 void ControlPage::interactiveUpdate(int counter, bool isPress) {
-    scroll.updateScroll(contents, contentSize, counter);
-    if (isPress) {
+  scroll.updateScroll(contents, contentSize, counter);
+  if (isPress) {
     int8_t index = scroll.getCurrentArrowRow(contents, contentSize);
     switch (index) {
       case 0:
@@ -41,7 +32,7 @@ void ControlPage::interactiveUpdate(int counter, bool isPress) {
       default:
         Page::nextPageCallback(Page::defaultPageKey);
         break;
-}
     }
+  }
 }
 

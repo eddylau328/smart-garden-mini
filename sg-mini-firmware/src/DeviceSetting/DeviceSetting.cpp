@@ -4,6 +4,7 @@ char DeviceSetting::userName[UserNameLength];
 DS1307 DeviceSetting::clock;
 uint8_t DeviceSetting::time[3];
 uint8_t DeviceSetting::date[4];
+bool DeviceSetting::wifiMode = false;
 unsigned long DeviceSetting::lastTimeRecord;
 
 void DeviceSetting::init() {
@@ -65,6 +66,14 @@ void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
     clock.fillDayOfWeek(dayOfWeek);//Saturday
     clock.setTime();
   }
+}
+
+void DeviceSetting::setWifiMode(bool isWifiMode) {
+  wifiMode = isWifiMode;
+}
+
+bool DeviceSetting::getWifiMode() {
+  return wifiMode;
 }
 
 void DeviceSetting::mainLoop() {

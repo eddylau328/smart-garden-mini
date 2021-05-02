@@ -13,11 +13,9 @@
 class ScheduleSettingPage : public Page {
 
   public:
-     ScheduleSettingPage();
-     ~ScheduleSettingPage();
+    ScheduleSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
     
@@ -30,8 +28,7 @@ class ScheduleSettingPage : public Page {
       Arrow = 3
     };
 
-    const int8_t contentSize = 9;
-    PageContent contents[9] = {
+    PageContent staticContents[9] = {
       PageContent(2, PageLayoutPosition(0, 1)),
       PageContent(2, PageLayoutPosition(3, 1)),
       PageContent(2, PageLayoutPosition(6, 1)),

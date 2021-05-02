@@ -19,8 +19,8 @@ class PageHorizontalScroll : public PageScroll {
      * @param rowRange the PageLayoutRange object that is used to indicate how many rows will be affected by the scroll effects
      */
     void setCoverArea(PageLayoutRange colRange, PageLayoutRange rowRange);
-    void resetScroll(PageContent *contents, int length);
-    void updateScroll(PageContent *contents, int length, int counter);
+    void resetScroll(PageContent **contents, int length);
+    void updateScroll(PageContent **contents, int length, int counter);
 
   private:
     int8_t leftScrollMax;

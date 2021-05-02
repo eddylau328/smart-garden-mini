@@ -1,23 +1,12 @@
 #include "ModeSettingPage.h"
 
-ModeSettingPage::ModeSettingPage(){}
-
 void ModeSettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 4);
+
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 2));
-  scroll.setCursor(&contents[3], 0);
+  scroll.setCursor(&staticContents[3], 0);
 }
-
-ModeSettingPage::~ModeSettingPage(){
-
-}
-
-void ModeSettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
-}
-
-void ModeSettingPage::updateContents() {}
 
 void ModeSettingPage::interactiveUpdate(int counter, bool isPress) {
   scroll.updateScroll(contents, contentSize, counter);

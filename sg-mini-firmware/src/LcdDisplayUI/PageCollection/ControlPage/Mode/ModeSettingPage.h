@@ -11,18 +11,12 @@
  */
 class ModeSettingPage : public Page {
   public:
-     ModeSettingPage();
-     ~ModeSettingPage();
-
     void mountPage();
-    void getContents(PageContent **contents, int *length);
-    void updateContents();
     void interactiveUpdate(int counter, bool isPress);
    
 
   private:
-    const int8_t contentSize = 4;
-    PageContent contents[4] = {
+    PageContent staticContents[4] = {
       PageContent("Auto", 4, PageLayoutPosition(2,0)),
       PageContent("Schedule", 8, PageLayoutPosition(2,1)),
       PageContent("...", 3, PageLayoutPosition(2, 2)),

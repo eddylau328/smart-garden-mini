@@ -1,30 +1,25 @@
 #include "AutoSettingPage.h"
 
 AutoSettingPage::AutoSettingPage(){
-   input.setLinkage(&contents[InputIndex::Humidity]);
+   input.setLinkage(&staticContents[InputIndex::Humidity]);
    input.setCircleLoop(true);
 
    scroll.init(LCDScreenWidth, LCDScreenHeight);
    scroll.setCoverArea(PageLayoutRange(0, 1));
-   scroll.setCursor(&contents[InputIndex::Arrow], 1);
+   scroll.setCursor(&staticContents[InputIndex::Arrow], 1);
 }
 
-AutoSettingPage::~AutoSettingPage(){}
-
 void AutoSettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 6);
+
   int humidity;
   input.set((int8_t)humidity, 0, 99, true);
   
-  contents[InputIndex::Arrow].updateContent(" ", 1);
+  staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Humidity;
   input.startBlink();
   scroll.resetScroll(contents, contentSize);
   
-}
-
-void AutoSettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
 }
 
 void AutoSettingPage::updateContents() {
@@ -41,12 +36,8 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
         humidity = input.getInputValue();
         Page::interactiveUpdate(counter, isPress);  
       }
-      
       else
-      {
         Page::nextPageCallback(PageCollection::PageKey::ModeSettingPageKey);
-      }
-      
     }
     else
       scroll.updateScroll(contents, contentSize, counter);
@@ -56,14 +47,9 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
-        contents[InputIndex::Arrow].updateContent(">", 1);
-      else {
+        staticContents[InputIndex::Arrow].updateContent(">", 1);
+      else
         input.startBlink();
-      }
-     
     }
   }
-
 }
-
-void AutoSettingPage::dismountPage() {}

@@ -23,10 +23,11 @@ class Page {
     /**
      * @brief Get the Contents object for the LcdDisplayUI to render the Page
      * 
-     * @param contents - PageContent Array that contains all the information you want to display
+     * @param contents - PageContent Pointer Array that contains all the information you want to display
      * @param length - PageContent Array Length (Noted: it is important to provide exact array length)
+     * @param isAllocateContent - Boolean indicates the contents is newly allocated, cannot recall previous function
      */
-    virtual void getContents(PageContent **contents, int *length) = 0;
+    void getContents(PageContent ***contents, int *length, bool *isAllocateContents);
 
     /**
      * @brief This function will be called in a designed period of time as long as the page is assigned to display through PageControl Object
@@ -57,9 +58,12 @@ class Page {
     void setNextPageCallback(uint8_t defaultPageKey, void (*callback)(uint8_t));
 
   protected:
+    PageContent **contents;
+    int8_t contentSize = 0;
+    bool isAllocateContents = false;
     uint8_t defaultPageKey;
     void (*nextPageCallback)(uint8_t);
-  
+    void allocateStaticContents(PageContent *staticContents, int8_t contentSize, bool isAllocateContents = true);
 };
 
 #endif

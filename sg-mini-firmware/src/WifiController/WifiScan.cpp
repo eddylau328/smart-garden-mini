@@ -12,15 +12,10 @@ int WifiScan::getNetworkCount(){
   return WifiScan::networkCount;
 }
 
-void WifiScan::getNetwork(char **name, int *length, int index) {
+void WifiScan::getNetwork(char *name, int *length, int index, int nameBufferSize) {
   if (Helper::intInRange(index, 0, networkCount)) {
-    *name = networks[index];
-    *length = BufferSize;
-    for (int i = BufferSize - 1; i >= 0; i--)
-      if (networks[index][i] == ' ')
-        *length--;
-      else
-        break;
+    *length = (int) Helper::getStringLength(networks[index]);
+    Helper::copyString(name, networks[index], *length);
   }
   else
     *length = 0;
@@ -36,6 +31,10 @@ void WifiScan::stopScanNetwork() {
   rescanNetworkCount = 0;
 }
 
+bool WifiScan::isScanningNetwork() {
+  return isScanNetwork;
+}
+
 /* Private Methods */
 void WifiScan::setNetwork(String networkName, int index) {
   Helper::assignStrValue(networks[index], ' ', BufferSize);
@@ -45,7 +44,7 @@ void WifiScan::setNetwork(String networkName, int index) {
 void WifiScan::initializeNetworks(int networkCount) {
   // Delete old memory allocation
   for (int i = 0; i < WifiScan::networkCount; i++)
-    delete [] networks[i];
+    delete networks[i];
   delete [] networks;
 
   // set the new allocation size
@@ -62,13 +61,43 @@ void WifiScan::scanNetworks() {
 }
 
 void WifiScan::handleScanNetworks(WiFiEvent_t event, WiFiEventInfo_t info) {
-  initializeNetworks(scanNetworkCount);
   LOG_WARNING("Finish scan network");
-  if (getNetworkCount() == 0)
+  if (getScanNetworkCount() == 0) {
     LOG_WARNING("No networks found");
-  else
-    for (int i = 0 ; i < getNetworkCount(); i++)
-      setNetwork(WiFi.SSID(i), i);
+  }
+  else {
+    int validateNetworkIndexes[10], validateNetworkCount = 0, bufferSize = 10;
+    getValidateNetworkIndexes(validateNetworkIndexes, &validateNetworkCount, bufferSize);
+    LOG_ERROR(validateNetworkCount);
+    for (int i = 0; i < validateNetworkCount; i++)
+      LOG_ERROR(validateNetworkIndexes[i]);
+    initializeNetworks(validateNetworkCount);
+    setValidateNetworks(validateNetworkIndexes, validateNetworkCount);
+  }
+}
+
+int WifiScan::getScanNetworkCount() {
+  return scanNetworkCount;
+}
+
+void WifiScan::setValidateNetworks(int *indexes, int count) {
+  for (int i = 0 ; i < count; i++)
+    setNetwork(WiFi.SSID(indexes[i]), i);
+}
+
+void WifiScan::getValidateNetworkIndexes(int *indexes, int *count, int bufferSize) {
+  int temp = 0;
+  for (int i = 0; i < getScanNetworkCount(); i++)
+    if (validateNetwork(WiFi.SSID(i)) && i < bufferSize)
+      indexes[temp++] = i;
+  *count = temp;
+}
+
+bool WifiScan::validateNetwork(String network) {
+  for (int i = 0; i < (int)network.length(); i++)
+    if (!isPrintable(network[i]))
+      return false;
+  return true;
 }
 
 /* Protected Methods */

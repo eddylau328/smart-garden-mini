@@ -3,24 +3,12 @@
 SettingPage::SettingPage() {
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 6));
-  scroll.setCursor(&contents[7], 0);
-}
-
-SettingPage::~SettingPage() {
+  scroll.setCursor(&staticContents[7], 0);
 }
 
 void SettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 8);
   scroll.resetScroll(contents, contentSize);
-}
-
-void SettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
-}
-
-void SettingPage::updateContents() {
-  // if sensors pointer is not null
-
 }
 
 void SettingPage::interactiveUpdate(int counter, bool isPress) {

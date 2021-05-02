@@ -18,6 +18,20 @@ void WifiConnect::connect(char *ssid, char *password) {
   isRequestConnect = true;
 }
 
+void WifiConnect::connect(AccessPointSetting setting) {
+  delete [] WifiConnect::ssid;
+  delete [] WifiConnect::password;
+  char *ssidTemp = setting.getAccessPointName();
+  int ssidLength = Helper::getStringLength(ssidTemp);
+  char *passwordTemp = setting.getAccessPointPassword();
+  int passwordLength = Helper::getStringLength(passwordTemp);
+  WifiConnect::ssid = new char[ssidLength];
+  WifiConnect::password = new char[passwordLength];
+  Helper::copyString(WifiConnect::ssid, ssidTemp, ssidLength);
+  Helper::copyString(WifiConnect::password, passwordTemp, passwordLength);
+  isRequestConnect = true;
+}
+
 void WifiConnect::disconnect() {
   WiFi.disconnect();
 }
@@ -31,13 +45,13 @@ void WifiConnect::connectEvent() {
   disconnect();
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
-    LOG_WARNING("Connecting to WiFi..");
+    LOG_ERROR("Connecting to WiFi..");
     delay(500);
   }
 }
 
 void WifiConnect::handleConnect(WiFiEvent_t event, WiFiEventInfo_t info) {
-  LOG_WARNING("Connected to the WiFi network");
+  LOG_ERROR("Connected to the WiFi network");
   isFinishEvent = true;
 }
 

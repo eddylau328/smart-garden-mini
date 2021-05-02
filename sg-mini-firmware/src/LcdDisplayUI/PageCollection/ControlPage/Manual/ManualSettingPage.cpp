@@ -1,30 +1,26 @@
 #include "ManualSettingPage.h"
 
 ManualSettingPage::ManualSettingPage(){
-   input.setLinkage(&contents[InputIndex::Second]);
+   input.setLinkage(&staticContents[InputIndex::Second]);
    input.setCircleLoop(true);
 
    scroll.init(LCDScreenWidth, LCDScreenHeight);
    scroll.setCoverArea(PageLayoutRange(0, 1));
-   scroll.setCursor(&contents[InputIndex::Arrow], 1);
+   scroll.setCursor(&staticContents[InputIndex::Arrow], 1);
 }
 
-ManualSettingPage::~ManualSettingPage(){}
 
 void ManualSettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 6);
+
   int second;
   input.set((int8_t)second, 0, 20, true);
   
-  contents[InputIndex::Arrow].updateContent(" ", 1);
+  staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Second;
   input.startBlink();
   scroll.resetScroll(contents, contentSize);
   
-}
-
-void ManualSettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
 }
 
 void ManualSettingPage::updateContents() {
@@ -56,7 +52,7 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
-        contents[InputIndex::Arrow].updateContent(">", 1);
+        staticContents[InputIndex::Arrow].updateContent(">", 1);
       else {
         input.startBlink();
       }

@@ -85,6 +85,23 @@ class Helper {
     static void copyString(char *target, const char *copy, int length);
 
     /**
+     * @brief Get the String Length
+     * 
+     * @param target - the character pointer you want to check the string length
+     * 
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(char *target);
+
+    /**
+     * @brief Get the String Length
+     * 
+     * @param target - the constant character pointer want to check the string length
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(const char *target);
+
+    /**
      * @brief compare the character array value by value
      * 
      * @param target - the character array you want to test

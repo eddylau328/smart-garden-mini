@@ -13,6 +13,12 @@ class InputAscii : public InputTool {
     ~InputAscii();
 
     /**
+     * @brief Initiate the buffer for storing the character
+     * 
+     */
+    void init();
+
+    /**
      * @brief Set the default string value of the input content
      * 
      * @param defaultValue - constant character pointer for the content you want to show 
@@ -32,6 +38,7 @@ class InputAscii : public InputTool {
   private:
     int8_t valueIndex;
     char *inputValue;
+    char *inputBuffer;
     
 };
 

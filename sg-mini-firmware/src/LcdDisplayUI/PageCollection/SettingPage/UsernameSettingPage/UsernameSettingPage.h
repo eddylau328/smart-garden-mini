@@ -14,10 +14,8 @@
 class UsernameSettingPage : public Page {
   public:
     UsernameSettingPage();
-    ~UsernameSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
 
@@ -27,8 +25,7 @@ class UsernameSettingPage : public Page {
       Arrow = 1
     };
 
-    const int8_t contentSize = 7;
-    PageContent contents[7] = {
+    PageContent staticContents[7] = {
       PageContent(UserNameLength, PageLayoutPosition(1, 1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Set Name", 8, PageLayoutPosition(0, 0)),

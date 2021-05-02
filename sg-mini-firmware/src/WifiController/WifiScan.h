@@ -25,8 +25,9 @@ class WifiScan{
      * @param name the network name in char array 
      * @param length the network name length 
      * @param index the index in the network array
+     * @param nameBufferSize the buffer size of the name char array
      */
-    static void getNetwork(char **name, int *length, int index);
+    static void getNetwork(char *name, int *length, int index, int nameBufferSize=BufferSize);
 
     /**
      * @brief start scanning the nearby access points
@@ -40,6 +41,12 @@ class WifiScan{
      * 
      */
     static void stopScanNetwork();
+
+    /**
+     * @brief is scanning network
+     * 
+     */
+    static bool isScanningNetwork();
 
   protected:
     /**
@@ -77,6 +84,11 @@ class WifiScan{
      * @param index - the index assigned to the network array 
      */
     static void setNetwork(String networkName, int index);
+
+    static bool validateNetwork(String networkName);
+    static void getValidateNetworkIndexes(int *validateNetworkIndexes, int *validateNetworkCount, int bufferSize);
+    static void setValidateNetworks(int *validateNetworkIndexes, int validatNetworkCount);
+    static int getScanNetworkCount();
 
     static char **networks;
     static int networkCount;

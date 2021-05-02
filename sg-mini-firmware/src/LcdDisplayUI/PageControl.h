@@ -5,7 +5,6 @@
 #include "LcdDisplayUI.h"
 
 // Page Collection -------------------------------------
-#define TotalPage 13// Modify it if you want to add page
 #include "PageCollection/PageCollection.h"
 #include "PageCollection/Page.h"
 #include "PageCollection/MainPage/MainPage.h"
@@ -19,7 +18,12 @@
 #include "PageCollection/ControlPage/Mode/AutoSettingPage.h"
 #include "PageCollection/ControlPage/Mode/ScheduleSettingPage.h"
 #include "PageCollection/ControlPage/Manual/ManualSettingPage.h"
-
+#include "PageCollection/WifiSettingPage/WifiSettingPage.h"
+#include "PageCollection/WifiSettingPage/ScanWifiPage/ScanWifiPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/WifiNamePage/WifiNamePage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/WifiPasswordPage/WifiPasswordPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/WifiConnectPage/WifiConnectPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/SetDefaultWifi/SetDefaultWifiPage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------

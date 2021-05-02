@@ -1,30 +1,25 @@
 #include "UsernameSettingPage.h"
 
 UsernameSettingPage::UsernameSettingPage() {
-  input.setLinkage(&contents[InputIndex::Name]);
+  input.setLinkage(&staticContents[InputIndex::Name]);
   input.setCircleLoop(true);
 
   scroll.init(LCDScreenWidth, LCDScreenHeight);
   scroll.setCoverArea(PageLayoutRange(0, 1));
-  scroll.setCursor(&contents[InputIndex::Arrow], 1);
+  scroll.setCursor(&staticContents[InputIndex::Arrow], 1);
 }
 
-UsernameSettingPage::~UsernameSettingPage() {}
-
 void UsernameSettingPage::mountPage() {
+  Page::allocateStaticContents(staticContents, 7);
+
   char *name;
   int length;
   DeviceSetting::getUserName(&name, &length);
   input.set(name, UserNameLength);
-  contents[InputIndex::Arrow].updateContent(" ", 1);
+  staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Name;
   input.startBlink();
   scroll.resetScroll(contents, contentSize);
-}
-
-void UsernameSettingPage::getContents(PageContent **contents, int *length) {
-  *contents = this->contents;
-  *length = contentSize;
 }
 
 void UsernameSettingPage::updateContents() {
@@ -48,7 +43,7 @@ void UsernameSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isFinish) {
       inputIndex++;
       if (inputIndex == InputIndex::Arrow)
-        contents[InputIndex::Arrow].updateContent(">", 1);
+        staticContents[InputIndex::Arrow].updateContent(">", 1);
     }
   }
 }
