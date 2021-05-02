@@ -49,4 +49,4 @@ class ScanWifiPage : public Page {
     LoadingSpinner loadingSpinner;
 };
 
-#endif`
+#endif

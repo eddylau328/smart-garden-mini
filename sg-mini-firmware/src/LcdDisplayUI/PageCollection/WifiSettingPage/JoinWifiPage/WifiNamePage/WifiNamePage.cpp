@@ -31,7 +31,9 @@ void WifiNamePage::interactiveUpdate(int counter, bool isPress) {
         int length;
         char *wifiName;
         input.getInputValue(&wifiName, &length);
-        TempStorage::setSelectWifiName(wifiName, length);
+        AccessPointSetting accessPointSetting = TempStorage::getAccessPointSetting();
+        accessPointSetting.setAccessPointName(wifiName, length);
+        TempStorage::setAccessPointSetting(accessPointSetting);
       }
       Page::interactiveUpdate(counter, isPress);
     }

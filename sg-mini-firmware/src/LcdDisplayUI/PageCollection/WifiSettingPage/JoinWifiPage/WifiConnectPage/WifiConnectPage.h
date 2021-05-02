@@ -2,10 +2,13 @@
 #define WifiConnectPage_h
 
 #include "../../../Page.h"
+#include "../../../../../Helper/Helper.h"
 #include "../../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../../TempStorage/TempStorage.h"
 #include "../../../../Components/LoadingSpinner/LoadingSpinner.h"
 #include "../../../../../WifiController/WifiController.h"
+#include "../../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+
 
 /**
  * @brief Page derived class use to show to the user when the system is idle

@@ -18,6 +18,20 @@ void WifiConnect::connect(char *ssid, char *password) {
   isRequestConnect = true;
 }
 
+void WifiConnect::connect(AccessPointSetting setting) {
+  delete [] WifiConnect::ssid;
+  delete [] WifiConnect::password;
+  char *ssidTemp = setting.getAccessPointName();
+  int ssidLength = Helper::getStringLength(ssidTemp);
+  char *passwordTemp = setting.getAccessPointPassword();
+  int passwordLength = Helper::getStringLength(passwordTemp);
+  WifiConnect::ssid = new char[ssidLength];
+  WifiConnect::password = new char[passwordLength];
+  Helper::copyString(WifiConnect::ssid, ssidTemp, ssidLength);
+  Helper::copyString(WifiConnect::password, passwordTemp, passwordLength);
+  isRequestConnect = true;
+}
+
 void WifiConnect::disconnect() {
   WiFi.disconnect();
 }

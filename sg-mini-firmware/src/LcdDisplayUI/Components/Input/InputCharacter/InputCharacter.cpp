@@ -38,7 +38,7 @@ void InputCharacter::blinkUpdate() {
         if (isBlinking) {
             Helper::copyString(copyBuffer, connectContent->getContent(), displayRange);
             *(copyBuffer + valueIndex - showIndex) = '_';
-            connectContent->updateContent(copyBuffer, displayRange, showIndex);
+            connectContent->updateContent(copyBuffer, displayRange, 0);
         }
         else {
             char blinkChar = *(buffer + valueIndex);

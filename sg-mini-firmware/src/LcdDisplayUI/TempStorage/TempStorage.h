@@ -3,21 +3,16 @@
 
 #include <Arduino.h>
 #include "../../Helper/Helper.h"
+#include "../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
 
 class TempStorage {
-  public:
-    static void getSelectWifiName(char **str, int *length);
-    static void setSelectWifiName(char *name, int length);
-    static void freeSelectWifiName();
-    static void getSelectWifiPassword(char **str, int *length);
-    static void setSelectWifiPassword(char *password, int length);
-    static void freeSelectWifiPassword();
+    public:
+        static void init();
+        static AccessPointSetting getAccessPointSetting();
+        static void setAccessPointSetting(AccessPointSetting newAccessPointSetting);
 
-  private:
-    static int selectWifiNameLength;
-    static char *selectWifiName;
-    static char *selectWifiPassword;
-    static int selectWifiPasswordLength;
+    private:
+        static AccessPointSetting accessPointSetting;
 
 };
 

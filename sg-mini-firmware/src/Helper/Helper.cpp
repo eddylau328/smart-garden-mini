@@ -39,13 +39,33 @@ void Helper::clearString(char *target, int length) {
 }
 
 void Helper::copyString(char *target, char *copy, int length) {
-    for (int i = 0; i < length; i++)
-        *(target + i) = *(copy + i);
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
 }
 
 void Helper::copyString(char *target, const char *copy, int length) {
-    for (int i = 0; i < length; i++)
-        *(target + i) = *(copy + i);
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
+}
+
+size_t Helper::getStringLength(char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
+}
+
+size_t Helper::getStringLength(const char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
 }
 
 bool Helper::compareString(char *target, char *compare, int targetLength) {

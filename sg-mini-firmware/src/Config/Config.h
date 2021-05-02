@@ -43,4 +43,7 @@
 // Define the reading time for sensors
 #define ReadingInterval 5000000  // 5s = 5000ms = 5000 000 micro sec
 
+// WIFI ACCESS POINT
+#define ACCESS_POINT_NAME_BUFFER_SIZE 25
+#define ACCESS_POINT_PASSWORD_BUFFER_SIZE 25
 #endif

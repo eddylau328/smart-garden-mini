@@ -7,15 +7,15 @@ WifiConnectPage::WifiConnectPage() {
 void WifiConnectPage::mountPage() {
   Page::allocateStaticContents(staticContents, staticContentSize);
 
-  TempStorage::getSelectWifiName(&wifiName, &wifiNameLength);
+  AccessPointSetting accessPointSetting = TempStorage::getAccessPointSetting();
+  wifiName = accessPointSetting.getAccessPointName();
+  wifiNameLength = Helper::getStringLength(wifiName);
+
   staticContents[ContentIndex::WifiName] = PageContent(wifiNameLength, PageLayoutPosition(0, 1));
   staticContents[ContentIndex::WifiName].updateContent(wifiName, wifiNameLength);
 
   loadingSpinner.spin(true);
-  char *wifiPassword;
-  int passwordLength;
-  TempStorage::getSelectWifiPassword(&wifiPassword, &passwordLength);
-  WifiController::connect(wifiName, wifiPassword);
+  WifiController::connect(accessPointSetting);
 }
 
 void WifiConnectPage::updateContents() {
@@ -28,6 +28,4 @@ void WifiConnectPage::updateContents() {
 
 void WifiConnectPage::dismountPage() {
   staticContents[ContentIndex::WifiName].~PageContent();
-  TempStorage::freeSelectWifiName();
-  TempStorage::freeSelectWifiPassword();
 }

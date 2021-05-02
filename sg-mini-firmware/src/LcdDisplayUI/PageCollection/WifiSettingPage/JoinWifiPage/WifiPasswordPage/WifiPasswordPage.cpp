@@ -29,9 +29,11 @@ void WifiPasswordPage::interactiveUpdate(int counter, bool isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
         int length;
-        char *wifiName;
-        input.getInputValue(&wifiName, &length);
-        TempStorage::setSelectWifiPassword(wifiName, length);
+        char *wifiPassword;
+        input.getInputValue(&wifiPassword, &length);
+        AccessPointSetting accessPointSetting = TempStorage::getAccessPointSetting();
+        accessPointSetting.setAccessPointPassword(wifiPassword, length);
+        TempStorage::setAccessPointSetting(accessPointSetting);
       }
       Page::interactiveUpdate(counter, isPress);
     }
