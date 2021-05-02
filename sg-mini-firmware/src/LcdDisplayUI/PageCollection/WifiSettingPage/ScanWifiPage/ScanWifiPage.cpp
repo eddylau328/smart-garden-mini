@@ -26,7 +26,14 @@ void ScanWifiPage::interactiveUpdate(int counter, bool isPress) {
   if (isPress) {
     int8_t index = scroll.getCurrentArrowRow(contents, contentSize);
     if (index > 0 && index < contentRow - 1) {
-
+      // SELECT WIFI NAME
+      char wifiName[25];
+      int length = 0;
+      WifiController::getNetwork(wifiName, &length, index - 1, 25);
+      AccessPointSetting accessPointSetting = TempStorage::getAccessPointSetting();
+      accessPointSetting.setAccessPointName(wifiName, length);
+      TempStorage::setAccessPointSetting(accessPointSetting);
+      Page::nextPageCallback(PageCollection::PageKey::WifiPasswordPageKey);
     }
     else if (index == contentRow - 1) {
       // JOIN OTHER
@@ -81,6 +88,7 @@ void ScanWifiPage::getDynamicContents() {
   int length = 0;
   for (int i = 0 ; i < dynamicContentSize; i++) {
     WifiController::getNetwork(str, &length, i, 40);
+    length -= 1; // Ignore null character
     dynamicContents[i] = new PageContent(length, PageLayoutPosition(2, i + 1));
     dynamicContents[i]->updateContent(str, length);
   }

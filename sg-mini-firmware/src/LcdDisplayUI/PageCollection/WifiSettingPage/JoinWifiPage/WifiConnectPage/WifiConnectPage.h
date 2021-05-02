@@ -29,7 +29,7 @@ class WifiConnectPage : public Page {
 
     int8_t staticContentSize = 3;
     PageContent staticContents[3] = {
-      PageContent("Connecting to", 13, PageLayoutPosition(0, 0)),
+      PageContent("Connecting", 10, PageLayoutPosition(0, 0)),
       PageContent(" ", 1, PageLayoutPosition(15, 0)),
       PageContent()
     };

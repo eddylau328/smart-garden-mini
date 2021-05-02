@@ -45,13 +45,13 @@ void WifiConnect::connectEvent() {
   disconnect();
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
-    LOG_WARNING("Connecting to WiFi..");
+    LOG_ERROR("Connecting to WiFi..");
     delay(500);
   }
 }
 
 void WifiConnect::handleConnect(WiFiEvent_t event, WiFiEventInfo_t info) {
-  LOG_WARNING("Connected to the WiFi network");
+  LOG_ERROR("Connected to the WiFi network");
   isFinishEvent = true;
 }
 

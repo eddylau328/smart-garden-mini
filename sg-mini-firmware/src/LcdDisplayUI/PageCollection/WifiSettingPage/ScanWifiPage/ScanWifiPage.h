@@ -5,6 +5,9 @@
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../WifiController/WifiController.h"
 #include "../../../Components/LoadingSpinner/LoadingSpinner.h"
+#include "../../../TempStorage/TempStorage.h"
+#include "../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+
 
 class ScanWifiPage : public Page {
 
