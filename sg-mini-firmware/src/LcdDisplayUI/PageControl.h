@@ -23,6 +23,7 @@
 #include "PageCollection/WifiSettingPage/JoinWifiPage/WifiNamePage/WifiNamePage.h"
 #include "PageCollection/WifiSettingPage/JoinWifiPage/WifiPasswordPage/WifiPasswordPage.h"
 #include "PageCollection/WifiSettingPage/JoinWifiPage/WifiConnectPage/WifiConnectPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/SetDefaultWifi/SetDefaultWifiPage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------
