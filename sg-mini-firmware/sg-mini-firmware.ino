@@ -11,13 +11,13 @@ unsigned long lastclock;
 #include "src/Sensors/Sensors.h"
 #include "src/LcdDisplayUI/RotaryEncoder.h"
 #include "src/DeviceSetting/DeviceSetting.h"
-#include "src/Controller/Controller.h"
 #include "src/WifiController/WifiController.h"
+#include "src/WaterController/WaterController.h"
+
 
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
-Controller controller;
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void setup() {
@@ -38,7 +38,7 @@ void setup() {
   pageControl.init();
   pageControl.initInput(&rotaryEncoder);
 
-  controller.init();
+  WaterController::init();
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -59,13 +59,15 @@ void setup() {
 
 void loop() {
   // digitalWrite(12,!digitalRead(12)); //Blinking LED
-
   pageControl.mainLoop();
   display.render();
-  controller.mainLoop();
   Sensors::mainLoop();
   DeviceSetting::mainLoop();
+<<<<<<< HEAD
 
+=======
+  WaterController::mainLoop();
+>>>>>>> controller
 }
 
 

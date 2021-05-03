@@ -31,17 +31,23 @@
 
 // MAX44009 Light Intensity Sensor
 #define MAX44009_MAX_ADDR 0x4B // 0x4B is no interrupt, or 0x4B if A0 pin connected to Vcc
-
 // Rotary Encoder
 #define DT_PIN 39
 #define CLK_PIN 36
 #define SW_PIN 25
+
+// WATER PUMP
+#define WATER_PUMP_PIN 4
+#define WATER_PUMP_ON 0x00
+#define WATER_PUMP_OFF 0x01
+#define MAX_WATER_PUMP_ON_TIME 20000
 
 // LCD Screen Size
 #define LCDScreenWidth 16
 #define LCDScreenHeight 2
 // Define the reading time for sensors
 #define ReadingInterval 5000000  // 5s = 5000ms = 5000 000 micro sec
+#define WATER_CONTROLLER_INTERVAL 500000 // 0.5s = 500 ms = 500 000 micro sec
 
 // WIFI ACCESS POINT
 #define ACCESS_POINT_NAME_BUFFER_SIZE 25

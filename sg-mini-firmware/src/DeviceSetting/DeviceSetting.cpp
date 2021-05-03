@@ -6,6 +6,9 @@ uint8_t DeviceSetting::time[3];
 uint8_t DeviceSetting::date[4];
 bool DeviceSetting::wifiMode = false;
 unsigned long DeviceSetting::lastTimeRecord;
+uint8_t DeviceSetting::WateringDuration; //set the second the pump will be on
+uint8_t DeviceSetting::ScheduleTime[3];// set what time the pump will be on
+uint8_t DeviceSetting::HumidityLevel;
 
 void DeviceSetting::init() {
   Storage::init();
@@ -41,7 +44,7 @@ void DeviceSetting::setUserName(char *newUserName, int length) {
 }
 
 void DeviceSetting::setTime(int hour, int minute, int second) {
-  if (Helper::intInRange(hour, 0, 23) && Helper::intInRange(minute, 0, 59) && Helper::intInRange(second, 0, 59)) {
+  if (Helper::isInRange(hour, 0, 23) && Helper::isInRange(minute, 0, 59) && Helper::isInRange(second, 0, 59)) {
     clock.fillByHMS(hour, minute, second);
     clock.setTime();//write time to the RTC chip
   }
@@ -61,7 +64,7 @@ void DeviceSetting::getDate(int *year, int *month, int *day, int *dayOfWeek) {
 }
 
 void DeviceSetting::setDate(int year, int month, int day, int dayOfWeek) {
-  if (Helper::isValidDate(year, month, day) && Helper::intInRange(dayOfWeek, MON , SUN)) {
+  if (Helper::isValidDate(year, month, day) && Helper::isInRange(dayOfWeek, MON , SUN)) {
     clock.fillByYMD(year, month, day);
     clock.fillDayOfWeek(dayOfWeek);//Saturday
     clock.setTime();
@@ -88,3 +91,29 @@ void DeviceSetting::mainLoop() {
     date[3] = clock.dayOfWeek;
   }
 }
+
+
+void DeviceSetting::setScheduleTime(int hour, int minute, int second) {
+  if (Helper::isInRange(hour, 0, 23) && Helper::isInRange(minute, 0, 59) && Helper::isInRange(second, 0, 59)) {
+    
+  }
+}
+
+void DeviceSetting::getScheduleTime(int *hour, int *minute, int *second) {
+  *hour = ScheduleTime[0];
+  *minute = ScheduleTime[1];
+  *second = ScheduleTime[2];
+}
+
+void DeviceSetting::setHumiditySetLevel(int HumidityLevel){
+  if(Helper::isInRange(HumidityLevel,0,100)){
+
+  }
+  
+
+}
+float DeviceSetting::getHumiditySetLevel(int *humidity){
+  *humidity = HumidityLevel;
+  return(HumidityLevel);
+}
+

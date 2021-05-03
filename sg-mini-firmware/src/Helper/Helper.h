@@ -148,15 +148,26 @@ class Helper {
     static void convertStrToNum(char *target, float &number);
 
     /**
-     * @brief check whether the 8-bit integer is within the range
+     * @brief check whether the float value is within the range
      * 
-     * @param target - the 8-bit integer variable you want to check
+     * @param target - the float value is within the range 
+     * @param min - the minimum of the target can have (inclusive)
+     * @param max - the maximum of the target can have (includsive)
+     * @return true - the target is within the range 
+     * @return false - the target is out of range 
+     */
+    static bool isInRange(float target, float min, float max);
+
+    /**
+     * @brief check whether the 8-bit unsigned integer is within the range
+     * 
+     * @param target - the 8-bit unsigned integer variable you want to check
      * @param min - the minimum of the target can have
      * @param max - the maximum of the target can have
      * @return true - the target is within the range
      * @return false - the target is out of range
      */
-    static bool int8_tInRange(int8_t target, int8_t min, int8_t max);
+    static bool isInRange(uint8_t target, uint8_t min, uint8_t max);
 
     /**
      * @brief check whether the integer is within the range
@@ -167,7 +178,7 @@ class Helper {
      * @return true - the target is within the range
      * @return false - the target is out of range
      */
-    static bool intInRange(int number, int min, int max);
+    static bool isInRange(int number, int min, int max);
 
     /**
      * @brief check whether the date is valid

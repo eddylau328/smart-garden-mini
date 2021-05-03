@@ -6,6 +6,7 @@
 #include "../Helper/Helper.h"
 #include "../Storage/Storage.h"
 #include "../Storage/StorageConstant.h"
+#include "../Sensors/Sensors.h"
 
 /**
  * @brief provides sets of functions for accessing the settings stored in the board or temporary stored in the device
@@ -94,8 +95,20 @@ class DeviceSetting {
      * @brief performs functions that need to call in a period of time, e.g. getting the time 
      * 
      */
-    static void mainLoop();
+    static void getControllerMode(int *mode);
+    static void setControllerMode(int mode);
 
+    static void getWateringDuration(int *second);
+    static void setWateringDuration(int second);
+
+    static void getScheduleTime(int *hour, int *minute, int *second);
+    static void setScheduleTime(int hour, int minute, int second);
+
+    static float getHumiditySetLevel(int *humidity);
+    static void setHumiditySetLevel(int humidity);
+
+    static void mainLoop();
+    
   private:
     static DS1307 clock;
     static char userName[UserNameLength];
