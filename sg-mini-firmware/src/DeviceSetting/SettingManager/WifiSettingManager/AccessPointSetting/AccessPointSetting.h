@@ -1,9 +1,8 @@
 #ifndef AccessPointSetting_h
 #define AccessPointSetting_h
 
-#include "../../../Helper/Helper.h"
-#include "../../../Config/Config.h"
-
+#include "../../../../Helper/Helper.h"
+#include "../../../../Config/Config.h"
 
 class AccessPointSetting {
     public:

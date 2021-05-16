@@ -6,7 +6,6 @@ portMUX_TYPE WaterController::timerMux = portMUX_INITIALIZER_UNLOCKED;
 volatile int WaterController::interruptCounter = 0;
 
 WaterPumpController WaterController::waterPumpController;
-WaterModeSetting WaterController::modeSetting;
 ModeController **WaterController::modeControllers = new ModeController *[TOTAL_WATER_MODE];
 WaterController::WaterMode WaterController::currentMode = WaterMode::ScheduleMode;
 
@@ -22,8 +21,9 @@ void WaterController::init() {
 
 void WaterController::mainLoop() {
     if (isTimerUpdated()) {
+        WaterSettingManager setting = DeviceManager::getWaterSettingManager();
         waterPumpController.mainLoop(); 
-        modeControllers[currentMode]->mainLoop(waterPumpController, modeSetting);
+        modeControllers[currentMode]->mainLoop(waterPumpController, setting);
     }
 }
 
@@ -37,18 +37,6 @@ bool WaterController::setMode(WaterController::WaterMode mode) {
 
 WaterController::WaterMode WaterController::getMode() {
     return currentMode;
-}
-
-void WaterController::setWaterModeSetting(ScheduleModeSetting scheduleModeSetting) {
-    modeSetting.setScheduleModeSetting(scheduleModeSetting);
-}
-
-void WaterController::setWaterModeSetting(HumidityModeSetting humidityModeSetting) {
-    modeSetting.setHumidityModeSetting(humidityModeSetting);
-}
-
-WaterModeSetting WaterController::getWaterModeSetting() {
-    return modeSetting;
 }
 
 // private

@@ -12,7 +12,7 @@
 #include "ModeController/ManualModeController/ManualModeController.h"
 #include "ModeController/ScheduleModeController/ScheduleModeController.h"
 #include "ModeController/HumidityModeController/HumidityModeController.h"
-#include "WaterModeSetting/WaterModeSetting.h"
+#include "../DeviceSetting/DeviceManager.h"
 
 /**
  * @brief provides functions for the smart-garden-mini kit control actions, e.g. watering the plants
@@ -38,10 +38,6 @@ class WaterController {
     static bool setMode(WaterController::WaterMode mode);
     static WaterController::WaterMode getMode();
 
-    static void setWaterModeSetting(ScheduleModeSetting scheduleModeSetting);
-    static void setWaterModeSetting(HumidityModeSetting HumidityModeSetting);
-    static WaterModeSetting getWaterModeSetting();
-  
   private:
     static void initInterval();
     static void setupModeControllers();
@@ -56,7 +52,7 @@ class WaterController {
     static WaterPumpController waterPumpController;
     static ModeController **modeControllers;
     static WaterMode currentMode;
-    static WaterModeSetting modeSetting;
+
 };
 
 #endif

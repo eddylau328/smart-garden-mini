@@ -1,7 +1,7 @@
 #include "ScheduleModeController.h"
 #include <Arduino.h>
 
-void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
+void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting) {
     // reach the next water time
     // DateTime currentTime = DateTime(2021, 3, 28, 22, 30, 0);
     // DateTime nextWaterTime = DateTime(2021, 3, 28, 22, 30, 0);

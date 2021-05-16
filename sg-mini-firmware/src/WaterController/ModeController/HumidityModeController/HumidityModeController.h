@@ -10,7 +10,7 @@ class HumidityModeController : public ModeController {
     public:
         void init();
 
-        void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting);
+        void mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting);
 
         void setDiffuseDelay(millisDelay diffuseDelay);
         

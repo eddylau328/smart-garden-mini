@@ -5,12 +5,11 @@ void WifiSettingManager::setIsWifiOn(bool isWifiOn) {
     this->isWifiOn = isWifiOn;
 }
 
-bool WifiSettingManager::getIsWifiOn() {
-    return this->isWifiOn;
-}
-
 void WifiSettingManager::setAccessPointSetting(AccessPointSetting accessPointSetting) {
     this->accessPointSetting = accessPointSetting;
+}
+bool WifiSettingManager::getIsWifiOn() {
+    return this->isWifiOn;
 }
 
 AccessPointSetting WifiSettingManager::getAccessPointSetting() {

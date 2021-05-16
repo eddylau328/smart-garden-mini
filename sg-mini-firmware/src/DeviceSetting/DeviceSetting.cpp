@@ -6,9 +6,7 @@ uint8_t DeviceSetting::time[3];
 uint8_t DeviceSetting::date[4];
 bool DeviceSetting::wifiMode = false;
 unsigned long DeviceSetting::lastTimeRecord;
-uint8_t DeviceSetting::WateringDuration; //set the second the pump will be on
-uint8_t DeviceSetting::ScheduleTime[3];// set what time the pump will be on
-uint8_t DeviceSetting::HumidityLevel;
+
 
 void DeviceSetting::init() {
   Storage::init();
@@ -100,9 +98,7 @@ void DeviceSetting::setScheduleTime(int hour, int minute, int second) {
 }
 
 void DeviceSetting::getScheduleTime(int *hour, int *minute, int *second) {
-  *hour = ScheduleTime[0];
-  *minute = ScheduleTime[1];
-  *second = ScheduleTime[2];
+
 }
 
 void DeviceSetting::setHumiditySetLevel(int HumidityLevel){
@@ -113,7 +109,6 @@ void DeviceSetting::setHumiditySetLevel(int HumidityLevel){
 
 }
 float DeviceSetting::getHumiditySetLevel(int *humidity){
-  *humidity = HumidityLevel;
-  return(HumidityLevel);
+
 }
 

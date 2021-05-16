@@ -19,14 +19,9 @@ LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
-//---------------------------------------SET UP--------------------------------------------------------------------
-void setup() {
-  // put your setup code here, to run once:
-  lastclock = millis();
 
-  Serial.begin(9600);
-  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
-  
+//---------------------------------------SET UP--------------------------------------------------------------------
+void init() {
   DeviceSetting::init();
   WifiController::init();
 
@@ -39,6 +34,18 @@ void setup() {
   pageControl.initInput(&rotaryEncoder);
 
   WaterController::init();
+}
+
+
+void setup() {
+  // put your setup code here, to run once:
+  lastclock = millis();
+
+  Serial.begin(9600);
+
+  LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
+  init();
+  
 // SD card file name create
 /*  char filename[] = "data00.txt";
   while(SD.exists(filename)){
@@ -58,16 +65,12 @@ void setup() {
 }
 
 void loop() {
-  // digitalWrite(12,!digitalRead(12)); //Blinking LED
+  digitalWrite(12,!digitalRead(12)); //Blinking LED
   pageControl.mainLoop();
   display.render();
   Sensors::mainLoop();
   DeviceSetting::mainLoop();
-<<<<<<< HEAD
-
-=======
   WaterController::mainLoop();
->>>>>>> controller
 }
 
 

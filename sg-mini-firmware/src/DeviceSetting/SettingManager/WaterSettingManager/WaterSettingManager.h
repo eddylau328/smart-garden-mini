@@ -1,11 +1,10 @@
-#ifndef WaterModeSetting_h
-#define WaterModeSetting_h
+#ifndef WaterSettingManager_h
+#define WaterSettingManager_h
 
-#include "../../Helper/Helper.h"
 #include "ModeSetting/ScheduleModeSetting/ScheduleModeSetting.h"
 #include "ModeSetting/HumidityModeSetting/HumidityModeSetting.h"
 
-class WaterModeSetting {
+class WaterSettingManager {
     public:
 
         void setScheduleModeSetting(ScheduleModeSetting setting);

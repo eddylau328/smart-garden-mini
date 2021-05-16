@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include "../../Helper/Helper.h"
-#include "../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 class TempStorage {
     public:

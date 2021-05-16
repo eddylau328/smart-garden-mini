@@ -1,7 +1,8 @@
 #ifndef HumidityModeSetting_h
 #define HumidityModeSetting_h
 
-#include "../../../../Helper/Helper.h"
+
+#include "../../../../../Helper/Helper.h"
 
 
 class HumidityModeSetting {

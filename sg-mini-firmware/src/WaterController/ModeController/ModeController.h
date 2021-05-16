@@ -2,15 +2,15 @@
 #define ModeController_h
 
 #include "../WaterPumpController/WaterPumpController.h"
-#include "../WaterModeSetting/WaterModeSetting.h"
-#include "../WaterModeSetting/ModeSetting/ScheduleModeSetting/ScheduleModeSetting.h"
-#include "../WaterModeSetting/ModeSetting/HumidityModeSetting/HumidityModeSetting.h"
+#include "../../DeviceSetting/SettingManager/WaterSettingManager/WaterSettingManager.h"
+#include "../../DeviceSetting/SettingManager/WaterSettingManager/ModeSetting/ScheduleModeSetting/ScheduleModeSetting.h"
+#include "../../DeviceSetting/SettingManager/WaterSettingManager/ModeSetting/HumidityModeSetting/HumidityModeSetting.h"
 
 
 class ModeController {
 
     public:
-        virtual void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) = 0;
+        virtual void mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting) = 0;
         bool getIsIdle();
     
     protected:

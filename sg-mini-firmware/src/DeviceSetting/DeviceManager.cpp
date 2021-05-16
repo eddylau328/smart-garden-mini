@@ -2,11 +2,12 @@
 
 
 WifiSettingManager DeviceManager::wifiSettingManager;
+WaterSettingManager DeviceManager::waterSettingManager;
 
 WifiSettingManager DeviceManager::getWifiSettingManager() {
     return wifiSettingManager;
 }
 
-void DeviceManager::setWifiSettingManager(WifiSettingManager manager) {
-    wifiSettingManager = manager;
+WaterSettingManager DeviceManager::getWaterSettingManager() {
+    return waterSettingManager;
 }

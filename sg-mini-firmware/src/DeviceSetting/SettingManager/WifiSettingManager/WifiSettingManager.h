@@ -3,7 +3,6 @@
 
 #include "AccessPointSetting/AccessPointSetting.h"
 
-
 class WifiSettingManager {
     public:
         void setIsWifiOn(bool isWifiOn);

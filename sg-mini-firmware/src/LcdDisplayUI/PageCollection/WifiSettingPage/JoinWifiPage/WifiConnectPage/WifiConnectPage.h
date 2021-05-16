@@ -7,7 +7,7 @@
 #include "../../../../TempStorage/TempStorage.h"
 #include "../../../../Components/LoadingSpinner/LoadingSpinner.h"
 #include "../../../../../WifiController/WifiController.h"
-#include "../../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../../../../../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 
 /**
