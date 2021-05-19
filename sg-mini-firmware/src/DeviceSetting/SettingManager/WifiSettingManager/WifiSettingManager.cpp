@@ -1,6 +1,10 @@
 #include "WifiSettingManager.h"
 
 
+void WifiSettingManager::init() {
+
+}
+
 void WifiSettingManager::setIsWifiOn(bool isWifiOn) {
     this->isWifiOn = isWifiOn;
 }

@@ -1,5 +1,10 @@
 #include "WaterSettingManager.h"
 
+
+void WaterSettingManager::init() {
+
+}
+
 void WaterSettingManager::setScheduleModeSetting(ScheduleModeSetting setting) {
     this->scheduleModeSetting = setting;
 }

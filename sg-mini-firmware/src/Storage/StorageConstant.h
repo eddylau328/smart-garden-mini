@@ -6,7 +6,7 @@
  * 
  */
 
-
+#define USERNAME_LENGTH 8
 #define UserNameLength 8
 #define TotalStorageSize 8
 

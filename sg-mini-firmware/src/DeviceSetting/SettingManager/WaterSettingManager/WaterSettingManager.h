@@ -3,10 +3,11 @@
 
 #include "ModeSetting/ScheduleModeSetting/ScheduleModeSetting.h"
 #include "ModeSetting/HumidityModeSetting/HumidityModeSetting.h"
+#include "../SettingManager.h"
 
-class WaterSettingManager {
+class WaterSettingManager : public SettingManager {
     public:
-
+        void init();
         void setScheduleModeSetting(ScheduleModeSetting setting);
         void setHumidityModeSetting(HumidityModeSetting setting);
 
