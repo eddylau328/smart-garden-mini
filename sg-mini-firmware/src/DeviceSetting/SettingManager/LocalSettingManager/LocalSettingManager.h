@@ -3,6 +3,7 @@
 
 #include <RTClib.h>
 #include "../SettingManager.h"
+#include "../../../Storage/StorageData/CharArrayData/CharArrayData.h"
 
 class LocalSettingManager : public SettingManager {
 
@@ -20,6 +21,9 @@ class LocalSettingManager : public SettingManager {
     private:
         char username[USERNAME_LENGTH];
         RTC_DS1307 clock;
+
+        // methods
+        void storeUsername(char *username);
 };
 
 #endif

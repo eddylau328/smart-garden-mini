@@ -25,9 +25,17 @@ const char* LocalSettingManager::getUserName() {
 void LocalSettingManager::setUserName(char *username) {
     int length = Helper::getStringLength(username);
     Helper::copyString(this->username, username, length);
+    this->storeUsername(username);
 }
 
 void LocalSettingManager::setUserName(const char *username) {
     int length = Helper::getStringLength(username);
     Helper::copyString(this->username, username, length);
+}
+
+void LocalSettingManager::storeUsername(char *username) {
+    StorageLocation location(USERNAME_LENGTH, USERNAME_STORE_INDEX);
+    CharArrayData data;
+    data.setByteData(username, location);
+    Storage::set(data);
 }

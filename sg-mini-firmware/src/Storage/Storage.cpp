@@ -17,6 +17,12 @@ byte* Storage::get(Storage::Key key){
   }
 }
 
+void Storage::set(DataBuffer dataBuffer) {
+  StorageLocation location = dataBuffer.getStorageLocation();
+  const byte* target = dataBuffer.getDataBuffer();
+  writeByte(target, location);
+}
+
 void Storage::set(Storage::Key key, byte* target) {
   switch (key) {
     case Storage::Key::UserName:
@@ -39,5 +45,14 @@ void Storage::writeByte(int address, byte *target, int length) {
     EEPROM.write(address + i, *(target+i));
     EEPROM.commit();
     // LOG_ERROR(*(target + i));
+  }
+}
+
+void Storage::writeByte(const byte *target, StorageLocation location) {
+  int length = location.getLength();
+  int address = location.getAddress();
+  for (int i = 0; i < length; i++) {
+    EEPROM.write(address + i, *(target + i));
+    EEPROM.commit();
   }
 }
