@@ -7,7 +7,7 @@ volatile int WaterController::interruptCounter = 0;
 
 WaterPumpController WaterController::waterPumpController;
 ModeController **WaterController::modeControllers = new ModeController *[TOTAL_WATER_MODE];
-WaterController::WaterMode WaterController::currentMode = WaterMode::ScheduleMode;
+WaterControllerConstant::WaterMode WaterController::currentMode = WaterControllerConstant::WaterMode::ScheduleMode;
 
 WaterController::WaterController() {}
 
@@ -27,7 +27,7 @@ void WaterController::mainLoop() {
     }
 }
 
-bool WaterController::setMode(WaterController::WaterMode mode) {
+bool WaterController::setMode(WaterControllerConstant::WaterMode mode) {
     if (currentMode != mode && modeControllers[currentMode]->getIsIdle()) {
         currentMode = mode;
         return true;
@@ -35,7 +35,7 @@ bool WaterController::setMode(WaterController::WaterMode mode) {
     return currentMode == mode;
 }
 
-WaterController::WaterMode WaterController::getMode() {
+WaterControllerConstant::WaterMode WaterController::getMode() {
     return currentMode;
 }
 
@@ -65,7 +65,7 @@ void WaterController::initInterval() {
 }
 
 void WaterController::setupModeControllers() {
-    modeControllers[WaterMode::ManualMode] = new ManualModeController();
-    modeControllers[WaterMode::ScheduleMode] = new ScheduleModeController();
-    modeControllers[WaterMode::HumidityMode] = new HumidityModeController();
+    modeControllers[WaterControllerConstant::WaterMode::ManualMode] = new ManualModeController();
+    modeControllers[WaterControllerConstant::WaterMode::ScheduleMode] = new ScheduleModeController();
+    modeControllers[WaterControllerConstant::WaterMode::HumidityMode] = new HumidityModeController();
 }

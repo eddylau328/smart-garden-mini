@@ -7,6 +7,8 @@
 #include "../DeviceSetting/DeviceSetting.h"
 #include "WaterPumpController/WaterPumpController.h"
 
+#include "WaterControllerConstant.h"
+
 // all the mode controllers
 #include "ModeController/ModeController.h"
 #include "ModeController/ManualModeController/ManualModeController.h"
@@ -19,24 +21,17 @@
  * 
  */
 
-#define TOTAL_WATER_MODE 3
 
 class WaterController {
 
   public:
-    enum WaterMode {
-      ManualMode = 0,
-      ScheduleMode = 1,
-      HumidityMode = 2,
-    };
-
     WaterController();
     ~WaterController();
 
     static void init();
     static void mainLoop();
-    static bool setMode(WaterController::WaterMode mode);
-    static WaterController::WaterMode getMode();
+    static bool setMode(WaterControllerConstant::WaterMode mode);
+    static WaterControllerConstant::WaterMode getMode();
 
   private:
     static void initInterval();
@@ -51,7 +46,7 @@ class WaterController {
 
     static WaterPumpController waterPumpController;
     static ModeController **modeControllers;
-    static WaterMode currentMode;
+    static WaterControllerConstant::WaterMode currentMode;
 
 };
 
