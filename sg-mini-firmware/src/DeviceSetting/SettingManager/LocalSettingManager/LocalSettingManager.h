@@ -23,7 +23,8 @@ class LocalSettingManager : public SettingManager {
         RTC_DS1307 clock;
 
         // methods
-        void storeUsername(char *username);
+        void storeUsername();
+        void retrieveUsername();
 };
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef SettingManager_h
 #define SettingManager_h
 
+#include <Arduino.h>
 #include "../../Storage/StorageData/StorageLocation.h"
 #include "../../Storage/StorageConstant.h"
 #include "../../Storage/Storage.h"

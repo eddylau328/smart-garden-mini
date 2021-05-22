@@ -17,9 +17,20 @@ byte* Storage::get(Storage::Key key){
   }
 }
 
-void Storage::set(DataBuffer dataBuffer) {
+void Storage::get(DataBuffer &emptyDataBuffer) {
+  StorageLocation location = emptyDataBuffer.getStorageLocation();
+  int length = location.getLength();
+  int address = location.getAddress();
+  byte *data = new byte[length];
+  copyByte(address, data, length);
+  emptyDataBuffer.setRawByte(data, length);
+  emptyDataBuffer.parseData();
+  delete []data;
+}
+
+void Storage::set(DataBuffer &dataBuffer) {
   StorageLocation location = dataBuffer.getStorageLocation();
-  const byte* target = dataBuffer.getDataBuffer();
+  byte* target = dataBuffer.getRawByte();
   writeByte(target, location);
 }
 
@@ -48,7 +59,7 @@ void Storage::writeByte(int address, byte *target, int length) {
   }
 }
 
-void Storage::writeByte(const byte *target, StorageLocation location) {
+void Storage::writeByte(byte *target, StorageLocation location) {
   int length = location.getLength();
   int address = location.getAddress();
   for (int i = 0; i < length; i++) {

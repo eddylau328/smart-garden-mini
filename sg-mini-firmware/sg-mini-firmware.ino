@@ -13,6 +13,7 @@ unsigned long lastclock;
 #include "src/DeviceSetting/DeviceSetting.h"
 #include "src/WifiController/WifiController.h"
 #include "src/WaterController/WaterController.h"
+#include "src/DeviceSetting/DeviceManager.h"
 
 
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
@@ -22,6 +23,7 @@ RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void init() {
+  DeviceManager::init();
   DeviceSetting::init();
   WifiController::init();
 

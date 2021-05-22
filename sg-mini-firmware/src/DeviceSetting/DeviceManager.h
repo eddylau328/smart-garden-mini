@@ -8,14 +8,14 @@
 class DeviceManager {
 	public:
 		static void init();
-		static WifiSettingManager& getWifiSettingManager();
-		static WaterSettingManager& getWaterSettingManager();
-		static LocalSettingManager& getLocalSettingManager();
+		static WifiSettingManager* getWifiSettingManager();
+		static WaterSettingManager* getWaterSettingManager();
+		static LocalSettingManager* getLocalSettingManager();
 
   	private:
-		static WifiSettingManager wifiSettingManager;
-		static WaterSettingManager waterSettingManager;
-		static LocalSettingManager localSettingManager;
+		static WifiSettingManager *wifiSettingManager;
+		static WaterSettingManager *waterSettingManager;
+		static LocalSettingManager *localSettingManager;
 };
 
 #endif

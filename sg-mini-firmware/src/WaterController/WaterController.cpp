@@ -21,9 +21,9 @@ void WaterController::init() {
 
 void WaterController::mainLoop() {
     if (isTimerUpdated()) {
-        WaterSettingManager setting = DeviceManager::getWaterSettingManager();
+        WaterSettingManager *setting = DeviceManager::getWaterSettingManager();
         waterPumpController.mainLoop(); 
-        modeControllers[currentMode]->mainLoop(waterPumpController, setting);
+        modeControllers[currentMode]->mainLoop(waterPumpController, *setting);
     }
 }
 

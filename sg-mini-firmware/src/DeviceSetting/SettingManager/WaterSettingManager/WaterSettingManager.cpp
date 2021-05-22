@@ -36,7 +36,6 @@ void WaterSettingManager::storeWaterMode(WaterControllerConstant::WaterMode mode
         WATER_CONTROLLER_MODE_LENGTH, 
         WATER_CONTROLLER_MODE_STORE_INDEX
     );
-    UInt8Data data;
-    data.setByteData((uint8_t) mode, storageLocation);
+    UInt8Data data((uint8_t) mode, storageLocation);
     Storage::set(data);
 }

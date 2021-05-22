@@ -12,10 +12,10 @@ UsernameSettingPage::UsernameSettingPage() {
 void UsernameSettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 7);
 
-  char *name;
-  int length;
-  DeviceSetting::getUserName(&name, &length);
-  input.set(name, UserNameLength);
+  LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+  const char* name = localSettingManager->getUserName();
+  input.set(name, USERNAME_LENGTH);
+
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Name;
   input.startBlink();
@@ -31,8 +31,10 @@ void UsernameSettingPage::interactiveUpdate(int counter, bool isPress) {
   if (inputIndex == InputIndex::Arrow) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-      if (row == 1)
-        DeviceSetting::setUserName(input.getInputValue(), UserNameLength);
+      if (row == 1) {
+        LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+        localSettingManager->setUserName(input.getInputValue());
+      }
       Page::interactiveUpdate(counter, isPress);
     }
     else

@@ -6,6 +6,7 @@
 #include "../../../Sensors/Sensors.h"
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
 
+
 /**
  * @brief Page derived class use to show to the user when the system is idle
  * 
@@ -16,10 +17,20 @@ class MainPage : public Page {
     void updateContents();
 
   private:
-    PageContent staticContents[7] = {
-      PageContent(2, PageLayoutPosition(0, 0)),
-      PageContent(":", 1, PageLayoutPosition(2, 0)),
-      PageContent(2, PageLayoutPosition(3, 0)),
+    enum ContentIndex {
+      USERNAME = 0,
+      HOUR = 1,
+      SECOND = 2,
+      MINUTE = 3,
+      TEMPERATURE = 5,
+      HUMIDITY = 7,
+    };
+
+    PageContent staticContents[8] = {
+      PageContent(8, PageLayoutPosition(0, 0)),
+      PageContent(2, PageLayoutPosition(11, 0)),
+      PageContent(":", 1, PageLayoutPosition(13, 0)),
+      PageContent(2, PageLayoutPosition(14, 0)),
       PageContent("T", 1, PageLayoutPosition(0, 1)),
       PageContent(2, PageLayoutPosition(2, 1)),
       PageContent("H", 1, PageLayoutPosition(5, 1)),

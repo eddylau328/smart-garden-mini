@@ -7,6 +7,9 @@
 #include "../Components/PageContent/PageContent.h"
 #include "../Components/PageLayoutPosition/PageLayoutPosition.h"
 #include "PageCollection.h"
+#include "../../Helper/Helper.h"
+#include "../../DeviceSetting/DeviceManager.h"
+
 /**
  * @brief provides the base structure for creating a Page
  * 

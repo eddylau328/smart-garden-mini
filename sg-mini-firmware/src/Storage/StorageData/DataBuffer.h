@@ -9,11 +9,17 @@ class DataBuffer {
 
     public:
         ~DataBuffer();
-        const byte* getDataBuffer();
+
+        byte* getRawByte();
+        void setRawByte(byte *rawData, int length);
+
         StorageLocation getStorageLocation();
+        void setStorageLocation(StorageLocation location);
+
+        virtual void parseData();
         
     protected:
-        byte *dataBuffer = nullptr;
+        byte *rawByte;
         StorageLocation storageLocation;
 };
 

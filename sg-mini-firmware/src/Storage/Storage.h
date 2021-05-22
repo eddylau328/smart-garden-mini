@@ -37,6 +37,8 @@ class Storage {
      */
     static byte* get(Storage::Key key);
 
+    static void get(DataBuffer &emptyDataBuffer);
+
     /**
      * @brief update the storage with new data
      * 
@@ -45,7 +47,7 @@ class Storage {
      */
     static void set(Storage::Key key, byte* target);
 
-    static void set(DataBuffer data);
+    static void set(DataBuffer &data);
   
   private:
 
@@ -67,7 +69,7 @@ class Storage {
      */
     static void writeByte(int address, byte *target, int length);
 
-    static void writeByte(const byte *target, StorageLocation location);
+    static void writeByte(byte *target, StorageLocation location);
 };
 
 #endif

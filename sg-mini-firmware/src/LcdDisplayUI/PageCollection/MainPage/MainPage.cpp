@@ -2,23 +2,27 @@
 
 
 void MainPage::mountPage() {
-  Page::allocateStaticContents(staticContents, 7);
+  Page::allocateStaticContents(staticContents, 8);
 
   int hour, min, sec;
   DeviceSetting::getTime(&hour, &min, &sec);
-  staticContents[0].updateContent(hour, true);
-  staticContents[2].updateContent(min, true);
+  staticContents[ContentIndex::HOUR].updateContent(hour, true);
+  staticContents[ContentIndex::MINUTE].updateContent(min, true);
+
+  LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+  const char* username = localSettingManager->getUserName();
+  staticContents[ContentIndex::USERNAME].updateContent(username, USERNAME_LENGTH);
 }
 
 void MainPage::updateContents() {
   int hour, min, sec;
   DeviceSetting::getTime(&hour, &min, &sec);
-  staticContents[0].updateContent(hour, true);
-  staticContents[2].updateContent(min, true);
-  staticContents[1].updateContent(sec % 2 == 1? " " : ":", 1);
+  staticContents[ContentIndex::HOUR].updateContent(hour, true);
+  staticContents[ContentIndex::MINUTE].updateContent(min, true);
+  staticContents[ContentIndex::SECOND].updateContent(sec % 2 == 1? " " : ":", 1);
   
-  updateSensorData(SensorCollection::SensorDataType::Temp, 4);
-  updateSensorData(SensorCollection::SensorDataType::Hum, 6);
+  updateSensorData(SensorCollection::SensorDataType::Temp, ContentIndex::TEMPERATURE);
+  updateSensorData(SensorCollection::SensorDataType::Hum, ContentIndex::HUMIDITY);
 }
 
 void MainPage::updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex) {

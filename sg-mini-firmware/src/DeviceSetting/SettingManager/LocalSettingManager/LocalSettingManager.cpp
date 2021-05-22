@@ -3,7 +3,9 @@
 
 void LocalSettingManager::init() {
     // initialize clock
-    clock.begin();
+    // clock.begin();
+    // retrieve storage data
+    retrieveUsername();
 }
 
 DateTime LocalSettingManager::getDeviceDateTime() {
@@ -25,17 +27,24 @@ const char* LocalSettingManager::getUserName() {
 void LocalSettingManager::setUserName(char *username) {
     int length = Helper::getStringLength(username);
     Helper::copyString(this->username, username, length);
-    this->storeUsername(username);
+    this->storeUsername();
 }
 
 void LocalSettingManager::setUserName(const char *username) {
     int length = Helper::getStringLength(username);
     Helper::copyString(this->username, username, length);
+    this->storeUsername();
 }
 
-void LocalSettingManager::storeUsername(char *username) {
+void LocalSettingManager::storeUsername() {
     StorageLocation location(USERNAME_LENGTH, USERNAME_STORE_INDEX);
-    CharArrayData data;
-    data.setByteData(username, location);
+    CharArrayData data(this->username, location);
     Storage::set(data);
+}
+
+void LocalSettingManager::retrieveUsername() {
+    StorageLocation location(USERNAME_LENGTH, USERNAME_STORE_INDEX);
+    CharArrayData data(location);
+    Storage::get(data);
+    Helper::copyString(this->username, data.getData(), USERNAME_LENGTH);
 }

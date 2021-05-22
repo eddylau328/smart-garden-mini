@@ -6,7 +6,17 @@
 
 class BooleanData : public DataBuffer {
     public:
-        void setByteData(bool data, StorageLocation storageLocation);
+        BooleanData(StorageLocation location);
+        BooleanData(bool data, StorageLocation location);
+
+        void parseData();
+        bool getData();
+    
+    private:
+        void setByteData(bool data);
+        void setData(bool data);
+
+        bool data;
 };
 
 #endif
