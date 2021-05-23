@@ -28,6 +28,8 @@ class SetDefaultWifiPage : public Page {
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
       PageContent("Save", 4, PageLayoutPosition(12, 1)),
     };
+
+    void updateAccessPointSetting();
 };
 
 #endif

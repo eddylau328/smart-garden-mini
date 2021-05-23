@@ -49,6 +49,8 @@ class WifiSettingPage : public Page {
     PageVerticalScroll scroll;
 
     void processPageContent();
+
+    void updateIsWifiOn();
 };
 
 #endif

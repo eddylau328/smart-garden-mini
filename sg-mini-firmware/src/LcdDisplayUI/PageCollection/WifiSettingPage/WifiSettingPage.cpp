@@ -54,7 +54,7 @@ void WifiSettingPage::interactiveUpdate(int counter, bool isPress) {
     case ContentIndex::WifiModeInput:
       bool isFinish = input.interactiveUpdate(counter, isPress);
       if (isFinish) {
-        DeviceSetting::setWifiMode(input.getInputValue());
+        updateIsWifiOn();
         inputIndex = ContentIndex::Arrow;
         staticContents[ContentIndex::Arrow].updateContent(">", 1);
       }
@@ -74,6 +74,11 @@ void WifiSettingPage::processPageContent() {
     contentSize = 4;
     scroll.setCoverArea(PageLayoutRange(0, 1));
   }
+}
+
+void WifiSettingPage::updateIsWifiOn() {
+  WifiSettingManager *settingManager = DeviceManager::getWifiSettingManager();
+  settingManager->setIsWifiOn(input.getInputValue());
 }
 
 /* Design
