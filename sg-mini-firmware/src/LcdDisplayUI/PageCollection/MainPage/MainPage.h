@@ -5,6 +5,7 @@
 #include "../../../DeviceSetting/DeviceSetting.h"
 #include "../../../Sensors/Sensors.h"
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
+#include "../../../WifiController/WifiController.h"
 
 
 /**
@@ -24,20 +25,24 @@ class MainPage : public Page {
       MINUTE = 3,
       TEMPERATURE = 5,
       HUMIDITY = 7,
+      WIFI_STATUS = 8,
     };
 
-    PageContent staticContents[8] = {
+    PageContent staticContents[9] = {
       PageContent(8, PageLayoutPosition(0, 0)),
-      PageContent(2, PageLayoutPosition(11, 0)),
-      PageContent(":", 1, PageLayoutPosition(13, 0)),
-      PageContent(2, PageLayoutPosition(14, 0)),
+      PageContent(2, PageLayoutPosition(10, 0)),
+      PageContent(":", 1, PageLayoutPosition(12, 0)),
+      PageContent(2, PageLayoutPosition(13, 0)),
       PageContent("T", 1, PageLayoutPosition(0, 1)),
       PageContent(2, PageLayoutPosition(2, 1)),
       PageContent("H", 1, PageLayoutPosition(5, 1)),
-      PageContent(3, PageLayoutPosition(7, 1))
+      PageContent(3, PageLayoutPosition(7, 1)),
+      PageContent(1, PageLayoutPosition(15, 0))
     };
     
     void updateSensorData(SensorCollection::SensorDataType dataType, int contentIndex);
+
+    void updateWifiStatus();
 };
 
 #endif

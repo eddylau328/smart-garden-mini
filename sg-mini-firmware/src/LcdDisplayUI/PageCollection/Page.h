@@ -9,6 +9,7 @@
 #include "PageCollection.h"
 #include "../../Helper/Helper.h"
 #include "../../DeviceSetting/DeviceManager.h"
+#include "../CustomCharacter/CustomCharacter.h"
 
 /**
  * @brief provides the base structure for creating a Page

@@ -12,7 +12,9 @@ void WifiSettingPage::mountPage() {
   // in order to hide contents, overwrite the content size value
   this->contentSize = 4;
   inputIndex = ContentIndex::Arrow;
-  wifiMode = DeviceSetting::getWifiMode();
+
+  WifiSettingManager *settingManager = DeviceManager::getWifiSettingManager();
+  wifiMode = settingManager->getIsWifiOn();
   input.set(wifiMode);
   processPageContent();
   scroll.resetScroll(contents, contentSize);
@@ -21,13 +23,6 @@ void WifiSettingPage::mountPage() {
 void WifiSettingPage::dismountPage() {
   scroll.resetScroll(contents, contentSize);
   Page::dismountPage();
-}
-
-void WifiSettingPage::updateContents() {
-  if (wifiMode != DeviceSetting::getWifiMode()) {
-    wifiMode = DeviceSetting::getWifiMode();
-    processPageContent();
-  }
 }
 
 void WifiSettingPage::interactiveUpdate(int counter, bool isPress) {
@@ -54,7 +49,9 @@ void WifiSettingPage::interactiveUpdate(int counter, bool isPress) {
     case ContentIndex::WifiModeInput:
       bool isFinish = input.interactiveUpdate(counter, isPress);
       if (isFinish) {
+        wifiMode = input.getInputValue();
         updateIsWifiOn();
+        processPageContent();
         inputIndex = ContentIndex::Arrow;
         staticContents[ContentIndex::Arrow].updateContent(">", 1);
       }
@@ -78,7 +75,7 @@ void WifiSettingPage::processPageContent() {
 
 void WifiSettingPage::updateIsWifiOn() {
   WifiSettingManager *settingManager = DeviceManager::getWifiSettingManager();
-  settingManager->setIsWifiOn(input.getInputValue());
+  settingManager->setIsWifiOn(wifiMode);
 }
 
 /* Design

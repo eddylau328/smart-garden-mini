@@ -8,6 +8,9 @@
 #define CUSTOM_BACKSLASH 0
 #define CUSTOM_ENTER 1
 #define CUSTOM_BACKSPACE 2
+#define CUSTOM_WIFI_CONNECTED 3
+#define CUSTOM_WIFI_DISCONNECTED 4
+#define CUSTOM_WIFI_OFF 5
 
 class CustomCharacter {
   public:
