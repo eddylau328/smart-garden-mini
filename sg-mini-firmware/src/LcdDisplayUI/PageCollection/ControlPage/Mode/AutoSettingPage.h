@@ -20,7 +20,7 @@ class AutoSettingPage : public Page {
     void interactiveUpdate(int counter, bool isPress);
 
   private:
-    enum InputIndex{
+    enum InputIndex {
         Humidity = 0,
         Arrow = 1
     };
@@ -37,6 +37,8 @@ class AutoSettingPage : public Page {
     int8_t inputIndex;
     InputNumber input;
     PageVerticalScroll scroll;
+
+    void updateHumidityModeSetting();
 };
 
 #endif

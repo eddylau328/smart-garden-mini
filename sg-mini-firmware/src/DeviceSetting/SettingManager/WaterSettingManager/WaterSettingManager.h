@@ -6,6 +6,7 @@
 #include "../SettingManager.h"
 #include "../../../WaterController/WaterControllerConstant.h"
 #include "../../../Storage/StorageData/UInt8Data/UInt8Data.h"
+#include "../../../Storage/StorageData/UInt64Data/UInt64Data.h"
 
 class WaterSettingManager : public SettingManager {
     public:
@@ -25,7 +26,14 @@ class WaterSettingManager : public SettingManager {
         
         // methods 
 
-        void storeWaterMode(WaterControllerConstant::WaterMode mode);
+        void storeWaterMode();
+        void retrieveWaterMode();
+
+        void storeScheduleModeSetting();
+        void retrieveScheduleModeSetting();
+
+        void storeHumidityModeSetting();
+        void retrieveHumidityModeSetting();
 };
 
 #endif

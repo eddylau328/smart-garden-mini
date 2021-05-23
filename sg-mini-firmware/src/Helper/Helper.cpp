@@ -98,10 +98,6 @@ bool Helper::isInRange(float target, float min, float max) {
   return (target >= min && target <= max);
 }
 
-bool Helper::isInRange(uint8_t target, uint8_t min, uint8_t max) {
-  return (target >= min && target <= max);
-}
-
 bool Helper::isInRange(int target, int min, int max) {
     return (target >= min && target <= max);
 }

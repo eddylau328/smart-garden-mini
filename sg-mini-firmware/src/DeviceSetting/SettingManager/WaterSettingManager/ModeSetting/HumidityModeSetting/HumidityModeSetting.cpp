@@ -3,37 +3,37 @@
 
 HumidityModeSetting::HumidityModeSetting() {}
 
-HumidityModeSetting::HumidityModeSetting(float targetHumidity, float minHumidity, float maxHumidity) {
+HumidityModeSetting::HumidityModeSetting(uint8_t targetHumidity, uint8_t minHumidity, uint8_t maxHumidity) {
     setMinHumidity(minHumidity);
     setMaxHumidity(maxHumidity);
     setTargetHumidity(targetHumidity);
 }
 
-void HumidityModeSetting::setMinHumidity(float minHumidity) {
+void HumidityModeSetting::setMinHumidity(uint8_t minHumidity) {
     if (isValidHumidityLevel(minHumidity))
         this->minHumidity = minHumidity;
 }
 
-void HumidityModeSetting::setMaxHumidity(float maxHumidity) {
+void HumidityModeSetting::setMaxHumidity(uint8_t maxHumidity) {
     if (isValidHumidityLevel(maxHumidity))
         this->maxHumidity = maxHumidity;
 }
 
-void HumidityModeSetting::setTargetHumidity(float targetHumidity) {
+void HumidityModeSetting::setTargetHumidity(uint8_t targetHumidity) {
     bool isWithinMinMax = Helper::isInRange(targetHumidity, this->minHumidity, this->maxHumidity);
     if (isValidHumidityLevel(targetHumidity) && isWithinMinMax)
         this->targetHumidity = targetHumidity;
 }
 
-float HumidityModeSetting::getTargetHumidity() {
+uint8_t HumidityModeSetting::getTargetHumidity() {
     return this->targetHumidity;
 }
 
-float HumidityModeSetting::getMinHumidity() {
+uint8_t HumidityModeSetting::getMinHumidity() {
     return this->minHumidity;
 }
 
-float HumidityModeSetting::getMaxHumidity() {
+uint8_t HumidityModeSetting::getMaxHumidity() {
     return this->maxHumidity;
 }
 
@@ -43,6 +43,6 @@ void HumidityModeSetting::operator = (const HumidityModeSetting &setting ) {
     this->maxHumidity = setting.maxHumidity;
 }
 
-bool HumidityModeSetting::isValidHumidityLevel(float humidityLevel) {
-    return Helper::isInRange(humidityLevel, 0.0, 100.0);
+bool HumidityModeSetting::isValidHumidityLevel(uint8_t humidityLevel) {
+    return Helper::isInRange(humidityLevel, 0, 100);
 }

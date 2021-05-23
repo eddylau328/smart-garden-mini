@@ -36,7 +36,7 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterSetti
     /* write your code below here */
     // ScheduleModeSetting setting = modeSetting.getScheduleModeSetting();
 
-    ScheduleModeSetting setting = ScheduleModeSetting(86400, 50.0);
+    ScheduleModeSetting setting = ScheduleModeSetting(86400, 50);
 
     currentTime = RTC_DS1307::now();
     TimeSpan timeInterval (setting.getScheduleDuration());
@@ -45,13 +45,13 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterSetti
     Sensors::getSensorData(SensorCollection::SoilHum,humidityLevel);
 
     if (currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn() && recheck == false) {       
-        if (setting.getTargetHumidity() <= humidityLevel && firstcheck == true)
+        if ((float) setting.getTargetHumidity() <= humidityLevel && firstcheck == true)
         {
             nextWaterTime = currentTime + timeInterval;
             Serial.println(String("The next watering time is : " + nextWaterTime.timestamp()));
             firstcheck = false;
         }
-        else if (setting.getTargetHumidity() > humidityLevel && millis() - lastWatering >= wateringBreak )
+        else if ((float) setting.getTargetHumidity() > humidityLevel && millis() - lastWatering >= wateringBreak )
         {      
             waterPump.waterOn(waterDuration);
             Serial.println(String("Water is on by time : "+ currentTime.timestamp()));
@@ -66,12 +66,12 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterSetti
         }
         }
     if (recheck == true && currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn()) {
-        if (setting.getTargetHumidity() <= humidityLevel){
+        if ((float) setting.getTargetHumidity() <= humidityLevel){
             nextWaterTime = currentTime - recheckInterval + timeInterval;
             Serial.println(String("The next watering time is : " + nextWaterTime.timestamp()));
             recheck = firstcheck = false;
         }
-        else if (setting.getTargetHumidity() > humidityLevel && millis() - lastWatering >= wateringBreak){
+        else if ((float) setting.getTargetHumidity() > humidityLevel && millis() - lastWatering >= wateringBreak){
             waterPump.waterOn(waterDuration);
             Serial.println(String("Water is on by time : "+ currentTime.timestamp()));
             lastWatering = millis();

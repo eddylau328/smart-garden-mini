@@ -8,18 +8,18 @@ class ScheduleModeSetting {
 
     public:
         ScheduleModeSetting();
-        ScheduleModeSetting(unsigned long scheduleDuration, float targetHumidity);
+        ScheduleModeSetting(unsigned long scheduleDuration, uint8_t targetHumidity);
 
         void setScheduleDuration(unsigned long scheduleDuration);
-        void setTargetHumidity(float targetHumidity);
+        void setTargetHumidity(uint8_t targetHumidity);
 
         unsigned long getScheduleDuration();
-        float getTargetHumidity();
+        uint8_t getTargetHumidity();
 
         void operator = (const ScheduleModeSetting &setting);
     
     private:
-        float targetHumidity = 0;
+        uint8_t targetHumidity = 0;
         unsigned long scheduleDuration = 0;
 };
 

@@ -17,13 +17,22 @@ ScheduleSettingPage::ScheduleSettingPage() {
 void ScheduleSettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 9);
 
-  int hour, minute, second;
+  WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
+  ScheduleModeSetting modeSetting = settingManager->getScheduleModeSetting();
+  unsigned long duration = modeSetting.getScheduleDuration();
+  int8_t hour, minute, second;
+  hour = (int8_t) (duration / 3600);
+  minute = (int8_t) ((duration - (unsigned long)hour * 3600) / 60);
+  second = (int8_t) (duration - (unsigned long)hour * 3600 - (unsigned long)minute * 60);
 
   input[InputIndex::Hour].set((int8_t)hour, 0, 23, true);
   input[InputIndex::Minute].set((int8_t)minute, 0, 59, true);
   input[InputIndex::Second].set((int8_t)second, 0, 59, true);
+
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
+
   inputIndex = InputIndex::Hour;
+
   input[inputIndex].startBlink();
   scroll.resetScroll(contents, contentSize);
   changeTopic();
@@ -39,18 +48,11 @@ void ScheduleSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
-        int hour, minute, second;
-        hour = input[InputIndex::Hour].getInputValue();
-        minute = input[InputIndex::Minute].getInputValue();
-        second = input[InputIndex::Second].getInputValue();
-        
-      
-      Page::interactiveUpdate(counter, isPress);
+        updateScheduleModeSetting();
+        Page::interactiveUpdate(counter, isPress);
       }
       else
-      {
        Page::nextPageCallback(PageCollection::PageKey::ModeSettingPageKey);
-      }
       
     }
     else
@@ -84,4 +86,19 @@ void ScheduleSettingPage::changeTopic() {
       staticContents[4].updateContent("Time2Water", 10);
       break;
   }
+}
+
+void ScheduleSettingPage::updateScheduleModeSetting() {
+  int8_t hour = input[InputIndex::Hour].getInputValue();
+  int8_t minute = input[InputIndex::Minute].getInputValue();
+  int8_t second = input[InputIndex::Second].getInputValue();
+
+  unsigned long duration = 0;
+  duration += (unsigned long)hour * 3600;
+  duration += (unsigned long)minute * 60;
+  duration += (unsigned long)second;
+
+  ScheduleModeSetting modeSetting(duration, 50);
+  WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
+  settingManager->setScheduleModeSetting(modeSetting);
 }

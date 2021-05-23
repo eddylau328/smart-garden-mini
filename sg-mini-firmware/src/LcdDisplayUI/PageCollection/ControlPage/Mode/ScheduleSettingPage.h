@@ -4,7 +4,7 @@
 #include "../../Page.h"
 #include "../../../Components/Input/InputNumber/InputNumber.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
-
+#include <RTClib.h>
 
 /**
  * @brief Page derived class use to show how to create a derived page class
@@ -44,7 +44,8 @@ class ScheduleSettingPage : public Page {
     InputNumber input[3];
     PageVerticalScroll scroll;
 
-     void changeTopic();
+    void changeTopic();
+    void updateScheduleModeSetting();
 };
 
 #endif

@@ -8,24 +8,24 @@
 class HumidityModeSetting {
     public:
         HumidityModeSetting();
-        HumidityModeSetting(float targetHumidity, float minHumidity, float maxHumidity);
+        HumidityModeSetting(uint8_t targetHumidity, uint8_t minHumidity, uint8_t maxHumidity);
 
-        void setMinHumidity(float minHumidity);
-        void setMaxHumidity(float maxHumidity);
-        void setTargetHumidity(float targetHumidity);
+        void setMinHumidity(uint8_t minHumidity);
+        void setMaxHumidity(uint8_t maxHumidity);
+        void setTargetHumidity(uint8_t targetHumidity);
 
-        float getMinHumidity();
-        float getMaxHumidity();
-        float getTargetHumidity();
+        uint8_t getMinHumidity();
+        uint8_t getMaxHumidity();
+        uint8_t getTargetHumidity();
 
         void operator = (const HumidityModeSetting &setting);
 
     private:
-        float targetHumidity = 0;
-        float minHumidity = 0;
-        float maxHumidity = 0;
+        uint8_t targetHumidity = 0;
+        uint8_t minHumidity = 0;
+        uint8_t maxHumidity = 0;
 
-        bool isValidHumidityLevel(float humidityLevel);
+        bool isValidHumidityLevel(uint8_t humidityLevel);
 
 };
 

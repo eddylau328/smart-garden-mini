@@ -11,8 +11,8 @@ void DeviceManager::init() {
     wifiSettingManager = new WifiSettingManager();
     waterSettingManager = new WaterSettingManager();
     localSettingManager->init();
-    // waterSettingManager->init();
-    // wifiSettingManager->init();
+    waterSettingManager->init();
+    wifiSettingManager->init();
 }
 
 
