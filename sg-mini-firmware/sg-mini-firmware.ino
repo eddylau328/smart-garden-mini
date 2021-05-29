@@ -1,10 +1,4 @@
-//Testing code for all sensor for smartgarden mini (ESP32 dev Kit V1) on breadboard
-
 // File datafile;  // for SD card file 
-#define pumpen 4 //Pumpenable Pin 
-
-unsigned long lastclock;
-
 #include "src/Config/Config.h"
 #include "src/LcdDisplayUI/LcdDisplayUI.h"
 #include "src/LcdDisplayUI/PageControl.h"
@@ -23,26 +17,20 @@ RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void init() {
+  WaterController::init();
+
   DeviceManager::init();
   DeviceSetting::init();
   WifiController::init();
-
-  pinMode(12, OUTPUT); //On board LED
-
-  digitalWrite(pumpen,HIGH); // Pull high pump enable pin to close pump 
-
   Sensors::init();
+
   pageControl.init();
   pageControl.initInput(&rotaryEncoder);
-
-  WaterController::init();
 }
 
 
 void setup() {
   // put your setup code here, to run once:
-  lastclock = millis();
-
   Serial.begin(9600);
 
   LOG_SET_LEVEL(DebugLogLevel::ERRORS); // all log is printed
@@ -67,7 +55,6 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(12,!digitalRead(12)); //Blinking LED
   pageControl.mainLoop();
   display.render();
   Sensors::mainLoop();

@@ -2,8 +2,8 @@
 
 
 Page *PageControl::pages[TotalPage];
-uint8_t PageControl::currentPageKey = PageCollection::PageKey::SensorPageKey;
-uint8_t PageControl::newPageKey = PageCollection::PageKey::MainPageKey;
+uint8_t PageControl::currentPageKey;
+uint8_t PageControl::nextPageKey;
 
 PageControl::PageControl(LcdDisplayUI *display) {
   this->display = display;
@@ -16,6 +16,56 @@ PageControl::~PageControl() {
 }
 
 void PageControl::init() {
+  this->pageInit();
+  this->retrieveCurrentPage();
+  this->display->init();
+}
+
+void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
+  this->rotaryEncoder = rotaryEncoder;
+
+  this->rotaryEncoder->init(&pressInputCallback, &rotateInputCallback);
+}
+
+void PageControl::mainLoop() {
+  if (millis() - lastUpdate > 500) {
+    handleUpdateContents();
+    lastUpdate = millis();
+  }
+  handleUI();
+  rotaryEncoder->eventLoop();
+}
+
+void PageControl::handleUI() {
+  if (nextPageKey != currentPageKey) {
+    // call page dismount for currentPageKey
+    pages[currentPageKey]->dismountPage();
+    // call page mount for newPageKey();
+    pages[nextPageKey]->mountPage();
+    // render the page
+    display->update(pages[nextPageKey]);
+    // update key
+    currentPageKey = nextPageKey;
+  }
+}
+
+void PageControl::handleUpdateContents() {
+  pages[currentPageKey]->updateContents();
+}
+
+void PageControl::retrieveCurrentPage() {
+  SetupSettingManager *manager = DeviceManager::getSetupSettingManager();
+  if (manager->getIsBeginSystemReset()) {
+    currentPageKey = PageCollection::PageKey::MainPageKey;
+    nextPageKey = PageCollection::PageKey::WelcomePageKey;
+  }
+  else {
+    currentPageKey = PageCollection::PageKey::WelcomePageKey;
+    nextPageKey = PageCollection::PageKey::MainPageKey;
+  }
+}
+
+void PageControl::pageInit() {
   pages[PageCollection::PageKey::MainPageKey] = new MainPage();
   pages[PageCollection::PageKey::SensorPageKey] = new SensorPage();
   pages[PageCollection::PageKey::SettingPageKey] = new SettingPage();
@@ -33,6 +83,7 @@ void PageControl::init() {
   pages[PageCollection::PageKey::WifiPasswordPageKey] = new WifiPasswordPage();
   pages[PageCollection::PageKey::WifiConnectPageKey] = new WifiConnectPage();
   pages[PageCollection::PageKey::SetDefaultWifiPageKey] = new SetDefaultWifiPage();
+  pages[PageCollection::PageKey::WelcomePageKey] = new WelcomePage();
 
   pages[PageCollection::PageKey::MainPageKey]->setNextPageCallback(PageCollection::PageKey::SensorPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::SensorPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
@@ -53,40 +104,9 @@ void PageControl::init() {
   pages[PageCollection::PageKey::WifiConnectPageKey]->setNextPageCallback(PageCollection::PageKey::SetDefaultWifiPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::SetDefaultWifiPageKey]->setNextPageCallback(PageCollection::PageKey::WifiSettingPageKey, &nextPageCallback);
 
-  this->display->init();
+  pages[PageCollection::PageKey::WelcomePageKey]->setNextPageCallback(PageCollection::PageKey::MainPageKey, &nextPageCallback);
 }
 
-void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
-  this->rotaryEncoder = rotaryEncoder;
-
-  this->rotaryEncoder->init(&pressInputCallback, &rotateInputCallback);
-}
-
-void PageControl::mainLoop() {
-  if (millis() - lastUpdate > 500) {
-    handleUpdateContents();
-    lastUpdate = millis();
-  }
-  handleUI();
-  rotaryEncoder->eventLoop();
-}
-
-void PageControl::handleUI() {
-  if (newPageKey != currentPageKey) {
-    // call page dismount for currentPageKey
-    pages[currentPageKey]->dismountPage();
-    // call page mount for newPageKey();
-    pages[newPageKey]->mountPage();
-    // render the page
-    display->update(pages[newPageKey]);
-    // update key
-    currentPageKey = newPageKey;
-  }
-}
-
-void PageControl::handleUpdateContents() {
-  pages[currentPageKey]->updateContents();
-}
 
 void PageControl::rotateInputCallback(int counter) {
   pages[currentPageKey]->interactiveUpdate(counter, false);
@@ -97,5 +117,5 @@ void PageControl::pressInputCallback() {
 }
 
 void PageControl::nextPageCallback(uint8_t pageKey) {
-  newPageKey = pageKey;
+  nextPageKey = pageKey;
 }

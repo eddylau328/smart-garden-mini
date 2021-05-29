@@ -22,13 +22,13 @@ void SetupSettingManager::resetInitialSetup() {
     storeIsInitialSetup();
 }
 
-void SetupSettingManager::getIsBeginSystemReset() {
+bool SetupSettingManager::getIsBeginSystemReset() {
     return this->isBeginSystemReset;
 }
 
 void SetupSettingManager::finishSystemReset() {
     this->isBeginSystemReset = false;
-    storeIsAfterSystemReset();
+    storeIsBeginSystemReset();
 }
 
 // private
@@ -45,7 +45,7 @@ void SetupSettingManager::storeIsInitialSetup() {
         setupCode[1] = SETUP_CODE_1;
         setupCode[2] = SETUP_CODE_2;
     }
-    StorageLocation location = StorageLocation(
+    StorageLocation location(
         SETUP_CODE_LENGTH,
         SETUP_CODE_STORE_INDEX
     );
@@ -54,12 +54,11 @@ void SetupSettingManager::storeIsInitialSetup() {
 }
 
 void SetupSettingManager::retrieveIsInitialSetup() {
-    CharArrayData data(
-        StorageLocation(
-            SETUP_CODE_LENGTH,
-            SETUP_CODE_STORE_INDEX,
-        )
+    StorageLocation location(
+        SETUP_CODE_LENGTH,
+        SETUP_CODE_STORE_INDEX
     );
+    CharArrayData data(location);
     Storage::get(data);
     char *setupCode = data.getData();
     this->isInitialSetup = !(
@@ -74,7 +73,7 @@ void SetupSettingManager::storeIsBeginSystemReset() {
         IS_BEGIN_SYSTEM_RESET_LENGTH,
         IS_BEGIN_SYSTEM_RESET_STORE_INDEX
     );
-    BooleanData data = BooleanData(
+    BooleanData data(
         this->isBeginSystemReset,
         location
     );
@@ -86,7 +85,7 @@ void SetupSettingManager::retrieveIsBeginSystemReset() {
         IS_BEGIN_SYSTEM_RESET_LENGTH, 
         IS_BEGIN_SYSTEM_RESET_STORE_INDEX
     );
-    BooleanData data = BooleanData(location);
+    BooleanData data(location);
     Storage::get(data);
     this->isBeginSystemReset = data.getData();
 }

@@ -12,7 +12,7 @@ class WifiSettingManager : public SettingManager {
         void setIsWifiOn(bool isWifiOn);
         bool getIsWifiOn();
 
-        void getIsAccessPointSet();
+        bool getIsAccessPointSet();
         void setAccessPointSetting(AccessPointSetting accessPointSetting);
         AccessPointSetting getAccessPointSetting();
     

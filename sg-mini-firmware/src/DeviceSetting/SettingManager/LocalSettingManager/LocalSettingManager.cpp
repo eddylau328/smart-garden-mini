@@ -10,7 +10,7 @@ void LocalSettingManager::init() {
         retrieveUsername();
 }
 
-void LocalSettingManagaer::restoreDefault() {
+void LocalSettingManager::restoreDefault() {
     this->isUsernameSet = false;
     this->storeIsUsernameSet();
     this->storeUsername();

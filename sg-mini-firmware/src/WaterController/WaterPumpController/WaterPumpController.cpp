@@ -2,6 +2,7 @@
 
 void WaterPumpController::init() {
     pinMode(WATER_PUMP_PIN, OUTPUT);
+    waterPumpOffAction();
 }
 
 void WaterPumpController::waterOn(unsigned long turnOnDuration, bool isOverideControl) {
@@ -64,8 +65,8 @@ void WaterPumpController::waterPumpWorkingAction() {
 void WaterPumpController::setWaterPumpOnOff(bool isTurnOn) {
     this->isTurnOn = isTurnOn;
     if (isTurnOn)
-        Serial.println("Water is On");
+        LOG_WARNING("Water Pump is On");
     else
-        Serial.println("Water is Off");
+        LOG_WARNING("Water Pump is Off");
     digitalWrite(WATER_PUMP_PIN, isTurnOn? WATER_PUMP_ON : WATER_PUMP_OFF);
 }

@@ -1,6 +1,5 @@
 #include "Page.h"
 
-void Page::mountPage() {}
 void Page::getContents(PageContent ***contents, int *length, bool *isAllocateContents) {
   *contents = this->contents;
   *length = this->contentSize;

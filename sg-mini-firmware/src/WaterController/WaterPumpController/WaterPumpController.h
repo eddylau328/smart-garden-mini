@@ -2,6 +2,7 @@
 #define WaterPumpController_h
 
 #include <Arduino.h>
+#include <DebugLog.h>
 #include "../../Config/Config.h"
 
 class WaterPumpController {

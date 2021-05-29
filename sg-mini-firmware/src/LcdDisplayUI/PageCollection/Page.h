@@ -22,7 +22,7 @@ class Page {
      * @brief This function will be called once when the page is assigned to display through PageControl object
      * 
      */
-    virtual void mountPage();
+    virtual void mountPage() = 0;
 
     /**
      * @brief Get the Contents object for the LcdDisplayUI to render the Page
