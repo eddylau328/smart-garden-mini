@@ -13,7 +13,7 @@ void UsernameSettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 7);
 
   LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
-  const char* name = localSettingManager->getUserName();
+  const char* name = localSettingManager->getUsername();
   input.set(name, USERNAME_LENGTH);
 
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
@@ -33,7 +33,7 @@ void UsernameSettingPage::interactiveUpdate(int counter, bool isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
         LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
-        localSettingManager->setUserName(input.getInputValue());
+        localSettingManager->setUsername(input.getInputValue());
       }
       Page::interactiveUpdate(counter, isPress);
     }

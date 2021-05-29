@@ -7,6 +7,16 @@ void WaterSettingManager::init() {
     retrieveHumidityModeSetting();
 }
 
+void WaterSettingManager::restoreDefault() {
+    this->waterMode = WaterControllerConstant::WaterMode::ManualMode;
+    this->scheduleModeSetting = ScheduleModeSetting(3600000, 50);
+    this->humidityModeSetting = HumidityModeSetting(50, 40, 60);
+    storeWaterMode();
+    storeScheduleModeSetting();
+    storeHumidityModeSetting();
+}
+
+
 void WaterSettingManager::setWaterMode(WaterControllerConstant::WaterMode mode) {
     this->waterMode = mode;    
     storeWaterMode();

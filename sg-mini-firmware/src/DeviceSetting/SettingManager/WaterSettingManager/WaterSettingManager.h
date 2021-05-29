@@ -5,12 +5,13 @@
 #include "ModeSetting/HumidityModeSetting/HumidityModeSetting.h"
 #include "../SettingManager.h"
 #include "../../../WaterController/WaterControllerConstant.h"
-#include "../../../Storage/StorageData/UInt8Data/UInt8Data.h"
-#include "../../../Storage/StorageData/UInt64Data/UInt64Data.h"
+
 
 class WaterSettingManager : public SettingManager {
     public:
         void init();
+        void restoreDefault();
+
         void setWaterMode(WaterControllerConstant::WaterMode mode);
         void setScheduleModeSetting(ScheduleModeSetting setting);
         void setHumidityModeSetting(HumidityModeSetting setting);

@@ -44,6 +44,17 @@ void Storage::set(Storage::Key key, byte* target) {
   }
 }
 
+void Storage::clearAll() {
+  int start = USERNAME_STORE_INDEX;
+  int length = USERNAME_STORE_INDEX + STORAGE_COVER_RANGE;
+  for (int i = start; i < length; i++) {
+    EEPROM.write(i, 0);
+    EEPROM.commit();
+  }
+}
+
+// private
+
 void Storage::copyByte(int address, byte *target, int length) {
   for (int i = 0; i < length ; i++) {
     *(target + i) = EEPROM.read(address + i);

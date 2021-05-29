@@ -10,7 +10,7 @@ void MainPage::mountPage() {
   staticContents[ContentIndex::MINUTE].updateContent(min, true);
 
   LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
-  const char* username = localSettingManager->getUserName();
+  const char* username = localSettingManager->getUsername();
   staticContents[ContentIndex::USERNAME].updateContent(username, USERNAME_LENGTH);
 
   updateWifiStatus();

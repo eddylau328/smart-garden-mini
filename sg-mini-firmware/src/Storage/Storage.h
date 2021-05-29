@@ -48,6 +48,8 @@ class Storage {
     static void set(Storage::Key key, byte* target);
 
     static void set(DataBuffer &data);
+
+    static void clearAll();
   
   private:
 

@@ -3,23 +3,44 @@
 
 void WifiSettingManager::init() {
     retrieveIsWifiOn();
-    retrieveAccessPointSetting();
+    retrieveIsAccessPointSet();
+    if (this->isAccessPointSet)
+        retrieveAccessPointSetting();
+}
+
+void WifiSettingManager::restoreDefault() {
+    this->isWifiOn = false;
+    this->isAccessPointSet = false;
+    this->accessPointSetting = AccessPointSetting();    
+    storeIsWifiOn();
+    storeIsAccessPointSet();
+    storeAccessPointSetting();
 }
 
 void WifiSettingManager::setIsWifiOn(bool isWifiOn) {
     this->isWifiOn = isWifiOn;
+    storeIsWifiOn();
 }
 
 void WifiSettingManager::setAccessPointSetting(AccessPointSetting accessPointSetting) {
     this->accessPointSetting = accessPointSetting;
+    storeAccessPointSetting();
+    storeIsAccessPointSet();
 }
+
 bool WifiSettingManager::getIsWifiOn() {
     return this->isWifiOn;
+}
+
+bool WifiSettingManager::getIsAccessPointSet() {
+    return this->isAccessPointSet;
 }
 
 AccessPointSetting WifiSettingManager::getAccessPointSetting() {
     return this->accessPointSetting;
 }
+
+// private
 
 void WifiSettingManager::storeIsWifiOn() {
     BooleanData data(
@@ -78,4 +99,24 @@ void WifiSettingManager::retrieveAccessPointSetting() {
         wifiNameData.getData(), 
         wifiPasswordData.getData()
     ));
+}
+
+void WifiSettingManager::storeIsAccessPointSet() {
+    BooleanData isAccessPointSetData(
+        this->isAccessPointSet,
+        StorageLocation(
+            IS_ACCESS_POINT_SET_LENGTH,
+            IS_ACCESS_POINT_SET_STORE_INDEX
+        )
+    );
+    Storage::set(isAccessPointSetData);
+}
+
+void WifiSettingManager::retrieveIsAccessPointSet() {
+    BooleanData isAccessPointSetData(StorageLocation(
+        IS_ACCESS_POINT_SET_LENGTH,
+        IS_ACCESS_POINT_SET_STORE_INDEX
+    ));
+    Storage::get(isAccessPointSetData);
+    this->isAccessPointSet = isAccessPointSetData.getData();
 }

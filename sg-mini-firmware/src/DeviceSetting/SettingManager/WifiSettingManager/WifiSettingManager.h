@@ -3,21 +3,26 @@
 
 #include "AccessPointSetting/AccessPointSetting.h"
 #include "../SettingManager.h"
-#include "../../../Storage/StorageData/BooleanData/BooleanData.h"
-#include "../../../Storage/StorageData/CharArrayData/CharArrayData.h"
+
 
 class WifiSettingManager : public SettingManager {
     public:
         void init();
+        void restoreDefault();
         void setIsWifiOn(bool isWifiOn);
         bool getIsWifiOn();
 
+        void getIsAccessPointSet();
         void setAccessPointSetting(AccessPointSetting accessPointSetting);
         AccessPointSetting getAccessPointSetting();
     
     private:
         AccessPointSetting accessPointSetting;
         bool isWifiOn;
+        bool isAccessPointSet;
+
+        void retrieveIsAccessPointSet();
+        void storeIsAccessPointSet();
 
         void storeIsWifiOn();
         void retrieveIsWifiOn();
