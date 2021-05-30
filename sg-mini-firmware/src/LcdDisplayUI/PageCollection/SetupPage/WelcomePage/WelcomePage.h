@@ -18,7 +18,7 @@ class WelcomePage : public Page {
     void interactiveUpdate(int counter, bool isPress);
 
   private:
-    PageContent staticContents[9] = {
+    PageContent staticContents[8] = {
       PageContent("Welcome  to  use", 16, PageLayoutPosition(0, 0)),
       PageContent("the Smart Garden", 16, PageLayoutPosition(0, 1)),
       PageContent("Mini  Prototype.", 16, PageLayoutPosition(0, 2)),
@@ -26,12 +26,10 @@ class WelcomePage : public Page {
       PageContent("follow the basic", 16, PageLayoutPosition(0, 4)),
       PageContent("setup procedures", 16, PageLayoutPosition(0, 5)),
       PageContent("before using it.", 16, PageLayoutPosition(0, 6)),
-      PageContent(">", 1, PageLayoutPosition(10, 7)),
-      PageContent("next", 4, PageLayoutPosition(12, 7)),
+      PageContent("> next", 6, PageLayoutPosition(10, 7)),
     };
 
     PageVerticalScroll scroll;
-
 };
 
 #endif

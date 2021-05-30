@@ -6,7 +6,7 @@ WelcomePage::WelcomePage() {
 }
 
 void WelcomePage::mountPage() {
-  Page::allocateStaticContents(staticContents, 9);
+  Page::allocateStaticContents(staticContents, 8);
 }
 
 void WelcomePage::interactiveUpdate(int counter, bool isPress) {

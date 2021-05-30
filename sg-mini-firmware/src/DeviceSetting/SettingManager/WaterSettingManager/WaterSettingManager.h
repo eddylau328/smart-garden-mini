@@ -3,6 +3,7 @@
 
 #include "ModeSetting/ScheduleModeSetting/ScheduleModeSetting.h"
 #include "ModeSetting/HumidityModeSetting/HumidityModeSetting.h"
+#include "ModeSetting/ManualModeSetting/ManualModeSetting.h"
 #include "../SettingManager.h"
 #include "../../../WaterController/WaterControllerConstant.h"
 
@@ -15,15 +16,18 @@ class WaterSettingManager : public SettingManager {
         void setWaterMode(WaterControllerConstant::WaterMode mode);
         void setScheduleModeSetting(ScheduleModeSetting setting);
         void setHumidityModeSetting(HumidityModeSetting setting);
+        void setManualModeSetting(ManualModeSetting setting);
 
         ScheduleModeSetting getScheduleModeSetting();
         HumidityModeSetting getHumidityModeSetting();
+        ManualModeSetting getManualModeSetting();
         WaterControllerConstant::WaterMode getWaterMode();
 
     private:
         WaterControllerConstant::WaterMode waterMode;
         ScheduleModeSetting scheduleModeSetting;
         HumidityModeSetting humidityModeSetting;
+        ManualModeSetting manualModeSetting;
         
         // methods 
 
@@ -35,6 +39,9 @@ class WaterSettingManager : public SettingManager {
 
         void storeHumidityModeSetting();
         void retrieveHumidityModeSetting();
+
+        void storeManualModeSetting();
+        void retrieveManualModeSetting();
 };
 
 #endif

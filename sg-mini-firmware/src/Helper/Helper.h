@@ -189,6 +189,15 @@ class Helper {
      */
     static bool isLeapYear(int year);
 
+    /**
+     * @brief Get the day of month
+     * 
+     * @param year - the year you want to check
+     * @param month - the month you want to know
+     * @return int8_t - the day of month
+     */
+    static int8_t getDayOfMonth(int year, int month);
+
 };
 
 #endif

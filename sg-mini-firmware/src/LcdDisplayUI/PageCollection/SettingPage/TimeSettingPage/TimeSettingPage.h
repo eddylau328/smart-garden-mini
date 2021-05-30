@@ -1,8 +1,9 @@
 #ifndef TimeSettingPage_h
 #define TimeSettingPage_h
 
+#include <RTClib.h>
 #include "../../Page.h"
-#include "../../../../DeviceSetting/DeviceSetting.h"
+#include "../../../TempStorage/TempStorage.h"
 #include "../../../Components/Input/InputNumber/InputNumber.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 
@@ -44,6 +45,10 @@ class TimeSettingPage : public Page {
     PageVerticalScroll scroll;
 
     void changeTopic();
+    void storeDateTime();
+    bool shouldStoreDateTime();
+    void proceedNextPage(int counter, bool isPress);
+    void proceedSystemResetNextPage();
 };
 
 #endif

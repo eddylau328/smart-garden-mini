@@ -25,6 +25,7 @@
 #include "PageCollection/WifiSettingPage/JoinWifiPage/WifiConnectPage/WifiConnectPage.h"
 #include "PageCollection/WifiSettingPage/JoinWifiPage/SetDefaultWifi/SetDefaultWifiPage.h"
 #include "PageCollection/SetupPage/WelcomePage/WelcomePage.h"
+#include "PageCollection/SetupPage/SetupFinishPage/SetupFinishPage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------

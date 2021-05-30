@@ -5,15 +5,14 @@ void WaterSettingManager::init() {
     retrieveWaterMode();
     retrieveScheduleModeSetting();
     retrieveHumidityModeSetting();
+    retrieveManualModeSetting();
 }
 
 void WaterSettingManager::restoreDefault() {
-    this->waterMode = WaterControllerConstant::WaterMode::ManualMode;
-    this->scheduleModeSetting = ScheduleModeSetting(3600000, 50);
-    this->humidityModeSetting = HumidityModeSetting(50, 40, 60);
-    storeWaterMode();
-    storeScheduleModeSetting();
-    storeHumidityModeSetting();
+    setWaterMode(WaterControllerConstant::WaterMode::ManualMode);
+    setScheduleModeSetting(ScheduleModeSetting(3600000, 50));
+    setHumidityModeSetting(HumidityModeSetting(50, 40, 60));
+    setManualModeSetting(ManualModeSetting(5));
 }
 
 
@@ -32,6 +31,11 @@ void WaterSettingManager::setHumidityModeSetting(HumidityModeSetting setting) {
     storeHumidityModeSetting();
 }
 
+void WaterSettingManager::setManualModeSetting(ManualModeSetting setting) {
+    this->manualModeSetting = setting;
+    storeManualModeSetting();
+}
+
 WaterControllerConstant::WaterMode WaterSettingManager::getWaterMode() {
     return this->waterMode;
 }
@@ -42,6 +46,10 @@ ScheduleModeSetting WaterSettingManager::getScheduleModeSetting() {
 
 HumidityModeSetting WaterSettingManager::getHumidityModeSetting() {
     return this->humidityModeSetting;
+}
+
+ManualModeSetting WaterSettingManager::getManualModeSetting() {
+    return this->manualModeSetting;
 }
 
 // private methods
@@ -154,3 +162,24 @@ void WaterSettingManager::retrieveScheduleModeSetting() {
     this->scheduleModeSetting.setScheduleDuration(durationData.getData());
 }
 
+void WaterSettingManager::storeManualModeSetting() {
+    StorageLocation location = StorageLocation(
+        MANUAL_MODE_TURN_ON_DURATION_LENGTH,
+        MANUAL_MODE_TURN_ON_DURATION_STORE_INDEX
+    );
+    UInt8Data turnOnDurationData(
+        this->manualModeSetting.getTurnOnDuration(), 
+        location
+    );
+    Storage::set(turnOnDurationData);
+}
+
+void WaterSettingManager::retrieveManualModeSetting() {
+    StorageLocation location = StorageLocation(
+        MANUAL_MODE_TURN_ON_DURATION_LENGTH,
+        MANUAL_MODE_TURN_ON_DURATION_STORE_INDEX
+    );
+    UInt8Data turnOnDurationData(location);
+    Storage::get(turnOnDurationData);
+    this->manualModeSetting.setTurnOnDuration(turnOnDurationData.getData());
+}
