@@ -5,5 +5,9 @@ void SetupFinishPage::mountPage() {
 }
 
 void SetupFinishPage::interactiveUpdate(int counter, bool isPress) {
-  Page::interactiveUpdate(counter, isPress);
+  if (isPress) {
+    SetupSettingManager *manager = DeviceManager::getSetupSettingManager();
+    manager->finishSystemReset();
+    Page::interactiveUpdate(counter, isPress);
+  }
 }

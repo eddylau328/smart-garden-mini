@@ -4,6 +4,8 @@
 void WifiSettingManager::init() {
     retrieveIsWifiOn();
     retrieveIsAccessPointSet();
+    Serial.print("isAccessPointSet ");
+    Serial.println(isAccessPointSet);
     if (this->isAccessPointSet)
         retrieveAccessPointSetting();
 }
@@ -83,16 +85,18 @@ void WifiSettingManager::storeAccessPointSetting() {
 }
 
 void WifiSettingManager::retrieveAccessPointSetting() {
-    CharArrayData wifiNameData(StorageLocation(
+    StorageLocation wifiNameLocation = StorageLocation(
         WIFI_NAME_LENGTH,
         WIFI_NAME_STORE_INDEX
-    ));
+    );
+    CharArrayData wifiNameData(wifiNameLocation);
     Storage::get(wifiNameData);
 
-    CharArrayData wifiPasswordData(StorageLocation(
+    StorageLocation wifiPasswordLocation = StorageLocation(
         WIFI_PASSWORD_LENGTH,
         WIFI_PASSWORD_STORE_INDEX
-    ));
+    );
+    CharArrayData wifiPasswordData(wifiPasswordLocation);
     Storage::get(wifiPasswordData);
 
     setAccessPointSetting(AccessPointSetting(
@@ -102,21 +106,20 @@ void WifiSettingManager::retrieveAccessPointSetting() {
 }
 
 void WifiSettingManager::storeIsAccessPointSet() {
-    BooleanData isAccessPointSetData(
-        this->isAccessPointSet,
-        StorageLocation(
-            IS_ACCESS_POINT_SET_LENGTH,
-            IS_ACCESS_POINT_SET_STORE_INDEX
-        )
+    StorageLocation location = StorageLocation(
+        IS_ACCESS_POINT_SET_LENGTH,
+        IS_ACCESS_POINT_SET_STORE_INDEX
     );
+    BooleanData isAccessPointSetData(this->isAccessPointSet, location);
     Storage::set(isAccessPointSetData);
 }
 
 void WifiSettingManager::retrieveIsAccessPointSet() {
-    BooleanData isAccessPointSetData(StorageLocation(
+    StorageLocation location = StorageLocation(
         IS_ACCESS_POINT_SET_LENGTH,
         IS_ACCESS_POINT_SET_STORE_INDEX
-    ));
+    );
+    BooleanData isAccessPointSetData(location);
     Storage::get(isAccessPointSetData);
     this->isAccessPointSet = isAccessPointSetData.getData();
 }

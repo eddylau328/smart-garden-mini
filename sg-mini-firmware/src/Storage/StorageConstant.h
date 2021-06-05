@@ -9,7 +9,7 @@
 #define SETUP_CODE_LENGTH 3
 #define SETUP_CODE_STORE_INDEX 0
 #define SETUP_CODE_0 56
-#define SETUP_CODE_1 0
+#define SETUP_CODE_1 88
 #define SETUP_CODE_2 48
 
 #define STORE_VERSION_LENGTH 1
@@ -66,7 +66,6 @@
 #define STORAGE_COVER_RANGE 100
 
 #define UserNameLength 8
-#define TotalStorageSize 8
 
 
 #endif

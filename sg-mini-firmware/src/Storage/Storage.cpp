@@ -1,7 +1,7 @@
 #include "Storage.h"
 
 void Storage::init() {
-  EEPROM.begin(TotalStorageSize);
+  EEPROM.begin(STORAGE_COVER_RANGE);
 }
 
 // need to destroy the pointer after using it
@@ -74,7 +74,7 @@ void Storage::writeByte(byte *target, StorageLocation location) {
   int length = location.getLength();
   int address = location.getAddress();
   for (int i = 0; i < length; i++) {
-    EEPROM.write(address + i, *(target + i));
+    EEPROM.write(address + i, target[i]);
     EEPROM.commit();
   }
 }

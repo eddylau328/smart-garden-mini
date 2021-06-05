@@ -12,7 +12,7 @@ BooleanData::BooleanData(bool data, StorageLocation location) {
 }
 
 void BooleanData::parseData() {
-    this->data = (bool) this->rawByte[0];
+    this->data = !(this->rawByte[0] == 0x00);
 }
 
 bool BooleanData::getData() {
@@ -22,7 +22,7 @@ bool BooleanData::getData() {
 void BooleanData::setByteData(bool data) {
     this->storageLocation = storageLocation;
     this->rawByte = new byte[1];
-    this->rawByte[0] = data? 1 : 0;
+    this->rawByte[0] = data? 0xFF : 0x00;
 }
 
 void BooleanData::setData(bool data) {

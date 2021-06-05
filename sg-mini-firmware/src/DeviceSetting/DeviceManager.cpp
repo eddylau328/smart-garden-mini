@@ -15,6 +15,8 @@ void DeviceManager::init() {
 
     setupSettingManager->init();
     if (setupSettingManager->getIsInitialSetup()) {
+        Serial.println("restore to default");
+        Storage::clearAll();
         localSettingManager->restoreDefault();
         waterSettingManager->restoreDefault();
         wifiSettingManager->restoreDefault();

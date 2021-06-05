@@ -6,6 +6,8 @@ void LocalSettingManager::init() {
     // clock.begin();
     // retrieve storage data
     retrieveIsUsernameSet();
+    Serial.print("isUsernameSet ");
+    Serial.println((int) isUsernameSet);
     if (this->isUsernameSet)
         retrieveUsername();
 }

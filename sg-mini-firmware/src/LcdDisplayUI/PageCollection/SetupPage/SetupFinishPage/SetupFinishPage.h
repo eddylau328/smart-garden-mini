@@ -2,7 +2,7 @@
 #define SetupFinishPage_h
 
 #include "../../Page.h"
-
+#include "../../../../DeviceSetting/SettingManager/SetupSettingManager/SetupSettingManager.h"
 
 /**
  * @brief Page derived class use to show setup is finish
