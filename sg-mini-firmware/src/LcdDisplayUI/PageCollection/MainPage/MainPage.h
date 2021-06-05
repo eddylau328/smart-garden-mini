@@ -1,8 +1,10 @@
 #ifndef MainPage_h
 #define MainPage_h
 
+#include <RTClib.h>
+
 #include "../Page.h"
-#include "../../../DeviceSetting/DeviceSetting.h"
+#include "../../../DeviceSetting/SettingManager/LocalSettingManager/LocalSettingManager.h"
 #include "../../../Sensors/Sensors.h"
 #include "../../../Sensors/SensorsCollection/SensorCollection.h"
 #include "../../../WifiController/WifiController.h"

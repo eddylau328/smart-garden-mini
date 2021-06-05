@@ -3,7 +3,6 @@
 
 #include "../ModeController.h"
 #include <RTClib.h>
-#include "../../../DeviceSetting/DeviceSetting.h"
 #include "../../../Sensors/Sensors.h"
 
 

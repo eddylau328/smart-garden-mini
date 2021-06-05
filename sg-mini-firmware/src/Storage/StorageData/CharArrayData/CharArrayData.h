@@ -15,8 +15,8 @@ class CharArrayData : public DataBuffer {
 
         void parseData();
 
-        char *data;
     private:
+        char *data;
         void setByteData(char *data, StorageLocation storageLocation);
         void setData(char *data);
 

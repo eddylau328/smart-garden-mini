@@ -2,7 +2,6 @@
 #define WifiNamePage_h
 
 #include "../../../Page.h"
-#include "../../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../../Components/Input/InputAscii/InputAscii.h"
 #include "../../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../../Storage/StorageConstant.h"

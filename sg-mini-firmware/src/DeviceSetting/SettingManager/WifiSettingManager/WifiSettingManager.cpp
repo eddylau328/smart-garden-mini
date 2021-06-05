@@ -4,8 +4,6 @@
 void WifiSettingManager::init() {
     retrieveIsWifiOn();
     retrieveIsAccessPointSet();
-    Serial.print("isAccessPointSet ");
-    Serial.println(isAccessPointSet);
     if (this->isAccessPointSet)
         retrieveAccessPointSetting();
 }

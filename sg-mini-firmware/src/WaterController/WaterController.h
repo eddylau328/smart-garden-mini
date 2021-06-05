@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 #include "../Config/Config.h"
-#include "../DeviceSetting/DeviceSetting.h"
 #include "WaterPumpController/WaterPumpController.h"
 
 #include "WaterControllerConstant.h"

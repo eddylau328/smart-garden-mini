@@ -4,10 +4,10 @@
 #include "src/LcdDisplayUI/PageControl.h"
 #include "src/Sensors/Sensors.h"
 #include "src/LcdDisplayUI/RotaryEncoder.h"
-#include "src/DeviceSetting/DeviceSetting.h"
 #include "src/WifiController/WifiController.h"
 #include "src/WaterController/WaterController.h"
 #include "src/DeviceSetting/DeviceManager.h"
+#include "src/Storage/Storage.h"
 
 
 LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
@@ -17,10 +17,10 @@ RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
 //---------------------------------------SET UP--------------------------------------------------------------------
 void init() {
+  Storage::init();
   WaterController::init();
 
   DeviceManager::init();
-  DeviceSetting::init();
   WifiController::init();
   Sensors::init();
 
@@ -58,7 +58,6 @@ void loop() {
   pageControl.mainLoop();
   display.render();
   Sensors::mainLoop();
-  DeviceSetting::mainLoop();
   WaterController::mainLoop();
 }
 

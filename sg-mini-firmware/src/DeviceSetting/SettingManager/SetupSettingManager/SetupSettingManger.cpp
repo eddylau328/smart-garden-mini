@@ -51,6 +51,7 @@ void SetupSettingManager::storeIsInitialSetup() {
     );
     CharArrayData data(setupCode, location);
     Storage::set(data);
+    retrieveIsInitialSetup();
 }
 
 void SetupSettingManager::retrieveIsInitialSetup() {
@@ -78,6 +79,7 @@ void SetupSettingManager::storeIsBeginSystemReset() {
         location
     );
     Storage::set(data);
+    retrieveIsBeginSystemReset();
 }
 
 void SetupSettingManager::retrieveIsBeginSystemReset() {

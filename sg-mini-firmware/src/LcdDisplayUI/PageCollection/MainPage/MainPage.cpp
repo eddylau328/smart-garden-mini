@@ -4,24 +4,23 @@
 void MainPage::mountPage() {
   Page::allocateStaticContents(staticContents, 9);
 
-  int hour, min, sec;
-  DeviceSetting::getTime(&hour, &min, &sec);
-  staticContents[ContentIndex::HOUR].updateContent(hour, true);
-  staticContents[ContentIndex::MINUTE].updateContent(min, true);
+  LocalSettingManager *manager = DeviceManager::getLocalSettingManager();
+  DateTime dateTime = manager->getDeviceDateTime();
+  staticContents[ContentIndex::HOUR].updateContent((int) dateTime.hour(), true);
+  staticContents[ContentIndex::MINUTE].updateContent((int) dateTime.minute(), true);
 
-  LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
-  const char* username = localSettingManager->getUsername();
+  const char* username = manager->getUsername();
   staticContents[ContentIndex::USERNAME].updateContent(username, USERNAME_LENGTH);
 
   updateWifiStatus();
 }
 
 void MainPage::updateContents() {
-  int hour, min, sec;
-  DeviceSetting::getTime(&hour, &min, &sec);
-  staticContents[ContentIndex::HOUR].updateContent(hour, true);
-  staticContents[ContentIndex::MINUTE].updateContent(min, true);
-  staticContents[ContentIndex::SECOND].updateContent(sec % 2 == 1? " " : ":", 1);
+  LocalSettingManager *manager = DeviceManager::getLocalSettingManager();
+  DateTime dateTime = manager->getDeviceDateTime();
+  staticContents[ContentIndex::HOUR].updateContent((int) dateTime.hour(), true);
+  staticContents[ContentIndex::MINUTE].updateContent((int) dateTime.minute(), true);
+  staticContents[ContentIndex::SECOND].updateContent((int) dateTime.second() % 2 == 1 ? " " : ":", 1);
   
   updateSensorData(SensorCollection::SensorDataType::Temp, ContentIndex::TEMPERATURE);
   updateSensorData(SensorCollection::SensorDataType::Hum, ContentIndex::HUMIDITY);

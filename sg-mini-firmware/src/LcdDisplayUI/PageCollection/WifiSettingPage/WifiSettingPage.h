@@ -9,7 +9,6 @@
 #include "../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 
 // Modules
-#include "../../../DeviceSetting/DeviceSetting.h"
 #include "../../../WifiController/WifiController.h"
 
 /**

@@ -3,7 +3,6 @@
 
 #include "../../../Page.h"
 #include "../../../../../Helper/Helper.h"
-#include "../../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../../TempStorage/TempStorage.h"
 #include "../../../../Components/LoadingSpinner/LoadingSpinner.h"
 #include "../../../../../WifiController/WifiController.h"
