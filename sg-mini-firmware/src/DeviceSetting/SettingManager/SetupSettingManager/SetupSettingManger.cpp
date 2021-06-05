@@ -17,7 +17,7 @@ bool SetupSettingManager::getIsInitialSetup() {
     return this->isInitialSetup;
 }
 
-void SetupSettingManager::resetInitialSetup() {
+void SetupSettingManager::resetSystem() {
     this->isInitialSetup = true;
     storeIsInitialSetup();
 }
@@ -36,9 +36,9 @@ void SetupSettingManager::finishSystemReset() {
 void SetupSettingManager::storeIsInitialSetup() {
     char setupCode[SETUP_CODE_LENGTH];
     if (this->isInitialSetup) { 
-        setupCode[0] = 0;
-        setupCode[1] = 0;
-        setupCode[2] = 0;
+        setupCode[0] = 88;
+        setupCode[1] = 88;
+        setupCode[2] = 88;
     }
     else {
         setupCode[0] = SETUP_CODE_0;

@@ -95,13 +95,12 @@ void DateSettingPage::inputInteractiveUpdate(int counter, bool isPress) {
     inputIndex++;
     if (inputIndex == InputIndex::Arrow)
       staticContents[InputIndex::Arrow].updateContent(">", 1);
-    else
-      input[inputIndex].startBlink();
- 
-    if (inputIndex == InputIndex::DayOfMonth) {
+    else if (inputIndex == InputIndex::DayOfMonth) {
       setupDayInputRange();
       input[inputIndex].startBlink();
     }
+    else
+      input[inputIndex].startBlink();
     changeTopic();
   }
 }
@@ -112,7 +111,7 @@ void DateSettingPage::setupDayInputRange() {
   month = input[InputIndex::Month].getInputValue();
   dayOfMonth = input[InputIndex::DayOfMonth].getInputValue();
   int maxDayOfMonth = Helper::getDayOfMonth(year, month);
-  input[inputIndex].set((int8_t)min(dayOfMonth, maxDayOfMonth), 1, maxDayOfMonth);
+  input[inputIndex].set((int8_t)min(dayOfMonth, maxDayOfMonth), 1, maxDayOfMonth, true);
 }
 
 void DateSettingPage::storeDateTime() {

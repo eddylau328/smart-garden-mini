@@ -13,6 +13,7 @@
 #include "PageCollection/SettingPage/TimeSettingPage/TimeSettingPage.h"
 #include "PageCollection/SettingPage/DateSettingPage/DateSettingPage.h"
 #include "PageCollection/SettingPage/UsernameSettingPage/UsernameSettingPage.h"
+#include "PageCollection/SettingPage/RestoreDefaultPage/RestoreDefaultPage.h"
 #include "PageCollection/ControlPage/ControlPage.h"
 #include "PageCollection/ControlPage/Mode/ModeSettingPage.h"
 #include "PageCollection/ControlPage/Mode/AutoSettingPage.h"
@@ -26,6 +27,7 @@
 #include "PageCollection/WifiSettingPage/JoinWifiPage/SetDefaultWifi/SetDefaultWifiPage.h"
 #include "PageCollection/SetupPage/WelcomePage/WelcomePage.h"
 #include "PageCollection/SetupPage/SetupFinishPage/SetupFinishPage.h"
+#include "PageCollection/SetupPage/ConfirmRestorePage/ConfirmRestorePage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------

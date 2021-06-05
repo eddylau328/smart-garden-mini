@@ -11,7 +11,7 @@ class SetupSettingManager : public SettingManager {
         void restoreDefault();
 
         bool getIsInitialSetup();
-        void resetInitialSetup();
+        void resetSystem();
 
         bool getIsBeginSystemReset();
         void finishSystemReset();

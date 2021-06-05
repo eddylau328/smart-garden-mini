@@ -48,7 +48,7 @@ void Storage::clearAll() {
   int start = USERNAME_STORE_INDEX;
   int length = USERNAME_STORE_INDEX + STORAGE_COVER_RANGE;
   for (int i = start; i < length; i++) {
-    EEPROM.write(i, 0);
+    EEPROM.write(i, 0xFF);
     EEPROM.commit();
   }
 }

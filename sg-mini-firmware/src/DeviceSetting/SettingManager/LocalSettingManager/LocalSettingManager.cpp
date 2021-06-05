@@ -51,9 +51,10 @@ void LocalSettingManager::setUsername(const char *username) {
     int length = Helper::getStringLength(username);
     Helper::copyString(this->username, username, length);
     this->storeUsername();
-
+    Serial.println("finish store username");
     this->isUsernameSet = true;
     storeIsUsernameSet();
+    Serial.println("finish store isUsernameSet");
 }
 
 // private

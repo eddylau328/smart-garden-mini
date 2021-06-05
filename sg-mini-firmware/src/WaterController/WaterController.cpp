@@ -7,7 +7,7 @@ volatile int WaterController::interruptCounter = 0;
 
 WaterPumpController WaterController::waterPumpController;
 ModeController **WaterController::modeControllers = new ModeController *[TOTAL_WATER_MODE];
-WaterControllerConstant::WaterMode WaterController::currentMode = WaterControllerConstant::WaterMode::ScheduleMode;
+WaterControllerConstant::WaterMode WaterController::currentMode = WaterControllerConstant::WaterMode::ManualMode;
 
 WaterController::WaterController() {}
 

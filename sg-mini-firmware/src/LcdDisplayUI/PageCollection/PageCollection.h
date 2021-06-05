@@ -1,7 +1,7 @@
 #ifndef PageCollection_h
 #define PageCollection_h
 
-#define TotalPage 19 // Modify it if you want to add page
+#define TotalPage 21 // Modify it if you want to add page
 
 class PageCollection {
 
@@ -27,6 +27,8 @@ class PageCollection {
       SetDefaultWifiPageKey = 16,
       WelcomePageKey = 17,
       SetupFinishPageKey = 18,
+      RestoreDefaultPageKey = 19,
+      ConfirmRestorePageKey = 20,
     };
 };
 
