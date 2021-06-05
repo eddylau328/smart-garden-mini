@@ -2,13 +2,12 @@
 #define WifiPasswordPage_h
 
 #include "../../../Page.h"
-#include "../../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../../Components/Input/InputAscii/InputAscii.h"
 #include "../../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../../Storage/StorageConstant.h"
 #include "../../../../Components/Input/InputCharacter/InputCharacter.h"
 #include "../../../../TempStorage/TempStorage.h"
-#include "../../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../../../../../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 /**
  * @brief Page derived class use to join wifi

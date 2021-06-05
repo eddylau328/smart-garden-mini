@@ -9,7 +9,6 @@
 #include "../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 
 // Modules
-#include "../../../DeviceSetting/DeviceSetting.h"
 #include "../../../WifiController/WifiController.h"
 
 /**
@@ -21,7 +20,6 @@ class WifiSettingPage : public Page {
   public:
     WifiSettingPage();
     void mountPage();
-    void updateContents();
     void interactiveUpdate(int counter, bool isPress);
     void dismountPage();
 
@@ -49,6 +47,8 @@ class WifiSettingPage : public Page {
     PageVerticalScroll scroll;
 
     void processPageContent();
+
+    void updateIsWifiOn();
 };
 
 #endif

@@ -13,7 +13,7 @@ int WifiScan::getNetworkCount(){
 }
 
 void WifiScan::getNetwork(char *name, int *length, int index, int nameBufferSize) {
-  if (Helper::intInRange(index, 0, networkCount)) {
+  if (Helper::isInRange(index, 0, networkCount)) {
     *length = (int) Helper::getStringLength(networks[index]);
     Helper::copyString(name, networks[index], *length);
   }

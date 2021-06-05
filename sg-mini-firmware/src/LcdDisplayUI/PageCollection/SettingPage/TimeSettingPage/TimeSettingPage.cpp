@@ -19,11 +19,12 @@ TimeSettingPage::~TimeSettingPage() {}
 void TimeSettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 9);
 
-  int hour, minute, second;
-  DeviceSetting::getTime(&hour, &minute, &second);
-  input[InputIndex::Hour].set((int8_t)hour, 0, 23, true);
-  input[InputIndex::Minute].set((int8_t)minute, 0, 59, true);
-  input[InputIndex::Second].set((int8_t)second, 0, 59, true);
+  LocalSettingManager *manager = DeviceManager::getLocalSettingManager();
+  DateTime dateTime = manager->getDeviceDateTime();
+  input[InputIndex::Hour].set((int8_t)dateTime.hour(), 0, 23, true);
+  input[InputIndex::Minute].set((int8_t)dateTime.minute(), 0, 59, true);
+  input[InputIndex::Second].set((int8_t)dateTime.second(), 0, 59, true);
+
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Hour;
   input[inputIndex].startBlink();
@@ -37,21 +38,13 @@ void TimeSettingPage::updateContents() {
 }
 
 void TimeSettingPage::interactiveUpdate(int counter, bool isPress) {
-  if (inputIndex == InputIndex::Arrow) {
-    if (isPress) {
-      int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-      if (row == 1) {
-        int hour, minute, second;
-        hour = input[InputIndex::Hour].getInputValue();
-        minute = input[InputIndex::Minute].getInputValue();
-        second = input[InputIndex::Second].getInputValue();
-        DeviceSetting::setTime(hour, minute, second);
-      }
-      Page::interactiveUpdate(counter, isPress);
-    }
-    else
-      scroll.updateScroll(contents, contentSize, counter);
+  if (inputIndex == InputIndex::Arrow && isPress) {
+    if (shouldStoreDateTime())
+      storeDateTime();
+    proceedNextPage(counter, isPress);
   }
+  else if (inputIndex == InputIndex::Arrow)
+    scroll.updateScroll(contents, contentSize, counter);
   else {
     bool isFinish = input[inputIndex].interactiveUpdate(counter, isPress);
     if (isFinish) {
@@ -63,6 +56,22 @@ void TimeSettingPage::interactiveUpdate(int counter, bool isPress) {
       changeTopic();
     }
   }
+}
+
+void TimeSettingPage::proceedNextPage(int counter, bool isPress) {
+  SetupSettingManager *manager = DeviceManager::getSetupSettingManager();
+  bool isBeginSystemReset = manager->getIsBeginSystemReset();
+  if (isBeginSystemReset)
+    proceedSystemResetNextPage();
+  else
+    Page::interactiveUpdate(counter, isPress);
+}
+
+void TimeSettingPage::proceedSystemResetNextPage() {
+  if (shouldStoreDateTime())
+    Page::nextPageCallback(PageCollection::PageKey::SetupFinishPageKey);
+  else
+    Page::nextPageCallback(PageCollection::PageKey::DateSettingPageKey);
 }
 
 void TimeSettingPage::changeTopic() {
@@ -80,4 +89,27 @@ void TimeSettingPage::changeTopic() {
       staticContents[4].updateContent("Set Time", 8);
       break;
   }
+}
+
+void TimeSettingPage::storeDateTime() {
+  int hour, minute, second;
+  hour = input[InputIndex::Hour].getInputValue();
+  minute = input[InputIndex::Minute].getInputValue();
+  second = input[InputIndex::Second].getInputValue();
+  LocalSettingManager *manager = DeviceManager::getLocalSettingManager();
+  DateTime tempDateTime = TempStorage::getDateTime();
+  DateTime newDateTime(
+    tempDateTime.year(),
+    tempDateTime.month(),
+    tempDateTime.day(),
+    hour,
+    minute,
+    second
+  );
+  manager->setDeviceDateTime(newDateTime);
+}
+
+bool TimeSettingPage::shouldStoreDateTime() {
+  int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
+  return row == 1;
 }

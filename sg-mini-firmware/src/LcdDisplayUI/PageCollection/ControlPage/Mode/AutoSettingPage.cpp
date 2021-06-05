@@ -12,14 +12,17 @@ AutoSettingPage::AutoSettingPage(){
 void AutoSettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 6);
 
-  int humidity;
-  input.set((int8_t)humidity, 0, 99, true);
+  WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
+  HumidityModeSetting modeSetting = settingManager->getHumidityModeSetting();
+  int8_t humidity = (int8_t) modeSetting.getTargetHumidity();
+  input.set(humidity, 0, 99, true);
   
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
+
   inputIndex = InputIndex::Humidity;
   input.startBlink();
+
   scroll.resetScroll(contents, contentSize);
-  
 }
 
 void AutoSettingPage::updateContents() {
@@ -32,8 +35,7 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
       if (row == 1) {
-        int humidity;
-        humidity = input.getInputValue();
+        updateHumidityModeSetting();
         Page::interactiveUpdate(counter, isPress);  
       }
       else
@@ -52,4 +54,15 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
         input.startBlink();
     }
   }
+}
+
+void AutoSettingPage::updateHumidityModeSetting() {
+  WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
+  uint8_t humidity = (uint8_t) input.getInputValue();
+  HumidityModeSetting modeSetting(
+    humidity, 
+    min(humidity - 10, 0), 
+    min(humidity + 10, 99)
+  );
+  settingManager->setHumidityModeSetting(modeSetting);
 }

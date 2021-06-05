@@ -12,10 +12,10 @@ UsernameSettingPage::UsernameSettingPage() {
 void UsernameSettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 7);
 
-  char *name;
-  int length;
-  DeviceSetting::getUserName(&name, &length);
-  input.set(name, UserNameLength);
+  LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+  const char* name = localSettingManager->getUsername();
+  input.set(name, USERNAME_LENGTH);
+
   staticContents[InputIndex::Arrow].updateContent(" ", 1);
   inputIndex = InputIndex::Name;
   input.startBlink();
@@ -28,22 +28,49 @@ void UsernameSettingPage::updateContents() {
 }
 
 void UsernameSettingPage::interactiveUpdate(int counter, bool isPress) {
-  if (inputIndex == InputIndex::Arrow) {
-    if (isPress) {
-      int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-      if (row == 1)
-        DeviceSetting::setUserName(input.getInputValue(), UserNameLength);
-      Page::interactiveUpdate(counter, isPress);
-    }
-    else
-      scroll.updateScroll(contents, contentSize, counter);
+  if (inputIndex == InputIndex::Arrow && isPress) {
+    if (shouldStoreUsername())
+      storeUsername();
+    proceedNextPage(counter, isPress);
   }
-  else {
-    bool isFinish = input.interactiveUpdate(counter, isPress);
-    if (isFinish) {
-      inputIndex++;
-      if (inputIndex == InputIndex::Arrow)
-        staticContents[InputIndex::Arrow].updateContent(">", 1);
-    }
+  else if (inputIndex == InputIndex::Arrow)
+    scroll.updateScroll(contents, contentSize, counter);
+  else
+    inputInteractiveUpdate(counter, isPress);
+}
+
+// private
+
+void UsernameSettingPage::proceedNextPage(int counter, bool isPress) {
+  SetupSettingManager *manager = DeviceManager::getSetupSettingManager();
+  bool isBeginSystemReset = manager->getIsBeginSystemReset();
+  if (isBeginSystemReset)
+    proceedSetupNextPage();
+  else
+    Page::interactiveUpdate(counter, isPress);
+}
+
+void UsernameSettingPage::proceedSetupNextPage() {
+  if (shouldStoreUsername())
+    Page::nextPageCallback(PageCollection::PageKey::DateSettingPageKey);
+  else
+    Page::nextPageCallback(PageCollection::PageKey::WelcomePageKey);
+}
+
+void UsernameSettingPage::inputInteractiveUpdate(int counter, bool isPress) {
+  bool isFinish = input.interactiveUpdate(counter, isPress);
+  if (isFinish) {
+    inputIndex = InputIndex::Arrow;
+    staticContents[InputIndex::Arrow].updateContent(">", 1);
   }
+}
+
+void UsernameSettingPage::storeUsername() {
+  LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+  localSettingManager->setUsername(input.getInputValue());
+}
+
+bool UsernameSettingPage::shouldStoreUsername() {
+  int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
+  return row == 1;
 }

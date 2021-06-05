@@ -20,7 +20,7 @@ void PageHorizontalScroll::updateScroll(PageContent **contents, int length, int 
   }
   if (newOrigin != currentOrigin) {
     for (int i = 0; i < length; i++){
-      newPos = (contents + i)->getNewPos();
+      newPos = contents[i]->getNewPos();
       if (Helper::isInRange(newPos.row, rowRange.min, rowRange.max)) {
         newPos.col += (newOrigin - currentOrigin);
         contents[i]->updatePos(newPos);
@@ -33,7 +33,7 @@ void PageHorizontalScroll::updateScroll(PageContent **contents, int length, int 
 void PageHorizontalScroll::resetScroll(PageContent **contents, int length) {
   PageLayoutPosition newPos; 
   for (int i = 0; i < length; i++){
-    newPos = (contents + i)->getNewPos();
+    newPos = contents[i]->getNewPos();
     if (Helper::isInRange(newPos.row, rowRange.min, rowRange.max)) {
       newPos.col -= currentOrigin;
       contents[i] ->updatePos(newPos);

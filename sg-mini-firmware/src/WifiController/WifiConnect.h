@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 
-#include "Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 #include "../Helper/Helper.h"
 

@@ -6,9 +6,8 @@ portMUX_TYPE WaterController::timerMux = portMUX_INITIALIZER_UNLOCKED;
 volatile int WaterController::interruptCounter = 0;
 
 WaterPumpController WaterController::waterPumpController;
-WaterModeSetting WaterController::modeSetting;
 ModeController **WaterController::modeControllers = new ModeController *[TOTAL_WATER_MODE];
-WaterController::WaterMode WaterController::currentMode = WaterMode::ScheduleMode;
+WaterControllerConstant::WaterMode WaterController::currentMode = WaterControllerConstant::WaterMode::ManualMode;
 
 WaterController::WaterController() {}
 
@@ -22,12 +21,13 @@ void WaterController::init() {
 
 void WaterController::mainLoop() {
     if (isTimerUpdated()) {
+        WaterSettingManager *setting = DeviceManager::getWaterSettingManager();
         waterPumpController.mainLoop(); 
-        modeControllers[currentMode]->mainLoop(waterPumpController, modeSetting);
+        modeControllers[currentMode]->mainLoop(waterPumpController, *setting);
     }
 }
 
-bool WaterController::setMode(WaterController::WaterMode mode) {
+bool WaterController::setMode(WaterControllerConstant::WaterMode mode) {
     if (currentMode != mode && modeControllers[currentMode]->getIsIdle()) {
         currentMode = mode;
         return true;
@@ -35,20 +35,8 @@ bool WaterController::setMode(WaterController::WaterMode mode) {
     return currentMode == mode;
 }
 
-WaterController::WaterMode WaterController::getMode() {
+WaterControllerConstant::WaterMode WaterController::getMode() {
     return currentMode;
-}
-
-void WaterController::setWaterModeSetting(ScheduleModeSetting scheduleModeSetting) {
-    modeSetting.setScheduleModeSetting(scheduleModeSetting);
-}
-
-void WaterController::setWaterModeSetting(HumidityModeSetting humidityModeSetting) {
-    modeSetting.setHumidityModeSetting(humidityModeSetting);
-}
-
-WaterModeSetting WaterController::getWaterModeSetting() {
-    return modeSetting;
 }
 
 // private
@@ -77,7 +65,7 @@ void WaterController::initInterval() {
 }
 
 void WaterController::setupModeControllers() {
-    modeControllers[WaterMode::ManualMode] = new ManualModeController();
-    modeControllers[WaterMode::ScheduleMode] = new ScheduleModeController();
-    modeControllers[WaterMode::HumidityMode] = new HumidityModeController();
+    modeControllers[WaterControllerConstant::WaterMode::ManualMode] = new ManualModeController();
+    modeControllers[WaterControllerConstant::WaterMode::ScheduleMode] = new ScheduleModeController();
+    modeControllers[WaterControllerConstant::WaterMode::HumidityMode] = new HumidityModeController();
 }

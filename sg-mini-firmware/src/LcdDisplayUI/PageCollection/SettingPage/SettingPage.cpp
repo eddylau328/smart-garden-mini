@@ -16,29 +16,30 @@ void SettingPage::interactiveUpdate(int counter, bool isPress) {
   if (isPress) {
     int8_t index = scroll.getCurrentArrowRow(contents, contentSize);
     switch (index) {
-      case 0:
-        LOG_ERROR("Enter Time Setting");
-        Page::nextPageCallback(PageCollection::PageKey::TimeSettingPageKey);
-        break;
-      case 1:
-        LOG_ERROR("Enter Date Setting");
+      case RowIndex::DateTime:
+        LOG_ERROR("Enter DateTime Setting");
         Page::nextPageCallback(PageCollection::PageKey::DateSettingPageKey);
         break;
-      case 2:
+      case RowIndex::Wifi:
         LOG_ERROR("Enter WiFi Setting");
+        Page::nextPageCallback(PageCollection::PageKey::WifiSettingPageKey);
         break;
-      case 3:
+      case RowIndex::Watering:
         LOG_ERROR("Enter Watering Setting");
         Page::nextPageCallback(PageCollection::PageKey::ControlPagePageKey);
         break;
-      case 4:
+      case RowIndex::IdleTime:
         LOG_ERROR("Enter Idle Time Setting");
         break;
-      case 5:
+      case RowIndex::Username:
         LOG_ERROR("Enter User Name Setting");
         Page::nextPageCallback(PageCollection::PageKey::UsernameSettingPageKey);
         break;
-      case 6:
+      case RowIndex::Restore:
+        LOG_ERROR("Enter Restore Setting");
+        Page::nextPageCallback(PageCollection::PageKey::RestoreDefaultPageKey);
+        break;
+      case RowIndex::Return:
         LOG_ERROR("Return");
         Page::nextPageCallback(Page::defaultPageKey);
         break;

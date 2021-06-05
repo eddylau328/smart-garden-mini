@@ -2,7 +2,6 @@
 #define UsernameSettingPage_h
 
 #include "../../Page.h"
-#include "../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../Components/Input/InputAlphabet/InputAlphabet.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../Storage/StorageConstant.h"
@@ -34,12 +33,18 @@ class UsernameSettingPage : public Page {
       PageContent("[", 1, PageLayoutPosition(0, 1)),
       PageContent("]", 1, PageLayoutPosition(9, 1))
     };
-    int8_t inputIndex;
+
+    InputIndex inputIndex;
 
     InputAlphabet input;
     PageVerticalScroll scroll;
 
-    void changeTopic();
+    void proceedNextPage(int counter, bool isPress);
+    void proceedSetupNextPage();
+    void inputInteractiveUpdate(int counter, bool isPress);
+
+    void storeUsername();
+    bool shouldStoreUsername();
 };
 
 #endif

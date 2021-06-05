@@ -14,11 +14,18 @@ void SetDefaultWifiPage::mountPage() {
 void SetDefaultWifiPage::interactiveUpdate(int counter, bool isPress) {
     if (isPress) {
         int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-        if (row == 1) {
+        if (row == 1)
             // SAVE AS DEFAULT WIFI
-        }
+            updateAccessPointSetting();
         Page::interactiveUpdate(counter, isPress);
     }
     else
       scroll.updateScroll(contents, contentSize, counter);
+}
+
+
+void SetDefaultWifiPage::updateAccessPointSetting() {
+    WifiSettingManager *settingManager = DeviceManager::getWifiSettingManager();
+    AccessPointSetting accessPointSetting = TempStorage::getAccessPointSetting();
+    settingManager->setAccessPointSetting(accessPointSetting);
 }

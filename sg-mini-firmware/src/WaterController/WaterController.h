@@ -4,44 +4,34 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 #include "../Config/Config.h"
-#include "../DeviceSetting/DeviceSetting.h"
 #include "WaterPumpController/WaterPumpController.h"
+
+#include "WaterControllerConstant.h"
 
 // all the mode controllers
 #include "ModeController/ModeController.h"
 #include "ModeController/ManualModeController/ManualModeController.h"
 #include "ModeController/ScheduleModeController/ScheduleModeController.h"
 #include "ModeController/HumidityModeController/HumidityModeController.h"
-#include "WaterModeSetting/WaterModeSetting.h"
+#include "../DeviceSetting/DeviceManager.h"
 
 /**
  * @brief provides functions for the smart-garden-mini kit control actions, e.g. watering the plants
  * 
  */
 
-#define TOTAL_WATER_MODE 3
 
 class WaterController {
 
   public:
-    enum WaterMode {
-      ManualMode = 0,
-      ScheduleMode = 1,
-      HumidityMode = 2,
-    };
-
     WaterController();
     ~WaterController();
 
     static void init();
     static void mainLoop();
-    static bool setMode(WaterController::WaterMode mode);
-    static WaterController::WaterMode getMode();
+    static bool setMode(WaterControllerConstant::WaterMode mode);
+    static WaterControllerConstant::WaterMode getMode();
 
-    static void setWaterModeSetting(ScheduleModeSetting scheduleModeSetting);
-    static void setWaterModeSetting(HumidityModeSetting HumidityModeSetting);
-    static WaterModeSetting getWaterModeSetting();
-  
   private:
     static void initInterval();
     static void setupModeControllers();
@@ -55,8 +45,8 @@ class WaterController {
 
     static WaterPumpController waterPumpController;
     static ModeController **modeControllers;
-    static WaterMode currentMode;
-    static WaterModeSetting modeSetting;
+    static WaterControllerConstant::WaterMode currentMode;
+
 };
 
 #endif

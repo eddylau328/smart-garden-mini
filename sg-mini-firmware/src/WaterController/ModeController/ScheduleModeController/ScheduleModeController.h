@@ -3,14 +3,13 @@
 
 #include "../ModeController.h"
 #include <RTClib.h>
-#include "../../../DeviceSetting/DeviceSetting.h"
 #include "../../../Sensors/Sensors.h"
 
 
 
 class ScheduleModeController : public ModeController {
     public:
-        void mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting);
+        void mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting);
         void setwaterDuration(unsigned long Duration);
 
         DateTime currentTime = DateTime(2021, 3, 28, 12, 12, 12);

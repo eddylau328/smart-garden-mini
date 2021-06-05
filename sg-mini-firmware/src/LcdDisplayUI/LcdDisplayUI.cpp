@@ -115,4 +115,7 @@ void LcdDisplayUI::createCustomCharacter() {
   lcd->createChar(CUSTOM_BACKSLASH, CustomCharacter::BACKSLASH);
   lcd->createChar(CUSTOM_ENTER, CustomCharacter::ENTER);
   lcd->createChar(CUSTOM_BACKSPACE, CustomCharacter::BACKSPACE);
+  lcd->createChar(CUSTOM_WIFI_CONNECTED, CustomCharacter::WIFICONNECTED);
+  lcd->createChar(CUSTOM_WIFI_DISCONNECTED, CustomCharacter::WIFIDISCONNECTED);
+  lcd->createChar(CUSTOM_WIFI_OFF, CustomCharacter::WIFIOFF);
 }

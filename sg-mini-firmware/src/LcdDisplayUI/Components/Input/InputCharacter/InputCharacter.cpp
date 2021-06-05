@@ -28,7 +28,7 @@ void InputCharacter::set(const char* defaultValue, int8_t stringLength) {
     // copy the default to the buffer
     Helper::copyString(buffer, defaultValue, stringLength);
     for (int i = 0 ; i < stringLength ; i++)
-        if (!(Helper::intInRange((int) *(buffer+i), 32, 126)))
+        if (!(Helper::isInRange((int) *(buffer+i), 32, 126)))
             *(buffer + i) = ' ';
     connectContent->updateContent(buffer, stringLength, showIndex);
 }

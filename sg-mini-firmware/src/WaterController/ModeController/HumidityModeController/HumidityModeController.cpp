@@ -8,10 +8,10 @@ millisDelay HumidityModeController::getDiffuseDelay() {
     return this->diffuseDelay;
 }
 
-void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterModeSetting &modeSetting) {
+void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting) {
 
     // HumidityModeSetting setting = modeSetting.getHumidityModeSetting();
-    HumidityModeSetting setting = HumidityModeSetting(54.0, 45.0, 65.0);
+    HumidityModeSetting setting = HumidityModeSetting(54, 45, 65);
 
     // target humidity level is the level you always want to keep your plant at
     float targetHumidity = 54;

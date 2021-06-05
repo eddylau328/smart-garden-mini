@@ -7,6 +7,10 @@
 #include "../Components/PageContent/PageContent.h"
 #include "../Components/PageLayoutPosition/PageLayoutPosition.h"
 #include "PageCollection.h"
+#include "../../Helper/Helper.h"
+#include "../../DeviceSetting/DeviceManager.h"
+#include "../CustomCharacter/CustomCharacter.h"
+
 /**
  * @brief provides the base structure for creating a Page
  * 
@@ -18,7 +22,7 @@ class Page {
      * @brief This function will be called once when the page is assigned to display through PageControl object
      * 
      */
-    virtual void mountPage();
+    virtual void mountPage() = 0;
 
     /**
      * @brief Get the Contents object for the LcdDisplayUI to render the Page

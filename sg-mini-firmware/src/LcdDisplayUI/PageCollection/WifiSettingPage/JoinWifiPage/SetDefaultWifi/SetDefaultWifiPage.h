@@ -4,7 +4,7 @@
 #include "../../../Page.h"
 #include "../../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../TempStorage/TempStorage.h"
-#include "../../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../../../../../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 
 class SetDefaultWifiPage : public Page {
@@ -28,6 +28,8 @@ class SetDefaultWifiPage : public Page {
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
       PageContent("Save", 4, PageLayoutPosition(12, 1)),
     };
+
+    void updateAccessPointSetting();
 };
 
 #endif

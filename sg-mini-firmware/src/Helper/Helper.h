@@ -159,17 +159,6 @@ class Helper {
     static bool isInRange(float target, float min, float max);
 
     /**
-     * @brief check whether the 8-bit unsigned integer is within the range
-     * 
-     * @param target - the 8-bit unsigned integer variable you want to check
-     * @param min - the minimum of the target can have
-     * @param max - the maximum of the target can have
-     * @return true - the target is within the range
-     * @return false - the target is out of range
-     */
-    static bool isInRange(uint8_t target, uint8_t min, uint8_t max);
-
-    /**
      * @brief check whether the integer is within the range
      * 
      * @param number - the integer variable you want to check
@@ -199,6 +188,15 @@ class Helper {
      * @return false - the year is not a leap year
      */
     static bool isLeapYear(int year);
+
+    /**
+     * @brief Get the day of month
+     * 
+     * @param year - the year you want to check
+     * @param month - the month you want to know
+     * @return int8_t - the day of month
+     */
+    static int8_t getDayOfMonth(int year, int month);
 
 };
 

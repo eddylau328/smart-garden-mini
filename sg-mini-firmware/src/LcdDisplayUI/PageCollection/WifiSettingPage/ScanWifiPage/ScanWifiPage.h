@@ -6,7 +6,7 @@
 #include "../../../../WifiController/WifiController.h"
 #include "../../../Components/LoadingSpinner/LoadingSpinner.h"
 #include "../../../TempStorage/TempStorage.h"
-#include "../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../../../../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 
 class ScanWifiPage : public Page {

@@ -3,11 +3,10 @@
 
 #include "../../../Page.h"
 #include "../../../../../Helper/Helper.h"
-#include "../../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../../TempStorage/TempStorage.h"
 #include "../../../../Components/LoadingSpinner/LoadingSpinner.h"
 #include "../../../../../WifiController/WifiController.h"
-#include "../../../../../WifiController/Setting/AccessPointSetting/AccessPointSetting.h"
+#include "../../../../../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
 
 
 /**
