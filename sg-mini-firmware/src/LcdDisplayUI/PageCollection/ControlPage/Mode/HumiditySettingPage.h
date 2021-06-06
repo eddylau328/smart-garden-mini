@@ -1,5 +1,5 @@
-#ifndef AutoSettingPage_h
-#define AutoSettingPage_h
+#ifndef HumiditySettingPage_h
+#define HumiditySettingPage_h
 
 #include "../../Page.h"
 #include "../../../Components/Input/InputNumber/InputNumber.h"
@@ -10,10 +10,10 @@
  * @brief Page derived class use to show how to create a derived page class
  * 
  */
-class AutoSettingPage : public Page {
+class HumiditySettingPage : public Page {
 
   public:
-    AutoSettingPage();
+    HumiditySettingPage();
 
     void mountPage();
     void updateContents();

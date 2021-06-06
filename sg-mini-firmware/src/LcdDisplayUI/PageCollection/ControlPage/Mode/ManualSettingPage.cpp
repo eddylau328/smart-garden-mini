@@ -29,6 +29,9 @@ void ManualSettingPage::updateContents() {
 }
 
 void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
+  // if (inputIndex == InputIndex::Arrow && isPress) {
+  //   processArrowAction();
+  // }
   if (inputIndex == InputIndex::Arrow) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
@@ -40,7 +43,7 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
       }
       else
       {
-        Page::nextPageCallback(PageCollection::PageKey::ControlPagePageKey);
+        Page::nextPageCallback(PageCollection::PageKey::ControlPageKey);
       }
       
     }
@@ -62,3 +65,15 @@ void ManualSettingPage::interactiveUpdate(int counter, bool isPress) {
 
 }
 
+// void ManualSettingPage::processArrowAction() {
+//   int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
+//   if (row == 1) {
+//     int second = input.getInputValue();
+//     
+//   }
+//  
+// }
+// 
+// void ManualSettingPage::toggleReturnContent() {
+// 
+// }

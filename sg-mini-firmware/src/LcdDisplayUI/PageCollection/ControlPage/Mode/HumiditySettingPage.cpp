@@ -1,6 +1,6 @@
-#include "AutoSettingPage.h"
+#include "HumiditySettingPage.h"
 
-AutoSettingPage::AutoSettingPage(){
+HumiditySettingPage::HumiditySettingPage(){
    input.setLinkage(&staticContents[InputIndex::Humidity]);
    input.setCircleLoop(true);
 
@@ -9,7 +9,7 @@ AutoSettingPage::AutoSettingPage(){
    scroll.setCursor(&staticContents[InputIndex::Arrow], 1);
 }
 
-void AutoSettingPage::mountPage() {
+void HumiditySettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 6);
 
   WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
@@ -25,12 +25,12 @@ void AutoSettingPage::mountPage() {
   scroll.resetScroll(contents, contentSize);
 }
 
-void AutoSettingPage::updateContents() {
+void HumiditySettingPage::updateContents() {
    if (inputIndex != InputIndex::Arrow)
     input.blinkUpdate();
 }
 
-void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
+void HumiditySettingPage::interactiveUpdate(int counter, bool isPress) {
   if (inputIndex == InputIndex::Arrow) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
@@ -56,7 +56,7 @@ void AutoSettingPage::interactiveUpdate(int counter, bool isPress) {
   }
 }
 
-void AutoSettingPage::updateHumidityModeSetting() {
+void HumiditySettingPage::updateHumidityModeSetting() {
   WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
   uint8_t humidity = (uint8_t) input.getInputValue();
   HumidityModeSetting modeSetting(
