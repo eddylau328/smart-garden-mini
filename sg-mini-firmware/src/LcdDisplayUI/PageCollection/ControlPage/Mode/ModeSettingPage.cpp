@@ -27,24 +27,29 @@ void ModeSettingPage::mountPage() {
 }
 
 void ModeSettingPage::interactiveUpdate(int counter, bool isPress) {
-  scroll.updateScroll(contents, contentSize, counter);
   if (isPress) {
     int8_t index = scroll.getCurrentArrowRow(contents, contentSize);
     WaterSettingManager *manager = DeviceManager::getWaterSettingManager();
+    WaterControllerConstant::WaterMode target;
     switch (index) {
       case RowIndex::Manual:
-        LOG_ERROR("Enter Manual Setting");
-        manager->setWaterMode(WaterControllerConstant::WaterMode::ManualMode);
+        LOG_ERROR("Set to manual");
+        target = WaterControllerConstant::WaterMode::ManualMode;
         break;
       case RowIndex::Humidity:
-        LOG_ERROR("Enter Humidity Setting");
-        manager->setWaterMode(WaterControllerConstant::WaterMode::HumidityMode);
+        LOG_ERROR("Set to humidity");
+        target = WaterControllerConstant::WaterMode::HumidityMode;
         break;
       case RowIndex::Schedule:
         LOG_ERROR("Enter Schedule Setting");
-        manager->setWaterMode(WaterControllerConstant::WaterMode::ScheduleMode);
-        break;
+        target = WaterControllerConstant::WaterMode::ScheduleMode;
+       break;
     }
+    bool isAllowSet = WaterController::setMode(target);
+    if (isAllowSet)
+      manager->setWaterMode(target);
     Page::interactiveUpdate(counter, isPress);
   }
+  else
+    scroll.updateScroll(contents, contentSize, counter);
 }

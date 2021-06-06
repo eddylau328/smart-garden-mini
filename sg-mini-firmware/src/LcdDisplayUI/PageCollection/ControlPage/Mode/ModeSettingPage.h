@@ -4,6 +4,7 @@
 #include "../../Page.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../DeviceSetting/SettingManager/WaterSettingManager/WaterSettingManager.h"
+#include "../../../../WaterController/WaterController.h"
 
 
 /**

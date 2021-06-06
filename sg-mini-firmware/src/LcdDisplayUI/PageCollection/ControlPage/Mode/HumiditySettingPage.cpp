@@ -12,14 +12,12 @@ HumiditySettingPage::HumiditySettingPage(){
 void HumiditySettingPage::mountPage() {
   Page::allocateStaticContents(staticContents, 6);
 
+  toggleArrowContent(InputIndex::Humidity);
+
   WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
   HumidityModeSetting modeSetting = settingManager->getHumidityModeSetting();
   int8_t humidity = (int8_t) modeSetting.getTargetHumidity();
   input.set(humidity, 0, 99, true);
-  
-  staticContents[InputIndex::Arrow].updateContent(" ", 1);
-
-  inputIndex = InputIndex::Humidity;
   input.startBlink();
 
   scroll.resetScroll(contents, contentSize);
@@ -31,38 +29,42 @@ void HumiditySettingPage::updateContents() {
 }
 
 void HumiditySettingPage::interactiveUpdate(int counter, bool isPress) {
-  if (inputIndex == InputIndex::Arrow) {
-    if (isPress) {
-      int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-      if (row == 1) {
-        updateHumidityModeSetting();
-        Page::interactiveUpdate(counter, isPress);  
-      }
-      else
-        Page::nextPageCallback(PageCollection::PageKey::ModeSettingPageKey);
-    }
-    else
-      scroll.updateScroll(contents, contentSize, counter);
-  }
-  else {
-    bool isFinish = input.interactiveUpdate(counter, isPress);
-    if (isFinish) {
-      inputIndex++;
-      if (inputIndex == InputIndex::Arrow)
-        staticContents[InputIndex::Arrow].updateContent(">", 1);
-      else
-        input.startBlink();
-    }
-  }
+  if (inputIndex == InputIndex::Arrow && isPress)
+    processActions(counter, isPress);
+  else if (inputIndex == InputIndex::Arrow)
+    scroll.updateScroll(contents, contentSize, counter);
+  else
+    processInputAction(counter, isPress);
 }
 
 void HumiditySettingPage::updateHumidityModeSetting() {
-  WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
-  uint8_t humidity = (uint8_t) input.getInputValue();
-  HumidityModeSetting modeSetting(
-    humidity, 
-    min(humidity - 10, 0), 
-    min(humidity + 10, 99)
+  uint8_t targetHumidity = (uint8_t) input.getInputValue();
+  HumidityModeSetting setting = HumidityModeSetting(
+    targetHumidity, 
+    max(targetHumidity - 10, 0), 
+    min(targetHumidity + 10, 99)
   );
-  settingManager->setHumidityModeSetting(modeSetting);
+  WaterSettingManager *manager = DeviceManager::getWaterSettingManager();
+  manager->setHumidityModeSetting(setting);
+}
+
+void HumiditySettingPage::processActions(int counter, bool isPress) {
+  int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
+  if (row == 1)
+    updateHumidityModeSetting();
+  Page::interactiveUpdate(counter, isPress);  
+}
+
+void HumiditySettingPage::processInputAction(int counter, bool isPress) {
+  bool isFinish = input.interactiveUpdate(counter, isPress);
+  if (isFinish)
+    toggleArrowContent(InputIndex::Arrow);
+}
+
+void HumiditySettingPage::toggleArrowContent(InputIndex index) {
+  inputIndex = index;
+  if (inputIndex == InputIndex::Arrow)
+    staticContents[InputIndex::Arrow].updateContent(">", 1);
+  else
+    staticContents[InputIndex::Arrow].updateContent(" ", 1);
 }
