@@ -4,6 +4,9 @@
 #include "../../Page.h"
 #include "../../../Components/Input/InputNumber/InputNumber.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
+#include "../../../../DeviceSetting/SettingManager/WaterSettingManager/WaterSettingManager.h"
+#include "../../../../DeviceSetting/SettingManager/WaterSettingManager/ModeSetting/ManualModeSetting/ManualModeSetting.h"
+#include "../../../../WaterController/WaterController.h"
 
 
 /**
@@ -37,15 +40,18 @@ class ManualSettingPage : public Page {
       PageContent("Second", 6, PageLayoutPosition(0,1)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
       PageContent("Fire", 4, PageLayoutPosition(12, 1)),
-     
     };
 
-    int8_t inputIndex;
+    InputIndex inputIndex;
     InputNumber input;
     PageVerticalScroll scroll;
 
-    // void processArrowAction();
-    // void toggleReturnContent();
+    void processActions(int counter, bool isPress);
+    void processFireAction();
+    void processReturnAction(int counter, bool isPress);
+    void processInputAction(int counter, bool isPress);
+
+    void toggleArrowContent(InputIndex index);
 };
 
 #endif

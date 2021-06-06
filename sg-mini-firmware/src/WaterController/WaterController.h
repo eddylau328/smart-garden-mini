@@ -31,6 +31,7 @@ class WaterController {
     static void mainLoop();
     static bool setMode(WaterControllerConstant::WaterMode mode);
     static WaterControllerConstant::WaterMode getMode();
+    static bool getIsWaterPumpOn();
 
   private:
     static void initInterval();

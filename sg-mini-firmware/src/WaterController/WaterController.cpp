@@ -39,6 +39,10 @@ WaterControllerConstant::WaterMode WaterController::getMode() {
     return currentMode;
 }
 
+bool WaterController::getIsWaterPumpOn() {
+    return waterPumpController.getIsWaterPumpOn();
+}
+
 // private
 
 bool WaterController::isTimerUpdated() {
