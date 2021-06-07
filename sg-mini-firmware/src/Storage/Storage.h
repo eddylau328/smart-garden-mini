@@ -29,23 +29,7 @@ class Storage {
      */
     static void init();
     
-    /**
-     * @brief get the serialized data from the storage device
-     * 
-     * @param key - the key of the data you want to get
-     * @return byte* - the byte pointer pointing to the first element of the serialized data which store in a byte array 
-     */
-    static byte* get(Storage::Key key);
-
     static void get(DataBuffer &emptyDataBuffer);
-
-    /**
-     * @brief update the storage with new data
-     * 
-     * @param key - the key of the data you want to update
-     * @param target - the byte pointer pointing to the first element of the serialized data which you want to update
-     */
-    static void set(Storage::Key key, byte* target);
 
     static void set(DataBuffer &data);
 

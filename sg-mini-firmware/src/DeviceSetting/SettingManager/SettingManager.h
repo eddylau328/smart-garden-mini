@@ -5,7 +5,7 @@
 
 #include "../../Storage/StorageData/CharArrayData/CharArrayData.h"
 #include "../../Storage/StorageData/UInt8Data/UInt8Data.h"
-#include "../../Storage/StorageData/UInt64Data/UInt64Data.h"
+#include "../../Storage/StorageData/UInt32Data/UInt32Data.h"
 #include "../../Storage/StorageData/BooleanData/BooleanData.h"
 #include "../../Storage/StorageData/StorageLocation.h"
 #include "../../Storage/StorageConstant.h"

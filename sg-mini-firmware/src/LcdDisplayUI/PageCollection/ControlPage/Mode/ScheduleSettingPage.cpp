@@ -20,6 +20,8 @@ void ScheduleSettingPage::mountPage() {
   WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
   ScheduleModeSetting modeSetting = settingManager->getScheduleModeSetting();
   unsigned long duration = modeSetting.getScheduleDuration();
+  Serial.print("Get duration ");
+  Serial.println(duration);
   int8_t hour, minute, second;
   hour = (int8_t) (duration / 3600);
   minute = (int8_t) ((duration - (unsigned long)hour * 3600) / 60);
@@ -47,13 +49,9 @@ void ScheduleSettingPage::interactiveUpdate(int counter, bool isPress) {
   if (inputIndex == InputIndex::Arrow) {
     if (isPress) {
       int8_t row = scroll.getCurrentArrowRow(contents, contentSize);
-      if (row == 1) {
+      if (row == 1)
         updateScheduleModeSetting();
-        Page::interactiveUpdate(counter, isPress);
-      }
-      else
-       Page::nextPageCallback(PageCollection::PageKey::ModeSettingPageKey);
-      
+      Page::interactiveUpdate(counter, isPress);
     }
     else
       scroll.updateScroll(contents, contentSize, counter);
@@ -98,7 +96,7 @@ void ScheduleSettingPage::updateScheduleModeSetting() {
   duration += (unsigned long)minute * 60;
   duration += (unsigned long)second;
 
-  ScheduleModeSetting modeSetting(duration, 50);
+  ScheduleModeSetting modeSetting(duration, 0);
   WaterSettingManager *settingManager = DeviceManager::getWaterSettingManager();
   settingManager->setScheduleModeSetting(modeSetting);
 }

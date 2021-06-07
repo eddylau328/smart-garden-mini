@@ -36,49 +36,48 @@ void ScheduleModeController::mainLoop(WaterPumpController &waterPump, WaterSetti
     /* write your code below here */
     // ScheduleModeSetting setting = modeSetting.getScheduleModeSetting();
 
-    ScheduleModeSetting setting = ScheduleModeSetting(86400, 50);
+    LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+    DateTime currentTime = localSettingManager->getDeviceDateTime();
 
-    currentTime = RTC_DS1307::now();
-    TimeSpan timeInterval (setting.getScheduleDuration());
-    TimeSpan recheckInterval (900); // 15mins to recheck humidity
-    float humidityLevel = 100.0;
-    Sensors::getSensorData(SensorCollection::SoilHum,humidityLevel);
+    ScheduleModeSetting setting = modeSetting.getScheduleModeSetting();
+    float targetHumidity = (float) setting.getTargetHumidity();
+    float humidityLevel;
+    Sensors::getSensorData(SensorCollection::SoilHum, humidityLevel);
 
-    if (currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn() && recheck == false) {       
-        if ((float) setting.getTargetHumidity() <= humidityLevel && firstcheck == true)
-        {
-            nextWaterTime = currentTime + timeInterval;
-            Serial.println(String("The next watering time is : " + nextWaterTime.timestamp()));
-            firstcheck = false;
-        }
-        else if ((float) setting.getTargetHumidity() > humidityLevel && millis() - lastWatering >= wateringBreak )
-        {      
-            waterPump.waterOn(waterDuration);
-            Serial.println(String("Water is on by time : "+ currentTime.timestamp()));
-            lastWatering = millis();
-            firstcheck = true;
-            }
-        else 
-        {
-            recheck = true;
-            nextWaterTime = currentTime + recheckInterval;
-            Serial.println(String("The humidity is above set level, recheck will run at 15minute later on "+ nextWaterTime.timestamp()));
-        }
-        }
-    if (recheck == true && currentTime >= nextWaterTime && !waterPump.getIsWaterPumpOn()) {
-        if ((float) setting.getTargetHumidity() <= humidityLevel){
-            nextWaterTime = currentTime - recheckInterval + timeInterval;
-            Serial.println(String("The next watering time is : " + nextWaterTime.timestamp()));
-            recheck = firstcheck = false;
-        }
-        else if ((float) setting.getTargetHumidity() > humidityLevel && millis() - lastWatering >= wateringBreak){
-            waterPump.waterOn(waterDuration);
-            Serial.println(String("Water is on by time : "+ currentTime.timestamp()));
-            lastWatering = millis();
-        }       
+    bool isWaterTimeReached = currentTime >= nextWaterTime;
+    bool isWaterPumpOn = waterPump.getIsWaterPumpOn();
+    bool isReachHumidity = humidityLevel >= targetHumidity;
+
+    // handle the first water action
+    if ((isWaterTimeReached || !isReachHumidity) && !isWaterPumpOn && isDiffuseFinish) {
+        waterPump.waterOn(WATER_ON_DURATION);
+        modeSetting.setLastWaterTime(currentTime);
+        diffuseDelay.start(WATER_ON_DURATION + DIFFUSE_DURATION);
+        updateNextWaterTime(modeSetting);
+    }
+    else {
+        updateDiffuseDelay();
     }
 }
 
-void ScheduleModeController::setwaterDuration(unsigned long Duration){
-    waterDuration = Duration;
+void ScheduleModeController::updateNextWaterTime(WaterSettingManager &manager) {
+    ScheduleModeSetting setting = manager.getScheduleModeSetting();
+    TimeSpan timeInterval(setting.getScheduleDuration());
+
+    DateTime lastWaterTime = manager.getLastWaterTime();
+
+    // initialized
+    if (lastWaterTime == DateTime()) {
+        LocalSettingManager *localSettingManager = DeviceManager::getLocalSettingManager();
+        DateTime currentTime = localSettingManager->getDeviceDateTime();
+        nextWaterTime = currentTime + timeInterval;
+    }
+    else {
+        nextWaterTime = lastWaterTime + timeInterval;
+    }
+}
+
+void ScheduleModeController::updateDiffuseDelay() {
+    if (diffuseDelay.isRunning())
+        isDiffuseFinish = diffuseDelay.justFinished();
 }

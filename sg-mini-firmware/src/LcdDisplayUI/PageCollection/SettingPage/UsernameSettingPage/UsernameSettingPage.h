@@ -25,7 +25,7 @@ class UsernameSettingPage : public Page {
     };
 
     PageContent staticContents[7] = {
-      PageContent(UserNameLength, PageLayoutPosition(1, 1)),
+      PageContent(USERNAME_LENGTH, PageLayoutPosition(1, 1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Set Name", 8, PageLayoutPosition(0, 0)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
