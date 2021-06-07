@@ -16,7 +16,7 @@
 #include "PageCollection/SettingPage/RestoreDefaultPage/RestoreDefaultPage.h"
 #include "PageCollection/ControlPage/ControlPage.h"
 #include "PageCollection/ControlPage/Mode/ModeSettingPage.h"
-#include "PageCollection/ControlPage/Mode/HumiditySettingPage.h"
+#include "PageCollection/ControlPage/Mode/HumiditySettingPage/HumiditySettingPage.h"
 #include "PageCollection/ControlPage/Mode/ScheduleSettingPage.h"
 #include "PageCollection/ControlPage/Mode/ManualSettingPage.h"
 #include "PageCollection/WifiSettingPage/WifiSettingPage.h"
