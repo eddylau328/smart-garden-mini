@@ -34,7 +34,7 @@ void InputCharacter::set(const char* defaultValue, int8_t stringLength) {
 }
 
 void InputCharacter::blinkUpdate() {
-    if (isBlink && connectContent && millis() - lastInputTrigger > 1000) {
+    if (isBlink && connectContent && inputTriggerDelay.justFinished()) {
         if (isBlinking) {
             Helper::copyString(copyBuffer, connectContent->getContent(), displayRange);
             *(copyBuffer + valueIndex - showIndex) = '_';
@@ -50,7 +50,7 @@ void InputCharacter::blinkUpdate() {
                 connectContent->updateContent(buffer, displayRange, showIndex);
         }
         isBlinking = !isBlinking;
-        lastInputTrigger = millis();
+        inputTriggerDelay.repeat();
     }
 }
 
@@ -93,7 +93,7 @@ bool InputCharacter::interactiveUpdate(int counter, bool isPress) {
     }
     else
         connectContent->updateContent(buffer, displayRange, showIndex);
-    lastInputTrigger = millis();
+    inputTriggerDelay.repeat();
     return false;
 }
 
@@ -135,4 +135,5 @@ void InputCharacter::resetInput() {
     this->valueIndex = 0;
     this->isBlink = false;
     this->isBlinking = false;
+    inputTriggerDelay.stop();
 }

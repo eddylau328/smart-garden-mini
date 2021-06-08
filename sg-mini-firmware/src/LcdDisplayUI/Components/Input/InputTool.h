@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <DebugLog.h>
+#include <millisDelay.h>
 #include "../PageContent/PageContent.h"
 #include "../../../Helper/Helper.h"
 
@@ -60,7 +61,7 @@ class InputTool {
     bool isBlinking = false;
 
     static char copyBuffer[20];
-    static unsigned long lastInputTrigger;
+    static millisDelay inputTriggerDelay;
 };
 
 #endif
