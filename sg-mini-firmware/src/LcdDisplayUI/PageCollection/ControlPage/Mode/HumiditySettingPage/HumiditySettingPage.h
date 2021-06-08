@@ -40,7 +40,7 @@ class HumiditySettingPage : public Page {
       PageContent(2, PageLayoutPosition(10, 1)),
       PageContent(2, PageLayoutPosition(10, 2)),
       PageContent(">", 1, PageLayoutPosition(0, 0)),
-      PageContent("Target H", 6, PageLayoutPosition(2, 0)),
+      PageContent("Target H", 8, PageLayoutPosition(2, 0)),
       PageContent("Min H", 5, PageLayoutPosition(2 ,1)),
       PageContent("Max H", 5, PageLayoutPosition(2, 2)),
       PageContent("Save", 4, PageLayoutPosition(2, 3)),
