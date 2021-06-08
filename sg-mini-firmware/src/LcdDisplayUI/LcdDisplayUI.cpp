@@ -17,6 +17,7 @@ void LcdDisplayUI::init() {
   lcd->init();
   lcd->backlight();
   createCustomCharacter();
+  renderDelay.start(100);
 }
 
 void LcdDisplayUI::update(Page *page) {
@@ -25,7 +26,8 @@ void LcdDisplayUI::update(Page *page) {
 }
 
 void LcdDisplayUI::render() {
-  if (millis() - lastRender > 100) {
+  if (renderDelay.justFinished()) {
+    renderDelay.repeat();
     if (renderPage) {
       // Retrieve page contents array
       PageContent **contents;
@@ -57,7 +59,6 @@ void LcdDisplayUI::render() {
         }
       }
     }
-    lastRender = millis();
   }
 }
 
