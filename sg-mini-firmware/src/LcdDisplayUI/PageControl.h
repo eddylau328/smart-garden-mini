@@ -2,6 +2,7 @@
 #define PageControl_h
 
 #include <Arduino.h>
+#include <millisDelay.h>
 #include "LcdDisplayUI.h"
 
 // Page Collection -------------------------------------
@@ -83,7 +84,7 @@ class PageControl {
     LcdDisplayUI *display;
     RotaryEncoder *rotaryEncoder;
 
-    unsigned long lastUpdate;
+    millisDelay updateDelay;
 
     /**
      * @brief It helps to assign the page which is going to display to the LCD Monitor
