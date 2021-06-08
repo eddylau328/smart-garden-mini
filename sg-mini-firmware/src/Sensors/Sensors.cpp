@@ -5,8 +5,8 @@
 #include "Sensors.h"
 
 Sensor *Sensors::sensorList[TotalSensors];
-unsigned long Sensors::lastBatchRead;
-unsigned long Sensors::lastSensorRead;
+millisDelay Sensors::batchReadDelay;
+millisDelay Sensors::sensorReadDelay;
 uint8_t Sensors::currentReadIndex = 0;
 bool Sensors::isStartRead = true;
 
@@ -26,18 +26,21 @@ void Sensors::init() {
     LOG_VERBOSE(SensorCollection::getSensorName(i), "Connect", isConnected? "Success" : "Failed");
   }
   LOG_VERBOSE("Total Connected Sensors:", sensorCount);
+
+  batchReadDelay.start(5000);
+  sensorReadDelay.start(100);
 }
 
 void Sensors::mainLoop() {
-  if (millis() - lastBatchRead > 5000 && !isStartRead) {
+  if (batchReadDelay.justFinished() && !isStartRead) {
+    batchReadDelay.repeat();
     isStartRead = true;
-    lastBatchRead = millis();
   }
   if (isStartRead){
-    if (millis() - lastSensorRead > 100) {
+    if (sensorReadDelay.justFinished()) {
+      sensorReadDelay.repeat();
       read(currentReadIndex);
       currentReadIndex++;
-      lastSensorRead = millis();
 
       if (currentReadIndex >= TotalSensors) {
         isStartRead = false;

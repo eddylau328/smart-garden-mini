@@ -6,6 +6,7 @@
 #define Sensors_h
 
 #include <Arduino.h>
+#include <millisDelay.h>
 
 #include "../Config/Config.h"
 #include "SensorsCollection/SensorCollection.h"
@@ -48,8 +49,8 @@ class Sensors {
 
   private:
     static Sensor *sensorList[TotalSensors];
-    static unsigned long lastBatchRead;
-    static unsigned long lastSensorRead;
+    static millisDelay batchReadDelay;
+    static millisDelay sensorReadDelay;
     static uint8_t currentReadIndex;
     static bool isStartRead;
     static void read(uint8_t index);
