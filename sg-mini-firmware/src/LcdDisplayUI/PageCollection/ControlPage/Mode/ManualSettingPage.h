@@ -4,6 +4,9 @@
 #include "../../Page.h"
 #include "../../../Components/Input/InputNumber/InputNumber.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
+#include "../../../../DeviceSetting/SettingManager/WaterSettingManager/WaterSettingManager.h"
+#include "../../../../DeviceSetting/SettingManager/WaterSettingManager/ModeSetting/ManualModeSetting/ManualModeSetting.h"
+#include "../../../../WaterController/WaterController.h"
 
 
 /**
@@ -21,23 +24,34 @@ class ManualSettingPage : public Page {
    
 
   private:
-    enum InputIndex{
-        Second = 0,
-        Arrow = 1
+    enum InputIndex {
+      Second = 0,
+      Arrow = 1
     };
+    enum RowIndex {
+      Fire = 1,
+      Back = 0,
+    };
+
     PageContent staticContents[6] = {
       PageContent(2, PageLayoutPosition(7,1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Sec2Water", 9, PageLayoutPosition(0,0)),
       PageContent("Second", 6, PageLayoutPosition(0,1)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
-      PageContent("Save", 4, PageLayoutPosition(12, 1)),
-     
+      PageContent("Fire", 4, PageLayoutPosition(12, 1)),
     };
 
-    int8_t inputIndex;
+    InputIndex inputIndex;
     InputNumber input;
     PageVerticalScroll scroll;
+
+    void processActions(int counter, bool isPress);
+    void processFireAction();
+    void processReturnAction(int counter, bool isPress);
+    void processInputAction(int counter, bool isPress);
+
+    void toggleArrowContent(InputIndex index);
 };
 
 #endif

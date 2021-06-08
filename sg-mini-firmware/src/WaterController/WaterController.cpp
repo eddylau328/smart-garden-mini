@@ -22,6 +22,7 @@ void WaterController::init() {
 void WaterController::mainLoop() {
     if (isTimerUpdated()) {
         WaterSettingManager *setting = DeviceManager::getWaterSettingManager();
+        currentMode = setting->getWaterMode();
         waterPumpController.mainLoop(); 
         modeControllers[currentMode]->mainLoop(waterPumpController, *setting);
     }
@@ -37,6 +38,10 @@ bool WaterController::setMode(WaterControllerConstant::WaterMode mode) {
 
 WaterControllerConstant::WaterMode WaterController::getMode() {
     return currentMode;
+}
+
+bool WaterController::getIsWaterPumpOn() {
+    return waterPumpController.getIsWaterPumpOn();
 }
 
 // private

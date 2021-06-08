@@ -72,10 +72,10 @@ void PageControl::pageInit() {
   pages[PageCollection::PageKey::TimeSettingPageKey] = new TimeSettingPage();
   pages[PageCollection::PageKey::DateSettingPageKey] = new DateSettingPage();
   pages[PageCollection::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
-  pages[PageCollection::PageKey::ControlPagePageKey] = new ControlPage();
+  pages[PageCollection::PageKey::ControlPageKey] = new ControlPage();
   pages[PageCollection::PageKey::ModeSettingPageKey] = new ModeSettingPage();
   pages[PageCollection::PageKey::ManualSettingPageKey] = new ManualSettingPage();
-  pages[PageCollection::PageKey::AutoSettingPageKey] = new AutoSettingPage();
+  pages[PageCollection::PageKey::HumiditySettingPageKey] = new HumiditySettingPage();
   pages[PageCollection::PageKey::ScheduleSettingPageKey] = new ScheduleSettingPage();
   pages[PageCollection::PageKey::WifiSettingPageKey] = new WifiSettingPage();
   pages[PageCollection::PageKey::ScanWifiPageKey] = new ScanWifiPage();
@@ -96,11 +96,11 @@ void PageControl::pageInit() {
   pages[PageCollection::PageKey::DateSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
 
-  pages[PageCollection::PageKey::ControlPagePageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ModeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ManualSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::AutoSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ControlPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ModeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ManualSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::HumiditySettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
 
   pages[PageCollection::PageKey::WifiSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
   pages[PageCollection::PageKey::ScanWifiPageKey]->setNextPageCallback(PageCollection::PageKey::WifiSettingPageKey, &nextPageCallback);

@@ -6,6 +6,7 @@ void WaterSettingManager::init() {
     retrieveScheduleModeSetting();
     retrieveHumidityModeSetting();
     retrieveManualModeSetting();
+    retrieveLastWaterTime();
 }
 
 void WaterSettingManager::restoreDefault() {
@@ -13,6 +14,7 @@ void WaterSettingManager::restoreDefault() {
     setScheduleModeSetting(ScheduleModeSetting(3600000, 50));
     setHumidityModeSetting(HumidityModeSetting(50, 40, 60));
     setManualModeSetting(ManualModeSetting(5));
+    setLastWaterTime(DateTime());
 }
 
 
@@ -36,6 +38,11 @@ void WaterSettingManager::setManualModeSetting(ManualModeSetting setting) {
     storeManualModeSetting();
 }
 
+void WaterSettingManager::setLastWaterTime(DateTime dateTime) {
+    this->lastWaterTime = dateTime;
+    storeLastWaterTime();
+}
+
 WaterControllerConstant::WaterMode WaterSettingManager::getWaterMode() {
     return this->waterMode;
 }
@@ -50,6 +57,10 @@ HumidityModeSetting WaterSettingManager::getHumidityModeSetting() {
 
 ManualModeSetting WaterSettingManager::getManualModeSetting() {
     return this->manualModeSetting;
+}
+
+DateTime WaterSettingManager::getLastWaterTime() {
+    return this->lastWaterTime;
 }
 
 // private methods
@@ -136,7 +147,7 @@ void WaterSettingManager::storeScheduleModeSetting() {
     );
     Storage::set(targetHumidityData);
 
-    UInt64Data scheduleDurationData(
+    UInt32Data scheduleDurationData(
         this->scheduleModeSetting.getScheduleDuration(),
         StorageLocation(
             SCHEDULE_MODE_DURATION_LENGTH,
@@ -154,7 +165,7 @@ void WaterSettingManager::retrieveScheduleModeSetting() {
     Storage::get(targetHumidityData);
     this->scheduleModeSetting.setTargetHumidity(targetHumidityData.getData());
 
-    UInt64Data durationData(StorageLocation(
+    UInt32Data durationData(StorageLocation(
         SCHEDULE_MODE_DURATION_LENGTH,
         SCHEDULE_MODE_DURATION_STORE_INDEX
     ));
@@ -182,4 +193,25 @@ void WaterSettingManager::retrieveManualModeSetting() {
     UInt8Data turnOnDurationData(location);
     Storage::get(turnOnDurationData);
     this->manualModeSetting.setTurnOnDuration(turnOnDurationData.getData());
+}
+
+void WaterSettingManager::storeLastWaterTime() {
+    StorageLocation location = StorageLocation(
+        LAST_WATER_TIME_LENGTH,
+        LAST_WATER_TIME_STORE_INDEX
+    );
+    UInt32Data lastWaterTimeData(
+        this->lastWaterTime.unixtime(),
+        location);
+    Storage::set(lastWaterTimeData);
+}
+
+void WaterSettingManager::retrieveLastWaterTime() {
+    StorageLocation location = StorageLocation(
+        LAST_WATER_TIME_LENGTH,
+        LAST_WATER_TIME_STORE_INDEX
+    );
+    UInt32Data lastWaterTimeData(location);
+    Storage::get(lastWaterTimeData);
+    this->lastWaterTime = DateTime(lastWaterTimeData.getData());
 }

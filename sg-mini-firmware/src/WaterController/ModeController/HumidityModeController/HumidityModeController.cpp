@@ -9,15 +9,14 @@ millisDelay HumidityModeController::getDiffuseDelay() {
 }
 
 void HumidityModeController::mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting) {
-
-    // HumidityModeSetting setting = modeSetting.getHumidityModeSetting();
-    HumidityModeSetting setting = HumidityModeSetting(54, 45, 65);
+    HumidityModeSetting setting = modeSetting.getHumidityModeSetting();
 
     // target humidity level is the level you always want to keep your plant at
-    float targetHumidity = 54;
+    float targetHumidity = (float) setting.getTargetHumidity();
     // min, max are the acceptable value for not turn on the water valve
-    float minHumidity = 45;
-    float maxHumidity = 65;
+    float minHumidity = (float) setting.getMinHumidity();
+    float maxHumidity = (float) setting.getMaxHumidity();
+
     float overMaxHumidity = 1.1 * maxHumidity;
     float currentHumidity;
 

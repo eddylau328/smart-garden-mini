@@ -1,21 +1,21 @@
-#include "UInt64Data.h"
+#include "UInt32Data.h"
 
 
-UInt64Data::UInt64Data(StorageLocation location) {
+UInt32Data::UInt32Data(StorageLocation location) {
     setStorageLocation(location);
 }
 
-UInt64Data::UInt64Data(unsigned long data, StorageLocation location) {
+UInt32Data::UInt32Data(unsigned long data, StorageLocation location) {
     setStorageLocation(location);
     setByteData(data);
     setData(data);
 }
 
-unsigned long UInt64Data::getData() {
+unsigned long UInt32Data::getData() {
     return this->data;
 }
 
-void UInt64Data::parseData() {
+void UInt32Data::parseData() {
     this->data = 0;
     this->data |= this->rawByte[0] << 24;
     this->data |= this->rawByte[1] << 16;
@@ -23,7 +23,7 @@ void UInt64Data::parseData() {
     this->data |= this->rawByte[3];
 }
 
-void UInt64Data::setByteData(unsigned long data) {
+void UInt32Data::setByteData(unsigned long data) {
     this->rawByte = new byte[4];
     this->rawByte[0] = (data & 0xFF000000) >> 24;
     this->rawByte[1] = (data & 0x00FF0000) >> 16;
@@ -31,6 +31,6 @@ void UInt64Data::setByteData(unsigned long data) {
     this->rawByte[3] = data & 0x000000FF;
 }
 
-void UInt64Data::setData(unsigned long data) {
+void UInt32Data::setData(unsigned long data) {
     this->data = data;
 }

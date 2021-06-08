@@ -2,7 +2,10 @@
 #define ScheduleModeController_h
 
 #include "../ModeController.h"
+
+#include <millisDelay.h>
 #include <RTClib.h>
+#include "../../../DeviceSetting/DeviceManager.h"
 #include "../../../Sensors/Sensors.h"
 
 
@@ -10,18 +13,16 @@
 class ScheduleModeController : public ModeController {
     public:
         void mainLoop(WaterPumpController &waterPump, WaterSettingManager &modeSetting);
-        void setwaterDuration(unsigned long Duration);
-
-        DateTime currentTime = DateTime(2021, 3, 28, 12, 12, 12);
-        DateTime nextWaterTime = DateTime(2021, 3, 28, 12, 12, 12);
 
     private:
-        unsigned long waterDuration = 1000;
-        unsigned int wateringBreak = 5000;
-        unsigned long lastWatering ;
-        bool recheck = false;
-        bool firstcheck = false;
+        DateTime nextWaterTime;
+        millisDelay diffuseDelay;
 
+        const unsigned long WATER_ON_DURATION = 5000;
+        const unsigned long DIFFUSE_DURATION = 10000;
+        bool isDiffuseFinish = true;
+        void updateNextWaterTime(WaterSettingManager &modeSetting);
+        void updateDiffuseDelay();
 };
 
 #endif

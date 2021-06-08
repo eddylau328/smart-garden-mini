@@ -4,19 +4,6 @@ void Storage::init() {
   EEPROM.begin(STORAGE_COVER_RANGE);
 }
 
-// need to destroy the pointer after using it
-byte* Storage::get(Storage::Key key){
-  byte *target;
-  switch (key) {
-    case Storage::Key::UserName:
-      target = new byte[UserNameLength];
-      copyByte(key, target, UserNameLength);
-      return target;
-    default:
-      return NULL;
-  }
-}
-
 void Storage::get(DataBuffer &emptyDataBuffer) {
   StorageLocation location = emptyDataBuffer.getStorageLocation();
   int length = location.getLength();
@@ -32,16 +19,6 @@ void Storage::set(DataBuffer &dataBuffer) {
   StorageLocation location = dataBuffer.getStorageLocation();
   byte* target = dataBuffer.getRawByte();
   writeByte(target, location);
-}
-
-void Storage::set(Storage::Key key, byte* target) {
-  switch (key) {
-    case Storage::Key::UserName:
-      writeByte(key, target, UserNameLength);
-      break;
-    default:
-      break;
-  }
 }
 
 void Storage::clearAll() {
