@@ -1,6 +1,8 @@
 #ifndef LoadingSpinner_h
 #define LoadingSpinner_h
 
+#include <millisDelay.h>
+
 #include "../PageContent/PageContent.h"
 #include "../../CustomCharacter/CustomCharacter.h"
 
@@ -21,7 +23,7 @@ class LoadingSpinner {
   private:
     bool isEnableSpin = false;
     int8_t loadingIndex = 0;
-    unsigned long lastLoadingUpdate;
+    millisDelay loadingUpdateDelay;
     PageContent *connectContent;
 
 };

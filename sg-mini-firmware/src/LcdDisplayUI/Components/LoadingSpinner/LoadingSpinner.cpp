@@ -6,14 +6,17 @@ void LoadingSpinner::setLinkage(PageContent *content) {
 
 void LoadingSpinner::spin(bool isSpin) {
   this->isEnableSpin = isSpin;
+  loadingUpdateDelay.start(500);
 }
 
 void LoadingSpinner::clear() {
   connectContent->updateContent(" ", 1);
+  loadingUpdateDelay.stop();
 }
 
 void LoadingSpinner::updateSpinner() {
-  if (isEnableSpin && millis() - lastLoadingUpdate > 500) {
+  if (isEnableSpin && loadingUpdateDelay.justFinished()) {
+    loadingUpdateDelay.repeat();
     switch(loadingIndex) {
       case 0:
         connectContent->updateContent("-", 1);
