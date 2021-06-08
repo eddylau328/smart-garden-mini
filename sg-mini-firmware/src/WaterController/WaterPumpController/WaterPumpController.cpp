@@ -7,7 +7,7 @@ void WaterPumpController::init() {
 
 void WaterPumpController::waterOn(unsigned long turnOnDuration, bool isOverideControl) {
     if (isOverideControl || !isTurnOn) {
-        this->turnOnDuration = turnOnDuration;
+        this->turnOnDuration = getValidateTurnOnDuration(turnOnDuration);
         this->controlState = ControlState::TurnOn;
     }
 }
@@ -38,27 +38,24 @@ void WaterPumpController::mainLoop() {
     }
 }
 
-bool WaterPumpController::validateTurnOnDuration(unsigned long turnOnDuration) {
-    return 0 <= turnOnDuration && turnOnDuration <= MAX_WATER_PUMP_ON_TIME;
-}
-
-bool WaterPumpController::isFinishWatering() {
-    return millis() - startTime > this->turnOnDuration;
+unsigned long WaterPumpController::getValidateTurnOnDuration(unsigned long turnOnDuration) {
+    return constrain(turnOnDuration, 0, MAX_WATER_PUMP_ON_TIME);
 }
 
 void WaterPumpController::waterPumpOnAction() {
     setWaterPumpOnOff(true);
     controlState = ControlState::Working;
-    startTime = millis();
+    waterOnDelay.start(turnOnDuration);
 }
 
 void WaterPumpController::waterPumpOffAction() {
     setWaterPumpOnOff(false);
     controlState = ControlState::Idle;
+    waterOnDelay.stop();
 }
 
 void WaterPumpController::waterPumpWorkingAction() {
-    if (isFinishWatering())
+    if (waterOnDelay.justFinished())
         controlState = ControlState::TurnOff;
 }
 

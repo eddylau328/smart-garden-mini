@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <DebugLog.h>
+#include <millisDelay.h>
 #include "../../Config/Config.h"
 
 class WaterPumpController {
@@ -23,12 +24,11 @@ class WaterPumpController {
         };
 
         bool isTurnOn = false;
-        unsigned long startTime;
+        millisDelay waterOnDelay;
         unsigned long turnOnDuration = 0;
         ControlState controlState = ControlState::Idle;
 
-        bool validateTurnOnDuration(unsigned long turnOnDuration);
-        bool isFinishWatering();
+        unsigned long getValidateTurnOnDuration(unsigned long turnOnDuration);
         void waterPumpOnAction();
         void waterPumpOffAction();
         void waterPumpWorkingAction();
