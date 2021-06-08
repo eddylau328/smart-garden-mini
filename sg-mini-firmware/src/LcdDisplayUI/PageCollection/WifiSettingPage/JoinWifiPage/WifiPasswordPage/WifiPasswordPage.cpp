@@ -34,8 +34,10 @@ void WifiPasswordPage::interactiveUpdate(int counter, bool isPress) {
         AccessPointSetting accessPointSetting = TempStorage::getAccessPointSetting();
         accessPointSetting.setAccessPointPassword(wifiPassword, length);
         TempStorage::setAccessPointSetting(accessPointSetting);
+        Page::interactiveUpdate(counter, isPress);
       }
-      Page::interactiveUpdate(counter, isPress);
+      else
+        Page::nextPageCallback(PageCollection::PageKey::WifiSettingPageKey);
     }
     else
       scroll.updateScroll(contents, contentSize, counter);
