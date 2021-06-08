@@ -19,6 +19,7 @@ void PageControl::init() {
   this->pageInit();
   this->retrieveCurrentPage();
   this->display->init();
+  updateDelay.start(500);
 }
 
 void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
@@ -28,9 +29,9 @@ void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
 }
 
 void PageControl::mainLoop() {
-  if (millis() - lastUpdate > 500) {
+  if (updateDelay.justFinished()) {
+    updateDelay.repeat();
     handleUpdateContents();
-    lastUpdate = millis();
   }
   handleUI();
   rotaryEncoder->eventLoop();
