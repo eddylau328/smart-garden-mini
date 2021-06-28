@@ -6,6 +6,7 @@
 
 #include "WifiScan.h"
 #include "WifiConnect.h"
+#include "../DeviceSetting/DeviceManager.h"
 
 /**
  * @brief provides wifi connection functions for connecting to the backend server for receiving/sending data

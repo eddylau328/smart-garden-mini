@@ -16,6 +16,8 @@ void MqttTransmitter::init() {
 }
 
 void MqttTransmitter::mainLoop() {
+    if (!WifiController::isConnectedNetwork()) return;
+
     if (!client->connected()) {
         if (millis() - lastReconnectAttempt > 5000 && reconnect())
             lastReconnectAttempt = 0;

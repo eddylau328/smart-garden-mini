@@ -40,6 +40,10 @@ bool WifiConnect::isConnectedNetwork() {
   return WiFi.status() == WL_CONNECTED;
 }
 
+bool WifiConnect::isConnecting() {
+  return isRequestConnect && !isFinishEvent;
+}
+
 void WifiConnect::connectEvent() {
   isFinishEvent = false;
   disconnect();
@@ -48,6 +52,7 @@ void WifiConnect::connectEvent() {
     LOG_ERROR("Connecting to WiFi..");
     delay(500);
   }
+  isFinishEvent = true;
 }
 
 void WifiConnect::handleConnect(WiFiEvent_t event, WiFiEventInfo_t info) {

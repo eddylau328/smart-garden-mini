@@ -24,6 +24,7 @@ void WifiSettingManager::setIsWifiOn(bool isWifiOn) {
 
 void WifiSettingManager::setAccessPointSetting(AccessPointSetting accessPointSetting) {
     this->accessPointSetting = accessPointSetting;
+    this->isAccessPointSet = true;
     storeAccessPointSetting();
     storeIsAccessPointSet();
 }

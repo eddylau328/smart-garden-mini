@@ -4,6 +4,7 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+#include "../../WifiController/WifiController.h"
 #include "../DataTransmitter.h"
 #include "../../Helper/Helper.h"
 #include "../JsonParser/JsonParser.h"
@@ -19,7 +20,7 @@ class MqttTransmitter : public DataTransmitter {
         bool reconnect();
     
     private:
-        const char* mqttServer = "192.168.0.105";
+        const char* mqttServer = "192.168.0.106";
         WiFiClient wifiClient;
         PubSubClient *client;
         unsigned long lastReconnectAttempt = 0;

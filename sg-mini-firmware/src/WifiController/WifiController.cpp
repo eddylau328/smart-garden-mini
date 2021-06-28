@@ -24,6 +24,13 @@ void WifiController::mainLoop(void * pvParameters ) {
   while (true) {
     WifiScan::mainLoop();
     WifiConnect::mainLoop();
+
+    if (!WifiConnect::isConnectedNetwork() && !WifiConnect::isConnecting()) {
+      WifiSettingManager *manager = DeviceManager::getWifiSettingManager();
+      if (manager->getIsWifiOn() && manager->getIsAccessPointSet()) {
+        WifiConnect::connect(manager->getAccessPointSetting());
+      }
+    }
     vTaskDelay(xDelay);
   }
 }

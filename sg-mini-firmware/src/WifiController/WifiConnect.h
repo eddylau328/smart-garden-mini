@@ -15,6 +15,7 @@ class WifiConnect {
     static void connect(char *ssid, char *password);
     static void disconnect();
     static bool isConnectedNetwork();
+    static bool isConnecting();
 
   protected:
     static void handleConnect(WiFiEvent_t event, WiFiEventInfo_t info);

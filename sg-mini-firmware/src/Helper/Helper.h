@@ -92,6 +92,8 @@ class Helper {
      * @param length - the length of your target array
      */
     static void copyString(char *target, byte *copy, int length);
+
+    /**
      * @brief Get the String Length
      * 
      * @param target - the character pointer you want to check the string length
