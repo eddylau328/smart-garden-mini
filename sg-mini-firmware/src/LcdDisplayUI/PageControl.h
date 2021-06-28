@@ -2,10 +2,10 @@
 #define PageControl_h
 
 #include <Arduino.h>
+#include <millisDelay.h>
 #include "LcdDisplayUI.h"
 
 // Page Collection -------------------------------------
-#define TotalPage 13// Modify it if you want to add page
 #include "PageCollection/PageCollection.h"
 #include "PageCollection/Page.h"
 #include "PageCollection/MainPage/MainPage.h"
@@ -14,16 +14,26 @@
 #include "PageCollection/SettingPage/TimeSettingPage/TimeSettingPage.h"
 #include "PageCollection/SettingPage/DateSettingPage/DateSettingPage.h"
 #include "PageCollection/SettingPage/UsernameSettingPage/UsernameSettingPage.h"
+#include "PageCollection/SettingPage/RestoreDefaultPage/RestoreDefaultPage.h"
 #include "PageCollection/ControlPage/ControlPage.h"
 #include "PageCollection/ControlPage/Mode/ModeSettingPage.h"
-#include "PageCollection/ControlPage/Mode/AutoSettingPage.h"
-#include "PageCollection/ControlPage/Mode/ScheduleSettingPage.h"
-#include "PageCollection/ControlPage/Manual/ManualSettingPage.h"
-
+#include "PageCollection/ControlPage/Mode/HumiditySettingPage/HumiditySettingPage.h"
+#include "PageCollection/ControlPage/Mode/ScheduleSettingPage/ScheduleSettingPage.h"
+#include "PageCollection/ControlPage/Mode/ManualSettingPage.h"
+#include "PageCollection/WifiSettingPage/WifiSettingPage.h"
+#include "PageCollection/WifiSettingPage/ScanWifiPage/ScanWifiPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/WifiNamePage/WifiNamePage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/WifiPasswordPage/WifiPasswordPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/WifiConnectPage/WifiConnectPage.h"
+#include "PageCollection/WifiSettingPage/JoinWifiPage/SetDefaultWifi/SetDefaultWifiPage.h"
+#include "PageCollection/SetupPage/WelcomePage/WelcomePage.h"
+#include "PageCollection/SetupPage/SetupFinishPage/SetupFinishPage.h"
+#include "PageCollection/SetupPage/ConfirmRestorePage/ConfirmRestorePage.h"
 // -----------------------------------------------------
 
 // Class you need to display data / information --------
 #include "RotaryEncoder.h"
+#include "../DeviceSetting/DeviceManager.h"
 // -----------------------------------------------------
 
 /**
@@ -69,12 +79,12 @@ class PageControl {
   private:
     static Page *pages[TotalPage];
     static uint8_t currentPageKey;
-    static uint8_t newPageKey;
+    static uint8_t nextPageKey;
 
     LcdDisplayUI *display;
     RotaryEncoder *rotaryEncoder;
 
-    unsigned long lastUpdate;
+    millisDelay updateDelay;
 
     /**
      * @brief It helps to assign the page which is going to display to the LCD Monitor
@@ -87,6 +97,18 @@ class PageControl {
      * 
      */
     void handleUpdateContents();
+
+    /**
+     * @brief It creates all the pages that will show to the screen
+     * 
+     */
+    void pageInit();
+
+    /**
+     * @brief It set the current page to the correct current page when setup
+     * 
+     */
+    void retrieveCurrentPage();
 
     /**
      * @brief This is a callback function which will invoke when the rotary encoder has rotate interrupt event.

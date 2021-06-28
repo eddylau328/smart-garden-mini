@@ -9,13 +9,13 @@ void InputNumber::set(int8_t defaultValue, int8_t minNumber, int8_t maxNumber, b
 }
 
 void InputNumber::blinkUpdate() {
-  if (isBlink && connectContent && millis() - lastInputTrigger > 500) {
+  if (isBlink && connectContent && inputTriggerDelay.justFinished()) {
     if (isBlinking)
       connectContent->updateContent(inputNumber, keptZero);
     else
       connectContent->updateContent("    ", 4);
     isBlinking = !isBlinking;
-    lastInputTrigger = millis();
+    inputTriggerDelay.repeat();
   }
 }
 
@@ -41,8 +41,8 @@ bool InputNumber::interactiveUpdate(int counter, bool isPress){
       number = maxNumber - (minNumber - number);
   }
   else {
-    if (Helper::int8_tInRange(number, minNumber, maxNumber)) {
-      if (Helper::int8_tInRange(number+counter, minNumber, maxNumber)) {
+    if (Helper::isInRange(number, minNumber, maxNumber)) {
+      if (Helper::isInRange(number+counter, minNumber, maxNumber)) {
         number += counter;
       }
       else {
@@ -55,7 +55,7 @@ bool InputNumber::interactiveUpdate(int counter, bool isPress){
   }
   inputNumber = number;
   connectContent->updateContent(inputNumber, keptZero);
-  lastInputTrigger = millis();
+  inputTriggerDelay.repeat();
   return false;
 }
 

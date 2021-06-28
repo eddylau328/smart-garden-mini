@@ -2,7 +2,6 @@
 #define UsernameSettingPage_h
 
 #include "../../Page.h"
-#include "../../../../DeviceSetting/DeviceSetting.h"
 #include "../../../Components/Input/InputAlphabet/InputAlphabet.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 #include "../../../../Storage/StorageConstant.h"
@@ -14,10 +13,8 @@
 class UsernameSettingPage : public Page {
   public:
     UsernameSettingPage();
-    ~UsernameSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
 
@@ -27,9 +24,8 @@ class UsernameSettingPage : public Page {
       Arrow = 1
     };
 
-    const int8_t contentSize = 7;
-    PageContent contents[7] = {
-      PageContent(UserNameLength, PageLayoutPosition(1, 1)),
+    PageContent staticContents[7] = {
+      PageContent(USERNAME_LENGTH, PageLayoutPosition(1, 1)),
       PageContent(" ", 1, PageLayoutPosition(10, 1)),
       PageContent("Set Name", 8, PageLayoutPosition(0, 0)),
       PageContent("Back", 4, PageLayoutPosition(12, 0)),
@@ -37,12 +33,18 @@ class UsernameSettingPage : public Page {
       PageContent("[", 1, PageLayoutPosition(0, 1)),
       PageContent("]", 1, PageLayoutPosition(9, 1))
     };
-    int8_t inputIndex;
+
+    InputIndex inputIndex;
 
     InputAlphabet input;
     PageVerticalScroll scroll;
 
-    void changeTopic();
+    void proceedNextPage(int counter, bool isPress);
+    void proceedSetupNextPage();
+    void inputInteractiveUpdate(int counter, bool isPress);
+
+    void storeUsername();
+    bool shouldStoreUsername();
 };
 
 #endif

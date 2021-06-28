@@ -40,13 +40,6 @@ class PageContent {
 
     // getter function  --------------------------------
     /**
-     * @brief Get the Id object (Deprecated)
-     * 
-     * @return uint8_t - the id of the object
-     */
-    uint8_t getId();
-
-    /**
      * @brief Get the Content Length object
      * 
      * @return int - the length of the content
@@ -73,6 +66,13 @@ class PageContent {
      * @return PageLayoutPosition - the PageLayoutPosition Object that contains the next position of the content that will be rendered
      */
     PageLayoutPosition getNewPos();
+
+    /**
+     * @brief Get the Custom Character Index
+     * 
+     * @return int8_t - the index of the corresponding custom character
+     */
+    int8_t getCustomCharacterIndex();
     // -------------------------------------------------
 
     /**
@@ -103,8 +103,9 @@ class PageContent {
      * 
      * @param data - character pointer contains the update strings you want to show
      * @param length - the length of the update string (Noted: if your new string length is shorter than the assigned string length, the left out will be automatically assigned a whitespace ' ')
+     * @param startIndex - the index for accessing the character array, normally it start from 0, for case you want to use substring of the character array, it will be useful
      */
-    void updateContent(char *data, int length);
+    void updateContent(char *data, int length, int startIndex=0);
 
     /**
      * @brief Update the content with constant character pointer data
@@ -113,6 +114,13 @@ class PageContent {
      * @param length - the length of the update string (Noted: if your new string length is shorter than the assigned string length, the left out will be automatically assigned a whitespace ' ')
      */
     void updateContent(const char *data, int length);
+
+    /**
+     * @brief Set the Custom Character index
+     * 
+     * @param customCharacterIndex 
+     */
+    void setCustomCharacterIndex(int8_t customCharacterIndex, int8_t customCharacterContentIndex=0, bool isSet=true);
 
     /**
      * @brief Set isUpdate to true to indicate the PageContent does not need to re-render again
@@ -128,23 +136,27 @@ class PageContent {
      */
     bool getIsUpdate();
 
+    /**
+     * @brief Get the Is Custom Character object
+     * 
+     * @param contentIndex the index of the custom character in the char array of the content
+     * 
+     * @return true - the page content character has set a custom character
+     * @return false - the page content character has not set a custom character 
+     */
+    bool getIsCustomCharacter(int8_t contentIndex);
+
   private:
     char *content;
     static char buffer[20];
     uint8_t contentLength;
-    uint8_t id;
     PageLayoutPosition pos;
     PageLayoutPosition newPos;
 
     bool isUpdate = true;
-
-    /**
-     * @brief Create an id for every PageContent Object (Deprecated)
-     * 
-     * @return uint8_t - an unique unsigned 8-bit integer id
-     */
-    static uint8_t createId();
-
+    bool isSetCustomCharacter = false;
+    int8_t customCharacterIndex;
+    int8_t customCharacterContentIndex;
 };
 
 #endif

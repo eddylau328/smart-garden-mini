@@ -5,10 +5,13 @@
 #include <Arduino.h>
 #include <DebugLog.h>
 
+#include "../DeviceSetting/SettingManager/WifiSettingManager/AccessPointSetting/AccessPointSetting.h"
+
 #include "../Helper/Helper.h"
 
 class WifiConnect {
   public:
+    static void connect(AccessPointSetting setting);
     static void connect(char *ssid, char *password);
     static void disconnect();
     static bool isConnectedNetwork();

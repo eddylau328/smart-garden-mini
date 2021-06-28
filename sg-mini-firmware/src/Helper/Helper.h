@@ -92,6 +92,21 @@ class Helper {
      * @param length - the length of your target array
      */
     static void copyString(char *target, byte *copy, int length);
+     * @brief Get the String Length
+     * 
+     * @param target - the character pointer you want to check the string length
+     * 
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(char *target);
+
+    /**
+     * @brief Get the String Length
+     * 
+     * @param target - the constant character pointer want to check the string length
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(const char *target);
 
     /**
      * @brief compare the character array value by value
@@ -140,15 +155,15 @@ class Helper {
     static void convertStrToNum(char *target, float &number);
 
     /**
-     * @brief check whether the 8-bit integer is within the range
+     * @brief check whether the float value is within the range
      * 
-     * @param target - the 8-bit integer variable you want to check
-     * @param min - the minimum of the target can have
-     * @param max - the maximum of the target can have
-     * @return true - the target is within the range
-     * @return false - the target is out of range
+     * @param target - the float value is within the range 
+     * @param min - the minimum of the target can have (inclusive)
+     * @param max - the maximum of the target can have (includsive)
+     * @return true - the target is within the range 
+     * @return false - the target is out of range 
      */
-    static bool int8_tInRange(int8_t target, int8_t min, int8_t max);
+    static bool isInRange(float target, float min, float max);
 
     /**
      * @brief check whether the integer is within the range
@@ -159,7 +174,7 @@ class Helper {
      * @return true - the target is within the range
      * @return false - the target is out of range
      */
-    static bool intInRange(int number, int min, int max);
+    static bool isInRange(int number, int min, int max);
 
     /**
      * @brief check whether the date is valid
@@ -180,6 +195,15 @@ class Helper {
      * @return false - the year is not a leap year
      */
     static bool isLeapYear(int year);
+
+    /**
+     * @brief Get the day of month
+     * 
+     * @param year - the year you want to check
+     * @param month - the month you want to know
+     * @return int8_t - the day of month
+     */
+    static int8_t getDayOfMonth(int year, int month);
 
 };
 

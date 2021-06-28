@@ -39,13 +39,33 @@ void Helper::clearString(char *target, int length) {
 }
 
 void Helper::copyString(char *target, char *copy, int length) {
-    for (int i = 0; i < length; i++)
-        *(target + i) = *(copy + i);
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
 }
 
 void Helper::copyString(char *target, const char *copy, int length) {
-    for (int i = 0; i < length; i++)
-        *(target + i) = *(copy + i);
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
+}
+
+size_t Helper::getStringLength(char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
+}
+
+size_t Helper::getStringLength(const char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
 }
 
 void Helper::copyString(char *target, byte *copy, int length) {
@@ -79,11 +99,11 @@ void Helper::convertStrToNum(char *target, float &number) {
   number = atof(target);
 }
 
-bool Helper::int8_tInRange(int8_t target, int8_t min, int8_t max) {
+bool Helper::isInRange(float target, float min, float max) {
   return (target >= min && target <= max);
 }
 
-bool Helper::intInRange(int target, int min, int max) {
+bool Helper::isInRange(int target, int min, int max) {
     return (target >= min && target <= max);
 }
 
@@ -95,11 +115,11 @@ void Helper::assignStrValue(char *target, char value, int strlen) {
 bool Helper::isValidDate(int year, int month, int day) {
     // If year, month and day  
     // are not in given range 
-    if (!Helper::intInRange(year, MIN_VALID_YR, MAX_VALID_YR)) 
+    if (!Helper::isInRange(year, MIN_VALID_YR, MAX_VALID_YR)) 
       return false; 
-    if (!Helper::intInRange(month, 1, 12)) 
+    if (!Helper::isInRange(month, 1, 12)) 
       return false; 
-    if (!Helper::intInRange(day, 1, 31)) 
+    if (!Helper::isInRange(day, 1, 31)) 
       return false; 
   
     // Handle February month  
@@ -130,3 +150,14 @@ bool Helper::isLeapYear(int year) {
           (year % 100 != 0)) || 
           (year % 400 == 0)); 
 } 
+
+int8_t Helper::getDayOfMonth(int year, int month) {
+  if (month == 2 && isLeapYear(year))
+    return 29;
+  else if (month == 2)
+    return 28;
+  else if (month == 4 || month == 6 || month == 9 || month == 11) 
+    return 30;
+  else
+    return 31;
+}

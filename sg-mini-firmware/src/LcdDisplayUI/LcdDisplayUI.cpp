@@ -16,6 +16,8 @@ LcdDisplayUI::~LcdDisplayUI() {
 void LcdDisplayUI::init() {
   lcd->init();
   lcd->backlight();
+  createCustomCharacter();
+  renderDelay.start(100);
 }
 
 void LcdDisplayUI::update(Page *page) {
@@ -24,48 +26,49 @@ void LcdDisplayUI::update(Page *page) {
 }
 
 void LcdDisplayUI::render() {
-  if (millis() - lastRender > 100) {
+  if (renderDelay.justFinished()) {
+    renderDelay.repeat();
     if (renderPage) {
       // Retrieve page contents array
-      PageContent *contents;
+      PageContent **contents;
       int length;
-      renderPage->getContents(&contents, &length);
+      bool isClearAll;
+      renderPage->getContents(&contents, &length, &isClearAll);
       // render the page
-      if (isUpdatePage) {
+      if (isUpdatePage || isClearAll) {
         lcd->clear();
         for (int i = 0; i < length; i++) {
-          printContent(contents+i);
+          printContent(contents[i]);
           // tell that content is updated
-          (contents+i)->confirmUpdate();
+          contents[i]->confirmUpdate();
         }
         isUpdatePage = false;
       }
       else {
         for (int i = 0; i < length; i++) {
-          if ((contents+i)->getIsUpdate()) {
-            LOG_WARNING("Update Content id:", (contents+i)->getId());
-            clearContent(contents+i);
+          if (contents[i]->getIsUpdate()) {
+            clearContent(contents[i]);
           }
         }
         for (int i = 0; i < length; i++) {
-          if ((contents+i)->getIsUpdate()) {
-            printContent(contents+i);
+          if (contents[i]->getIsUpdate()) {
+            printContent(contents[i]);
             // tell that content is updated
-            (contents+i)->confirmUpdate();
+            contents[i]->confirmUpdate();
           }
         }
       }
     }
-    lastRender = millis();
   }
 }
 
 void LcdDisplayUI::clearContent(PageContent *content) {
   PageLayoutPosition pos;
   pos = content->getPos();
-  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+  if (Helper::isInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
     int8_t endIndex = (int8_t)content->getContentLength();
+
     if (pos.col >= 0) {
       lcd->setCursor(pos.col, pos.row);
       if (pos.col + endIndex > colSize)
@@ -86,9 +89,10 @@ void LcdDisplayUI::printContent(PageContent *content) {
   PageLayoutPosition pos;
   pos = content->getNewPos();
   strncpy(strBuffer, content->getContent(), content->getContentLength());
-  if (Helper::int8_tInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
+  if (Helper::isInRange(pos.row, 0, rowSize-1) && pos.col < colSize) {
     int8_t startIndex = 0;
     int8_t endIndex = (int8_t)content->getContentLength();
+
     if (pos.col >= 0 ) {
       lcd->setCursor(pos.col, pos.row);
       if (pos.col + endIndex > colSize)
@@ -101,6 +105,18 @@ void LcdDisplayUI::printContent(PageContent *content) {
         endIndex = colSize;
     }
     for (int8_t i = startIndex ; i < endIndex; i++)
-      lcd->print(*(strBuffer+i));
+      if (content->getIsCustomCharacter(i))
+        lcd->write(content->getCustomCharacterIndex());
+      else
+        lcd->print(*(strBuffer+i));
   }   
+}
+
+void LcdDisplayUI::createCustomCharacter() {
+  lcd->createChar(CUSTOM_BACKSLASH, CustomCharacter::BACKSLASH);
+  lcd->createChar(CUSTOM_ENTER, CustomCharacter::ENTER);
+  lcd->createChar(CUSTOM_BACKSPACE, CustomCharacter::BACKSPACE);
+  lcd->createChar(CUSTOM_WIFI_CONNECTED, CustomCharacter::WIFICONNECTED);
+  lcd->createChar(CUSTOM_WIFI_DISCONNECTED, CustomCharacter::WIFIDISCONNECTED);
+  lcd->createChar(CUSTOM_WIFI_OFF, CustomCharacter::WIFIOFF);
 }

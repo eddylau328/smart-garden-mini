@@ -9,7 +9,6 @@ PageContent::PageContent(const char* content, int length, PageLayoutPosition pos
     this->contentLength = length;
     this->pos = pos;
     this->newPos = pos;
-    this->id = createId();
 }
 
 PageContent::PageContent(int length, PageLayoutPosition pos) {
@@ -18,7 +17,6 @@ PageContent::PageContent(int length, PageLayoutPosition pos) {
     this->contentLength = length;
     this->pos = pos;
     this->newPos = pos;
-    this->id = createId();
 }
 
 PageContent::PageContent() {
@@ -28,11 +26,7 @@ PageContent::PageContent() {
 }
 
 PageContent::~PageContent() {
-    delete content;
-}
-
-uint8_t PageContent::getId(){
-    return this->id;
+    delete[] content;
 }
 
 int PageContent::getContentLength(){
@@ -51,6 +45,10 @@ PageLayoutPosition PageContent::getNewPos() {
     return this->newPos;
 }
 
+int8_t PageContent::getCustomCharacterIndex() {
+    return customCharacterIndex;
+}
+
 void PageContent::updatePos(PageLayoutPosition pos) {
     this->newPos = pos;
     isUpdate = true;
@@ -66,6 +64,7 @@ void PageContent::updateContent(int data, bool keptZero){
             break;
         }
     }
+    setCustomCharacterIndex(0, 0, false);
 }
 
 void PageContent::updateContent(float data, int decimalPoints){
@@ -78,13 +77,14 @@ void PageContent::updateContent(float data, int decimalPoints){
             break;
         }
     }
+    setCustomCharacterIndex(0, 0, false);
 }
 
-void PageContent::updateContent(char *data, int length){
+void PageContent::updateContent(char *data, int length, int startIndex){
     Helper::assignStrValue(buffer, ' ', contentLength);
     for (int i = 0; i < length; i++){
         if (i < contentLength)
-            *(buffer+i) = *(data+i);
+            *(buffer+i) = *(data+startIndex+i);
     }
     for (int i = 0; i < contentLength; i++) {
         if (*(buffer+i) != *(content+i)) {
@@ -93,6 +93,7 @@ void PageContent::updateContent(char *data, int length){
             break;
         }
     }
+    setCustomCharacterIndex(0, 0, false);
 }
 
 void PageContent::updateContent(const char *data, int length){
@@ -108,6 +109,16 @@ void PageContent::updateContent(const char *data, int length){
             break;
         }
     }
+    setCustomCharacterIndex(0, 0, false);
+}
+
+void PageContent::setCustomCharacterIndex(int8_t customCharacterIndex, int8_t customCharacterContentIndex, bool isSet){
+    this->isSetCustomCharacter = isSet;
+    if (isSet) {
+        this->customCharacterIndex = customCharacterIndex;
+        this->customCharacterContentIndex = customCharacterContentIndex;
+        this->isUpdate = isSet;
+    }
 }
 
 void PageContent::confirmUpdate() {
@@ -119,8 +130,6 @@ bool PageContent::getIsUpdate() {
   return this->isUpdate;
 }
 
-// Private ----------------------------------------------------------------------------
-uint8_t PageContent::createId() {
-  static uint8_t id = 0;
-  return id++;
+bool PageContent::getIsCustomCharacter(int8_t contentIndex) {
+    return this->isSetCustomCharacter && contentIndex == customCharacterContentIndex;
 }

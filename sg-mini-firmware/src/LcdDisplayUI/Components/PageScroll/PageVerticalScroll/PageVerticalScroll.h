@@ -25,8 +25,8 @@ class PageVerticalScroll : public PageScroll {
      */
     void setCoverArea(PageLayoutRange rowRange);
 
-    void resetScroll(PageContent *contents, int length);
-    void updateScroll(PageContent *contents, int length, int counter);
+    void resetScroll(PageContent **contents, int length);
+    void updateScroll(PageContent **contents, int length, int counter);
 
     /**
      * @brief Get the Current Arrow Row object
@@ -35,7 +35,7 @@ class PageVerticalScroll : public PageScroll {
      * @param length - the PageContent array length
      * @return int8_t - the row position that the cursor is currently at
      */
-    int8_t getCurrentArrowRow(PageContent *contents, int length);
+    int8_t getCurrentArrowRow(PageContent **contents, int length);
 
   private:
     int8_t upScrollMax;

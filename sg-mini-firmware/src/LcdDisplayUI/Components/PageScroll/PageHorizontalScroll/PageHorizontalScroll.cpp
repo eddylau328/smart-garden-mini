@@ -7,7 +7,7 @@ void PageHorizontalScroll::setCoverArea(PageLayoutRange colRange, PageLayoutRang
   rightScrollMax = colRange.min;
 }
 
-void PageHorizontalScroll::updateScroll(PageContent *contents, int length, int counter) {
+void PageHorizontalScroll::updateScroll(PageContent **contents, int length, int counter) {
   PageLayoutPosition newPos;
   int8_t newOrigin = (int8_t)counter + currentOrigin; 
   if (counter < 0) {
@@ -20,23 +20,23 @@ void PageHorizontalScroll::updateScroll(PageContent *contents, int length, int c
   }
   if (newOrigin != currentOrigin) {
     for (int i = 0; i < length; i++){
-      newPos = (contents + i)->getNewPos();
-      if (Helper::int8_tInRange(newPos.row, rowRange.min, rowRange.max)) {
+      newPos = contents[i]->getNewPos();
+      if (Helper::isInRange(newPos.row, rowRange.min, rowRange.max)) {
         newPos.col += (newOrigin - currentOrigin);
-        (contents + i)->updatePos(newPos);
+        contents[i]->updatePos(newPos);
       }
     }
     currentOrigin = newOrigin;
   }
 }
 
-void PageHorizontalScroll::resetScroll(PageContent *contents, int length) {
+void PageHorizontalScroll::resetScroll(PageContent **contents, int length) {
   PageLayoutPosition newPos; 
   for (int i = 0; i < length; i++){
-    newPos = (contents + i)->getNewPos();
-    if (Helper::int8_tInRange(newPos.row, rowRange.min, rowRange.max)) {
+    newPos = contents[i]->getNewPos();
+    if (Helper::isInRange(newPos.row, rowRange.min, rowRange.max)) {
       newPos.col -= currentOrigin;
-      (contents + i) ->updatePos(newPos);
+      contents[i] ->updatePos(newPos);
     }
   }
 }

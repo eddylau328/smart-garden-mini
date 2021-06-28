@@ -5,8 +5,8 @@
 #include "Sensors.h"
 
 Sensor *Sensors::sensorList[TotalSensors];
-unsigned long Sensors::lastBatchRead;
-unsigned long Sensors::lastSensorRead;
+millisDelay Sensors::batchReadDelay;
+millisDelay Sensors::sensorReadDelay;
 uint8_t Sensors::currentReadIndex = 0;
 bool Sensors::isStartRead = true;
 
@@ -23,21 +23,24 @@ void Sensors::init() {
   for (int i = 0 ; i < TotalSensors; i++) {
     isConnected = sensorList[i]->init();
     isConnected ? sensorCount++ : sensorCount;
-    LOG_WARNING(SensorCollection::getSensorName(i), "Connect", isConnected? "Success" : "Failed");
+    LOG_VERBOSE(SensorCollection::getSensorName(i), "Connect", isConnected? "Success" : "Failed");
   }
-  LOG_WARNING("Total Connected Sensors:", sensorCount);
+  LOG_VERBOSE("Total Connected Sensors:", sensorCount);
+
+  batchReadDelay.start(5000);
+  sensorReadDelay.start(100);
 }
 
 void Sensors::mainLoop() {
-  if (millis() - lastBatchRead > 5000 && !isStartRead) {
+  if (batchReadDelay.justFinished() && !isStartRead) {
+    batchReadDelay.repeat();
     isStartRead = true;
-    lastBatchRead = millis();
   }
   if (isStartRead){
-    if (millis() - lastSensorRead > 100) {
+    if (sensorReadDelay.justFinished()) {
+      sensorReadDelay.repeat();
       read(currentReadIndex);
       currentReadIndex++;
-      lastSensorRead = millis();
 
       if (currentReadIndex >= TotalSensors) {
         isStartRead = false;
@@ -55,5 +58,5 @@ bool Sensors::getSensorData(SensorCollection::SensorDataType dataType, float &da
 void Sensors::read(uint8_t index) {
   bool isSuccess;
   isSuccess = sensorList[index]->read();
-  LOG_WARNING(SensorCollection::getSensorName(index), "Read", isSuccess? "Success" : "Failed");
+  LOG_VERBOSE(SensorCollection::getSensorName(index), "Read", isSuccess? "Success" : "Failed");
 }

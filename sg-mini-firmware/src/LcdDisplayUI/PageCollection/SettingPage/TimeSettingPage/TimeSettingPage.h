@@ -1,8 +1,9 @@
 #ifndef TimeSettingPage_h
 #define TimeSettingPage_h
 
+#include <RTClib.h>
 #include "../../Page.h"
-#include "../../../../DeviceSetting/DeviceSetting.h"
+#include "../../../TempStorage/TempStorage.h"
 #include "../../../Components/Input/InputNumber/InputNumber.h"
 #include "../../../Components/PageScroll/PageVerticalScroll/PageVerticalScroll.h"
 
@@ -16,7 +17,6 @@ class TimeSettingPage : public Page {
     ~TimeSettingPage();
 
     void mountPage();
-    void getContents(PageContent **contents, int *length);
     void updateContents();
     void interactiveUpdate(int counter, bool isPress);
 
@@ -28,8 +28,7 @@ class TimeSettingPage : public Page {
       Arrow = 3
     };
 
-    const int8_t contentSize = 9;
-    PageContent contents[9] = {
+    PageContent staticContents[9] = {
       PageContent(2, PageLayoutPosition(0, 1)),
       PageContent(2, PageLayoutPosition(3, 1)),
       PageContent(2, PageLayoutPosition(6, 1)),
@@ -46,6 +45,10 @@ class TimeSettingPage : public Page {
     PageVerticalScroll scroll;
 
     void changeTopic();
+    void storeDateTime();
+    bool shouldStoreDateTime();
+    void proceedNextPage(int counter, bool isPress);
+    void proceedSystemResetNextPage();
 };
 
 #endif

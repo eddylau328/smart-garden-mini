@@ -5,9 +5,12 @@
 #include <LiquidCrystal_I2C.h>
 #include <Arduino.h>
 #include <DebugLog.h>
+#include <millisDelay.h>
+
 
 #include "../Helper/Helper.h"
 #include "PageCollection/Page.h"
+#include "CustomCharacter/CustomCharacter.h"
 #include "Components/PageContent/PageContent.h"
 #include "Components/PageLayoutPosition/PageLayoutPosition.h"
 
@@ -53,11 +56,12 @@ class LcdDisplayUI {
     LiquidCrystal_I2C *lcd;
     Page *renderPage;
     bool isUpdatePage = true;
-    unsigned long lastRender;
+    millisDelay renderDelay;
     
     char *strBuffer;
     void clearContent(PageContent *content);
     void printContent(PageContent *content);
+    void createCustomCharacter();
 };
 
 #endif

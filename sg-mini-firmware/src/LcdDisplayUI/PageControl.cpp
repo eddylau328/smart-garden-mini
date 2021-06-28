@@ -2,8 +2,8 @@
 
 
 Page *PageControl::pages[TotalPage];
-uint8_t PageControl::currentPageKey = PageCollection::PageKey::SensorPageKey;
-uint8_t PageControl::newPageKey = PageCollection::PageKey::MainPageKey;
+uint8_t PageControl::currentPageKey;
+uint8_t PageControl::nextPageKey;
 
 PageControl::PageControl(LcdDisplayUI *display) {
   this->display = display;
@@ -16,31 +16,10 @@ PageControl::~PageControl() {
 }
 
 void PageControl::init() {
-  pages[PageCollection::PageKey::MainPageKey] = new MainPage();
-  pages[PageCollection::PageKey::SensorPageKey] = new SensorPage();
-  pages[PageCollection::PageKey::SettingPageKey] = new SettingPage();
-  pages[PageCollection::PageKey::TimeSettingPageKey] = new TimeSettingPage();
-  pages[PageCollection::PageKey::DateSettingPageKey] = new DateSettingPage();
-  pages[PageCollection::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
-  pages[PageCollection::PageKey::ControlPagePageKey] = new ControlPage();
-  pages[PageCollection::PageKey::ModeSettingPageKey] = new ModeSettingPage();
-  pages[PageCollection::PageKey::ManualSettingPageKey] = new ManualSettingPage();
-  pages[PageCollection::PageKey::AutoSettingPageKey] = new AutoSettingPage();
-  pages[PageCollection::PageKey::ScheduleSettingPageKey] = new ScheduleSettingPage();
-
-  pages[PageCollection::PageKey::MainPageKey]->setNextPageCallback(PageCollection::PageKey::SensorPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::SensorPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::SettingPageKey]->setNextPageCallback(PageCollection::PageKey::MainPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::TimeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::DateSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ControlPagePageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ModeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ManualSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::AutoSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
-  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ModeSettingPageKey, &nextPageCallback);
-
- this->display->init();
+  this->pageInit();
+  this->retrieveCurrentPage();
+  this->display->init();
+  updateDelay.start(500);
 }
 
 void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
@@ -50,30 +29,92 @@ void PageControl::initInput(RotaryEncoder *rotaryEncoder) {
 }
 
 void PageControl::mainLoop() {
-  if (millis() - lastUpdate > 500) {
+  if (updateDelay.justFinished()) {
+    updateDelay.repeat();
     handleUpdateContents();
-    lastUpdate = millis();
   }
   handleUI();
   rotaryEncoder->eventLoop();
 }
 
 void PageControl::handleUI() {
-  if (newPageKey != currentPageKey) {
+  if (nextPageKey != currentPageKey) {
     // call page dismount for currentPageKey
     pages[currentPageKey]->dismountPage();
     // call page mount for newPageKey();
-    pages[newPageKey]->mountPage();
+    pages[nextPageKey]->mountPage();
     // render the page
-    display->update(pages[newPageKey]);
+    display->update(pages[nextPageKey]);
     // update key
-    currentPageKey = newPageKey;
+    currentPageKey = nextPageKey;
   }
 }
 
 void PageControl::handleUpdateContents() {
   pages[currentPageKey]->updateContents();
 }
+
+void PageControl::retrieveCurrentPage() {
+  SetupSettingManager *manager = DeviceManager::getSetupSettingManager();
+  if (manager->getIsBeginSystemReset()) {
+    currentPageKey = PageCollection::PageKey::MainPageKey;
+    nextPageKey = PageCollection::PageKey::WelcomePageKey;
+  }
+  else {
+    currentPageKey = PageCollection::PageKey::WelcomePageKey;
+    nextPageKey = PageCollection::PageKey::MainPageKey;
+  }
+}
+
+void PageControl::pageInit() {
+  pages[PageCollection::PageKey::MainPageKey] = new MainPage();
+  pages[PageCollection::PageKey::SensorPageKey] = new SensorPage();
+  pages[PageCollection::PageKey::SettingPageKey] = new SettingPage();
+  pages[PageCollection::PageKey::TimeSettingPageKey] = new TimeSettingPage();
+  pages[PageCollection::PageKey::DateSettingPageKey] = new DateSettingPage();
+  pages[PageCollection::PageKey::UsernameSettingPageKey] = new UsernameSettingPage();
+  pages[PageCollection::PageKey::ControlPageKey] = new ControlPage();
+  pages[PageCollection::PageKey::ModeSettingPageKey] = new ModeSettingPage();
+  pages[PageCollection::PageKey::ManualSettingPageKey] = new ManualSettingPage();
+  pages[PageCollection::PageKey::HumiditySettingPageKey] = new HumiditySettingPage();
+  pages[PageCollection::PageKey::ScheduleSettingPageKey] = new ScheduleSettingPage();
+  pages[PageCollection::PageKey::WifiSettingPageKey] = new WifiSettingPage();
+  pages[PageCollection::PageKey::ScanWifiPageKey] = new ScanWifiPage();
+  pages[PageCollection::PageKey::WifiNamePageKey] = new WifiNamePage();
+  pages[PageCollection::PageKey::WifiPasswordPageKey] = new WifiPasswordPage();
+  pages[PageCollection::PageKey::WifiConnectPageKey] = new WifiConnectPage();
+  pages[PageCollection::PageKey::SetDefaultWifiPageKey] = new SetDefaultWifiPage();
+  pages[PageCollection::PageKey::WelcomePageKey] = new WelcomePage();
+  pages[PageCollection::PageKey::SetupFinishPageKey] = new SetupFinishPage();
+  pages[PageCollection::PageKey::RestoreDefaultPageKey] = new RestoreDefaultPage();
+  pages[PageCollection::PageKey::ConfirmRestorePageKey] = new ConfirmRestorePage();
+
+  pages[PageCollection::PageKey::MainPageKey]->setNextPageCallback(PageCollection::PageKey::SensorPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::SensorPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::SettingPageKey]->setNextPageCallback(PageCollection::PageKey::MainPageKey, &nextPageCallback);
+
+  pages[PageCollection::PageKey::TimeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::DateSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::UsernameSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+
+  pages[PageCollection::PageKey::ControlPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ModeSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ManualSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::HumiditySettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ScheduleSettingPageKey]->setNextPageCallback(PageCollection::PageKey::ControlPageKey, &nextPageCallback);
+
+  pages[PageCollection::PageKey::WifiSettingPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::ScanWifiPageKey]->setNextPageCallback(PageCollection::PageKey::WifiSettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::WifiNamePageKey]->setNextPageCallback(PageCollection::PageKey::WifiPasswordPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::WifiPasswordPageKey]->setNextPageCallback(PageCollection::PageKey::WifiConnectPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::WifiConnectPageKey]->setNextPageCallback(PageCollection::PageKey::SetDefaultWifiPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::SetDefaultWifiPageKey]->setNextPageCallback(PageCollection::PageKey::WifiSettingPageKey, &nextPageCallback);
+
+  pages[PageCollection::PageKey::WelcomePageKey]->setNextPageCallback(PageCollection::PageKey::UsernameSettingPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::SetupFinishPageKey]->setNextPageCallback(PageCollection::PageKey::MainPageKey, &nextPageCallback);
+  pages[PageCollection::PageKey::RestoreDefaultPageKey]->setNextPageCallback(PageCollection::PageKey::SettingPageKey, &nextPageCallback);
+}
+
 
 void PageControl::rotateInputCallback(int counter) {
   pages[currentPageKey]->interactiveUpdate(counter, false);
@@ -84,5 +125,5 @@ void PageControl::pressInputCallback() {
 }
 
 void PageControl::nextPageCallback(uint8_t pageKey) {
-  newPageKey = pageKey;
+  nextPageKey = pageKey;
 }
