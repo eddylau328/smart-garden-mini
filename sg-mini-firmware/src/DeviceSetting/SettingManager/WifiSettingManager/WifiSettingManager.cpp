@@ -98,7 +98,7 @@ void WifiSettingManager::retrieveAccessPointSetting() {
     CharArrayData wifiPasswordData(wifiPasswordLocation);
     Storage::get(wifiPasswordData);
 
-    setAccessPointSetting(AccessPointSetting(
+    this->setAccessPointSetting(AccessPointSetting(
         wifiNameData.getData(), 
         wifiPasswordData.getData()
     ));

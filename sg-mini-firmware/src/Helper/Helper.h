@@ -85,6 +85,24 @@ class Helper {
     static void copyString(char *target, const char *copy, int length);
 
     /**
+     * @brief copy the character array (Noted: this function copies the character value-by-value)
+     * 
+     * @param target - the character array you store the result
+     * @param copy - the character array you want to copy
+     * @param length - the length of your target array
+     */
+    static void copyString(unsigned char *target, unsigned char *copy, int length);
+
+    /**
+     * @brief copy the const character array (Noted: this function copies the character value-by-value)
+     * 
+     * @param target  - the character array you store the result
+     * @param copy - the constant character array you want to copy
+     * @param length - the length of your target array
+     */
+    static void copyString(unsigned char *target, const unsigned char *copy, int length);
+
+    /**
      * @brief copy the byte character array
      * 
      * @param target - the character array you store the result
@@ -109,6 +127,23 @@ class Helper {
      * @return size_t - the string length
      */
     static size_t getStringLength(const char *target);
+
+    /**
+     * @brief Get the String Length
+     * 
+     * @param target - the character pointer you want to check the string length
+     * 
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(unsigned char *target);
+
+    /**
+     * @brief Get the String Length
+     * 
+     * @param target - the constant character pointer want to check the string length
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(const unsigned char *target);
 
     /**
      * @brief compare the character array value by value

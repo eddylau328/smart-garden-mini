@@ -5,6 +5,7 @@ SetupSettingManager *DeviceManager::setupSettingManager;
 WifiSettingManager *DeviceManager::wifiSettingManager;
 WaterSettingManager *DeviceManager::waterSettingManager;
 LocalSettingManager *DeviceManager::localSettingManager;
+DataTransmitManager *DeviceManager::dataTransmitManager;
 
 
 void DeviceManager::init() {
@@ -12,6 +13,7 @@ void DeviceManager::init() {
     localSettingManager = new LocalSettingManager();
     wifiSettingManager = new WifiSettingManager();
     waterSettingManager = new WaterSettingManager();
+    dataTransmitManager = new DataTransmitManager();
 
     setupSettingManager->init();
     if (setupSettingManager->getIsInitialSetup()) {
@@ -20,12 +22,14 @@ void DeviceManager::init() {
         waterSettingManager->restoreDefault();
         wifiSettingManager->restoreDefault();
         setupSettingManager->restoreDefault();
+        dataTransmitManager->restoreDefault();
     }
 
     setupSettingManager->init();
     localSettingManager->init();
     waterSettingManager->init();
     wifiSettingManager->init();
+    dataTransmitManager->init();
 }
 
 SetupSettingManager* DeviceManager::getSetupSettingManager() {
@@ -42,4 +46,8 @@ WaterSettingManager* DeviceManager::getWaterSettingManager() {
 
 LocalSettingManager* DeviceManager::getLocalSettingManager() {
     return localSettingManager;
+}
+
+DataTransmitManager* DeviceManager::getDataTransmitManager() {
+    return dataTransmitManager;
 }

@@ -48,6 +48,16 @@ void Helper::copyString(char *target, const char *copy, int length) {
     *(target + i) = *(copy + i);
 }
 
+void Helper::copyString(unsigned char *target, unsigned char *copy, int length) {
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
+}
+
+void Helper::copyString(unsigned char *target, const unsigned char *copy, int length) {
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
+}
+
 size_t Helper::getStringLength(char *target) {
   size_t length = 0;
   for (int i = 0; i >= 0; i++) {
@@ -59,6 +69,26 @@ size_t Helper::getStringLength(char *target) {
 }
 
 size_t Helper::getStringLength(const char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
+}
+
+size_t Helper::getStringLength(unsigned char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
+}
+
+size_t Helper::getStringLength(const unsigned char *target) {
   size_t length = 0;
   for (int i = 0; i >= 0; i++) {
     length++;
