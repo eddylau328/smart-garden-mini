@@ -48,12 +48,12 @@ void Helper::copyString(char *target, const char *copy, int length) {
     *(target + i) = *(copy + i);
 }
 
-void Helper::copyString(unsigned char *target, unsigned char *copy, int length) {
+void Helper::copyUInt8_t(unsigned char *target, unsigned char *copy, int length) {
   for (int i = 0; i < length; i++)
     *(target + i) = *(copy + i);
 }
 
-void Helper::copyString(unsigned char *target, const unsigned char *copy, int length) {
+void Helper::copyUInt8_t(unsigned char *target, const unsigned char *copy, int length) {
   for (int i = 0; i < length; i++)
     *(target + i) = *(copy + i);
 }
@@ -111,6 +111,20 @@ bool Helper::compareString(char *target, char *compare, int targetLength) {
 }
 
 bool Helper::compareString(char *target, const char *compare, int targetLength) {
+  for (int i = 0; i < targetLength; i++)
+    if (*(target + i) != *(compare + i))
+      return false;
+  return true;
+}
+
+bool Helper::compareUInt8_t(unsigned char *target, unsigned char *compare, int targetLength) {
+  for (int i = 0; i < targetLength; i++)
+    if (*(target + i) != *(compare + i))
+      return false;
+  return true;
+}
+
+bool Helper::compareUInt8_t(unsigned char *target, const unsigned char *compare, int targetLength) {
   for (int i = 0; i < targetLength; i++)
     if (*(target + i) != *(compare + i))
       return false;

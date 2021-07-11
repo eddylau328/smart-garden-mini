@@ -3,6 +3,7 @@
 
 #include "MqttTransmitter/MqttTransmitter.h"
 #include "DataTransmitter.h"
+#include "TransmitConstant.h"
 
 class TransmitterController {
 
@@ -14,6 +15,14 @@ class TransmitterController {
         static void mainLoop(void * pvParameters );
         static DataTransmitter *transmitter;
 
+        static TransmitConstant::TransmitMethod transmitMethod;
+        static void updateTransmitMethod(TransmitConstant::TransmitMethod method);
+
+        class TransmitterFactory {
+            public:
+                static DataTransmitter* create(TransmitConstant::TransmitMethod method);
+                static void destroy(DataTransmitter *transmitter);
+        };
 };
 
 #endif

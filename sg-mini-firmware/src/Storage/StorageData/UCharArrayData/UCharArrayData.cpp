@@ -19,7 +19,7 @@ UCharArrayData::~UCharArrayData() {
 void UCharArrayData::setData(unsigned char *data) {
     int length = Helper::getStringLength(data);
     this->data = new unsigned char[length];
-    Helper::copyString(this->data, data, length);
+    Helper::copyUInt8_t(this->data, data, length);
 }
 
 void UCharArrayData::setByteData(unsigned char* data, StorageLocation storageLocation) {

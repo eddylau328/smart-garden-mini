@@ -3,11 +3,12 @@
 
 DataTransmitter *TransmitterController::transmitter;
 TaskHandle_t TransmitterController::transmitMainLoop;
+TransmitConstant::TransmitMethod TransmitterController::transmitMethod;
 
 
 void TransmitterController::init() {
-    transmitter = new MqttTransmitter();
-    transmitter->init();
+    DataTransmitManager *manager = DeviceManager::getDataTransmitManager();
+    updateTransmitMethod(manager->getTransmitMethod());
 
     xTaskCreatePinnedToCore(
                 mainLoop,   /* Task function. */
@@ -21,8 +22,36 @@ void TransmitterController::init() {
 
 void TransmitterController::mainLoop(void * pvParameters ) {
     const TickType_t xDelay = 2000 / portTICK_PERIOD_MS;
+    DataTransmitManager *manager = DeviceManager::getDataTransmitManager();
     while (true) {
-        transmitter->mainLoop();
+        if (manager->getIsTransmitData()) {
+            if (manager->getTransmitMethod() != transmitMethod)
+                updateTransmitMethod(manager->getTransmitMethod());
+            transmitter->mainLoop();
+        }
         vTaskDelay(xDelay);
     }
+}
+
+void TransmitterController::updateTransmitMethod(TransmitConstant::TransmitMethod method) {
+    if (transmitter) {
+        transmitter->disconnect();
+        TransmitterFactory::destroy(transmitter);
+    }
+    transmitMethod = method;
+    transmitter = TransmitterFactory::create(transmitMethod);
+    transmitter->init();
+}
+
+DataTransmitter* TransmitterController::TransmitterFactory::create(TransmitConstant::TransmitMethod method) {
+    switch (method) {
+        case TransmitConstant::TransmitMethod::MqttMode:
+            return new MqttTransmitter();
+        default:
+            return new DataTransmitter();
+    }
+}
+
+void TransmitterController::TransmitterFactory::destroy(DataTransmitter *transmitter) {
+    delete transmitter;
 }

@@ -5,19 +5,26 @@ String MqttTransmitter::basePath = "device/";
 String MqttTransmitter::sendDataPath = "data/";
 String MqttTransmitter::controlValvePath = "valve/";
 
-void MqttTransmitter::init() {
+
+MqttTransmitter::MqttTransmitter() {
     client = new PubSubClient(wifiClient);
-    client->setServer(mqttServer, 1883);
-    client->setCallback(handleReceiveMessage);
+}
+
+MqttTransmitter::~MqttTransmitter() {
+    delete client;
+}
+
+void MqttTransmitter::init() {
+    updateServerSetting();
     deviceId = WiFi.macAddress();
     lastReconnectAttempt = 0;
-    deviceId = WiFi.macAddress();
     Serial.println(deviceId);
 }
 
 void MqttTransmitter::mainLoop() {
     if (!WifiController::isConnectedNetwork()) return;
 
+    updateServerSetting();
     if (!client->connected()) {
         if (millis() - lastReconnectAttempt > 5000 && reconnect())
             lastReconnectAttempt = 0;
@@ -58,4 +65,31 @@ bool MqttTransmitter::reconnect() {
     client->subscribe(path.c_str());
   }
   return client->connected();
+}
+
+void MqttTransmitter::disconnect() {
+    if (client && client->connected())
+        client->disconnect();
+}
+
+// private
+
+bool MqttTransmitter::shouldUpdateServer(MqttTransmitSetting setting) {
+    return Helper::compareUInt8_t(
+        this->mqttServerIp,
+        setting.getMqttServerIp(),
+        4
+    ) && this->mqttServerPort == setting.getMqttServerPort();
+}
+
+void MqttTransmitter::updateServerSetting() {
+    DataTransmitManager *manager = DeviceManager::getDataTransmitManager();
+    MqttTransmitSetting setting = manager->getMqttTransmitSetting();
+    if (manager->getIsMqttTransmitSet() && this->shouldUpdateServer(setting)) {
+        Helper::copyUInt8_t(this->mqttServerIp, setting.getMqttServerIp(), 4);
+        this->mqttServerPort = setting.getMqttServerPort();
+        this->disconnect();
+        client->setServer(mqttServerIp, mqttServerPort);
+        client->setCallback(handleReceiveMessage);
+    }
 }

@@ -91,7 +91,7 @@ class Helper {
      * @param copy - the character array you want to copy
      * @param length - the length of your target array
      */
-    static void copyString(unsigned char *target, unsigned char *copy, int length);
+    static void copyUInt8_t(unsigned char *target, unsigned char *copy, int length);
 
     /**
      * @brief copy the const character array (Noted: this function copies the character value-by-value)
@@ -100,7 +100,7 @@ class Helper {
      * @param copy - the constant character array you want to copy
      * @param length - the length of your target array
      */
-    static void copyString(unsigned char *target, const unsigned char *copy, int length);
+    static void copyUInt8_t(unsigned char *target, const unsigned char *copy, int length);
 
     /**
      * @brief copy the byte character array
@@ -166,6 +166,28 @@ class Helper {
      * @return false - the target array is not the same as the constant compare array for the given length the target has 
      */
     static bool compareString(char *target, const char *compare, int targetLength);
+
+    /**
+     * @brief compare the character array value by value
+     * 
+     * @param target - the character array you want to test
+     * @param compare - the character array you want to compare
+     * @param targetLength - the length of the target array
+     * @return true - the target array is same as the compare array for the given length the target has 
+     * @return false - the target array is not the same as the compare array for the given length the target has 
+     */
+    static bool compareUInt8_t(unsigned char *target, unsigned char *compare, int targetLength);
+
+    /**
+     * @brief compare the character array value by value
+     * 
+     * @param target - the character array you want to test
+     * @param compare - the constant character array you want to compare
+     * @param targetLength - the length of the target array
+     * @return true - the target array is same as the constant compare array for the given length the target has 
+     * @return false - the target array is not the same as the constant compare array for the given length the target has 
+     */
+    static bool compareUInt8_t(unsigned char *target, const unsigned char *compare, int targetLength);  
 
     /**
      * @brief convert the character array to 8-bit integer
