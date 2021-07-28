@@ -18,10 +18,10 @@ void WifiTransmitter::sendSensorData() {
         // // Specify content-type header
         // http.addHeader("Content-Type", "application/json");
 
-        String postData;
-        JsonParser::writeSensorData(postData);
-        Serial.print(postData);
-        Serial.println();
+        // String postData;
+        // JsonParser::writeSensorData(postData);
+        // Serial.print(postData);
+        // Serial.println();
         // int httpResponseCode = http.POST(postData);
         // Serial.print("HTTP Response code: ");
         // Serial.println(httpResponseCode);

@@ -1,6 +1,7 @@
 #include "WifiController.h"
 
 TaskHandle_t WifiController::wifiMainLoop;
+millisDelay WifiController::reconnectDelay;
 
 void WifiController::init() {
   WifiConnect::disconnect();
@@ -20,17 +21,23 @@ void WifiController::init() {
 }
 
 void WifiController::mainLoop(void * pvParameters ) {
+  reconnectDelay.start(5000);
   const TickType_t xDelay = 2000 / portTICK_PERIOD_MS;
   while (true) {
     WifiScan::mainLoop();
     WifiConnect::mainLoop();
 
     if (!WifiConnect::isConnectedNetwork() && !WifiConnect::isConnecting()) {
-      WifiSettingManager *manager = DeviceManager::getWifiSettingManager();
-      if (manager->getIsWifiOn() && manager->getIsAccessPointSet()) {
-        WifiConnect::connect(manager->getAccessPointSetting());
+      if (reconnectDelay.justFinished()) {
+        Serial.println("enter reconnect");
+        WifiSettingManager *manager = DeviceManager::getWifiSettingManager();
+        if (manager->getIsWifiOn() && manager->getIsAccessPointSet()) {
+          WifiConnect::connect(manager->getAccessPointSetting());
+        }
+        reconnectDelay.repeat();
       }
     }
+
     vTaskDelay(xDelay);
   }
 }

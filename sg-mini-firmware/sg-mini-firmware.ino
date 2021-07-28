@@ -37,6 +37,11 @@ void setup() {
   Serial.begin(9600);
   LOG_SET_LEVEL(DebugLogLevel::ERRORS);
   init();
+  DataTransmitManager *manager = DeviceManager::getDataTransmitManager();
+  manager->setIsTransmitData(true);
+  manager->setTransmitMethod(TransmitConstant::TransmitMethod::MqttMode);
+  uint8_t ip[4] = { 192, 168, 0, 106 };
+  manager->setMqttTransmitSetting(MqttTransmitSetting(ip, 1883));
 }
 
 void loop() {

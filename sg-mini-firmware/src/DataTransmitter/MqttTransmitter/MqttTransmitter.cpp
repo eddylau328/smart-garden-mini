@@ -1,9 +1,11 @@
 #include "MqttTransmitter.h"
 
 String MqttTransmitter::deviceId = "";
-String MqttTransmitter::basePath = "device/";
-String MqttTransmitter::sendDataPath = "data/";
-String MqttTransmitter::controlValvePath = "valve/";
+const String MqttTransmitter::BASE_PATH = "device/";
+const String MqttTransmitter::INIT_PATH = "init/";
+const String MqttTransmitter::SEND_DATA_PATH = "data/";
+const String MqttTransmitter::CONTROL_VALVE_PATH = "valve/";
+
 
 
 MqttTransmitter::MqttTransmitter() {
@@ -15,9 +17,9 @@ MqttTransmitter::~MqttTransmitter() {
 }
 
 void MqttTransmitter::init() {
-    updateServerSetting();
     deviceId = WiFi.macAddress();
     lastReconnectAttempt = 0;
+    Serial.print("deviceId");
     Serial.println(deviceId);
 }
 
@@ -26,10 +28,15 @@ void MqttTransmitter::mainLoop() {
 
     updateServerSetting();
     if (!client->connected()) {
+        this->isConnected = false;
         if (millis() - lastReconnectAttempt > 5000 && reconnect())
             lastReconnectAttempt = 0;
     }
     else {
+        if (!this->isConnected) {
+            this->isConnected = true;
+            this->send(TransmitAction::SendAction::Init);
+        }
         // Client connected
         client->loop();
     }
@@ -37,20 +44,25 @@ void MqttTransmitter::mainLoop() {
 
 void MqttTransmitter::send(TransmitAction::SendAction actionType) {
     char *message = new char[MESSAGE_BUFFER];
-    JsonParser::writeSensorData(&message, MESSAGE_BUFFER);
-    String path = basePath + sendDataPath + deviceId;
-    Serial.println(path);
+    JsonParser *parser = this->getJsonParser(actionType);
+    parser->parse(&message, MESSAGE_BUFFER);
+    String path = this->getPublishPath(actionType);
     bool isPublished = client->publish(path.c_str(), message);
+
     Serial.print("publish ");
+    Serial.println(path);
     Serial.println(isPublished);
     Serial.println(message);
     Serial.println(client->state());
+
+    delete message;
+    delete parser;
 }
 
 void MqttTransmitter::handleReceiveMessage(char *title, byte *message, unsigned int length) {
     char *serializedMessage = new char[length];
     Helper::copyString(serializedMessage, message, length);
-    String path = basePath + controlValvePath + deviceId;
+    String path = BASE_PATH + CONTROL_VALVE_PATH + deviceId;
     if (Helper::compareString(title, path.c_str(), 30)) {
         for (int i = 0; i < length; i++)
             Serial.print(*(serializedMessage+i));
@@ -61,7 +73,7 @@ void MqttTransmitter::handleReceiveMessage(char *title, byte *message, unsigned 
 bool MqttTransmitter::reconnect() {
   if (client->connect("esp32Client")) {
     // ... and resubscribe
-    String path = basePath + controlValvePath + deviceId;
+    String path = BASE_PATH + CONTROL_VALVE_PATH + deviceId;
     client->subscribe(path.c_str());
   }
   return client->connected();
@@ -75,11 +87,11 @@ void MqttTransmitter::disconnect() {
 // private
 
 bool MqttTransmitter::shouldUpdateServer(MqttTransmitSetting setting) {
-    return Helper::compareUInt8_t(
+    return !(Helper::compareUInt8_t(
         this->mqttServerIp,
         setting.getMqttServerIp(),
         4
-    ) && this->mqttServerPort == setting.getMqttServerPort();
+    ) && this->mqttServerPort == setting.getMqttServerPort());
 }
 
 void MqttTransmitter::updateServerSetting() {
@@ -89,7 +101,38 @@ void MqttTransmitter::updateServerSetting() {
         Helper::copyUInt8_t(this->mqttServerIp, setting.getMqttServerIp(), 4);
         this->mqttServerPort = setting.getMqttServerPort();
         this->disconnect();
+        Serial.print("establish connection to ");
+        for (int i = 0; i < 4; i++) {
+            Serial.print(mqttServerIp[i]);
+            if (i < 3)
+                Serial.print(".");
+        }
+        Serial.print(":");
+        Serial.println(mqttServerPort);
+
         client->setServer(mqttServerIp, mqttServerPort);
         client->setCallback(handleReceiveMessage);
+    }
+}
+
+JsonParser* MqttTransmitter::getJsonParser(TransmitAction::SendAction actionType) {
+    switch(actionType) {
+        case TransmitAction::SendAction::Init:
+            return new InitJsonParser();
+        case TransmitAction::SendAction::SensorData:
+            return new SensorJsonParser(); 
+        default:
+            return NULL;
+    }
+}
+
+String MqttTransmitter::getPublishPath(TransmitAction::SendAction actionType) {
+    switch(actionType) {
+        case TransmitAction::SendAction::Init:
+            return BASE_PATH + INIT_PATH + deviceId;
+        case TransmitAction::SendAction::SensorData:
+            return BASE_PATH + SEND_DATA_PATH + deviceId;
+        default:
+            return BASE_PATH;
     }
 }

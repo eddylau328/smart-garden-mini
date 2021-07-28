@@ -1,6 +1,8 @@
 #ifndef WifiController_h
 #define WifiController_h
 
+#include <Arduino.h>
+#include <millisDelay.h>
 
 // Own Library
 
@@ -21,6 +23,7 @@ class WifiController: public WifiScan, public WifiConnect {
     static TaskHandle_t wifiMainLoop;
     static void mainLoop(void * pvParameters );
 
+    static millisDelay reconnectDelay;
 };
 
 #endif

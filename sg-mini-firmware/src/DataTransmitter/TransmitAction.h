@@ -8,6 +8,7 @@ class TransmitAction {
         //     
         // };
         enum SendAction {
+            Init,
             SensorData,
         };
 };
