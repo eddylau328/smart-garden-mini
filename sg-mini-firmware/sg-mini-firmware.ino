@@ -15,9 +15,6 @@ LcdDisplayUI display(LCDScreenWidth, LCDScreenHeight);
 PageControl pageControl(&display);
 RotaryEncoder rotaryEncoder(DT_PIN, CLK_PIN, SW_PIN, 10);
 
-unsigned long lastSend;
-
-
 void init() {
   Storage::init();
   WaterController::init();
@@ -38,7 +35,8 @@ void setup() {
   LOG_SET_LEVEL(DebugLogLevel::ERRORS);
   init();
   DataTransmitManager *manager = DeviceManager::getDataTransmitManager();
-  manager->setIsTransmitData(true);
+  manager->setIsEnableTransmit(true);
+  manager->setIsTransmitSensorData(true);
   manager->setTransmitMethod(TransmitConstant::TransmitMethod::MqttMode);
   uint8_t ip[4] = { 192, 168, 0, 106 };
   manager->setMqttTransmitSetting(MqttTransmitSetting(ip, 1883));
@@ -49,9 +47,4 @@ void loop() {
   display.render();
   Sensors::mainLoop();
   WaterController::mainLoop();
-
-  // if (millis() - lastSend > 5000) {
-  //   transmitter.send(TransmitAction::SendAction::SensorData);
-  //   lastSend = millis();
-  // }
 }

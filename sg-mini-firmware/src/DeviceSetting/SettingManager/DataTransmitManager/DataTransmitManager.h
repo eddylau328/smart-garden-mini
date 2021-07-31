@@ -11,8 +11,11 @@ class DataTransmitManager : public SettingManager {
         void init();
         void restoreDefault();
 
-        void setIsTransmitData(bool isTransmitData);
-        bool getIsTransmitData();
+        void setIsEnableTransmit(bool isTransmitData);
+        bool getIsEnableTransmit();
+
+        void setIsTransmitSensorData(bool isTransmitSensorData);
+        bool getIsTransmitSensorData();
 
         void setTransmitMethod(TransmitConstant::TransmitMethod method);
         TransmitConstant::TransmitMethod getTransmitMethod();
@@ -24,14 +27,18 @@ class DataTransmitManager : public SettingManager {
     private:
         MqttTransmitSetting mqttTransmitSetting;
         bool isMqttTransmitSet;
-        bool isTransmitData;
+        bool isEnableTransmit;
+        bool isTransmitSensorData;
         TransmitConstant::TransmitMethod transmitMethod;
 
         void retrieveIsMqttTransmitSet();
         void storeIsMqttTransmitSet();
 
-        void retrieveIsTransmitData();
-        void storeIsTransmitData();
+        void retrieveIsEnableTransmit();
+        void storeIsEnableTransmit();
+
+        void retrieveIsTransmitSensorData();
+        void storeIsTransmitSensorData();
 
         void storeMqttTransmitSetting();
         void retrieveMqttTransmitSetting();

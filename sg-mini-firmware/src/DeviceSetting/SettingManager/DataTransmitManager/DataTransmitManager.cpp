@@ -2,7 +2,8 @@
 
 
 void DataTransmitManager::init() {
-    retrieveIsTransmitData();
+    retrieveIsEnableTransmit();
+    retrieveIsTransmitSensorData();
     retrieveTransmitMethod();
     retrieveIsMqttTransmitSet();
     if (this->isMqttTransmitSet)
@@ -10,19 +11,26 @@ void DataTransmitManager::init() {
 }
 
 void DataTransmitManager::restoreDefault() {
-    this->isTransmitData = false;
+    this->isEnableTransmit = false;
+    this->isTransmitSensorData = false;
     this->isMqttTransmitSet = false;
     this->transmitMethod = TransmitConstant::TransmitMethod::MqttMode;
     this->mqttTransmitSetting = MqttTransmitSetting();
-    storeIsTransmitData();
+    storeIsEnableTransmit();
+    storeIsTransmitSensorData();
     storeIsMqttTransmitSet();
     storeTransmitMethod();
     storeMqttTransmitSetting();
 }
 
-void DataTransmitManager::setIsTransmitData(bool isTransmitData) {
-    this->isTransmitData = isTransmitData;
-    storeIsTransmitData();
+void DataTransmitManager::setIsEnableTransmit(bool isTransmitData) {
+    this->isEnableTransmit = isTransmitData;
+    storeIsEnableTransmit();
+}
+
+void DataTransmitManager::setIsTransmitSensorData(bool isTransmitSensorData) {
+    this->isTransmitSensorData = isTransmitSensorData;
+    storeIsTransmitSensorData();
 }
 
 void DataTransmitManager::setTransmitMethod(TransmitConstant::TransmitMethod method) {
@@ -37,8 +45,12 @@ void DataTransmitManager::setMqttTransmitSetting(MqttTransmitSetting mqttTransmi
     storeIsMqttTransmitSet();
 }
 
-bool DataTransmitManager::getIsTransmitData() {
-    return this->isTransmitData;
+bool DataTransmitManager::getIsEnableTransmit() {
+    return this->isEnableTransmit;
+}
+
+bool DataTransmitManager::getIsTransmitSensorData() {
+    return this->isTransmitSensorData;
 }
 
 bool DataTransmitManager::getIsMqttTransmitSet() {
@@ -55,12 +67,23 @@ MqttTransmitSetting DataTransmitManager::getMqttTransmitSetting() {
 
 // private
 
-void DataTransmitManager::storeIsTransmitData() {
+void DataTransmitManager::storeIsEnableTransmit() {
     BooleanData data(
-        this->isTransmitData,
+        this->isEnableTransmit,
         StorageLocation(
-            IS_TRANSMIT_DATA_LENGTH,
-            IS_TRANSMIT_DATA_STORE_INDEX
+            IS_ENABLE_TRANSMIT_LENGTH,
+            IS_ENABLE_TRANSMIT_STORE_INDEX
+        )
+    );
+    Storage::set(data);
+}
+
+void DataTransmitManager::storeIsTransmitSensorData() {
+    BooleanData data(
+        this->isTransmitSensorData,
+        StorageLocation(
+            IS_TRANSMIT_SENSOR_DATA_LENGTH,
+            IS_TRANSMIT_SENSOR_DATA_STORE_INDEX
         )
     );
     Storage::set(data);
@@ -77,13 +100,22 @@ void DataTransmitManager::storeIsMqttTransmitSet() {
     Storage::set(data);
 }
 
-void DataTransmitManager::retrieveIsTransmitData() {
+void DataTransmitManager::retrieveIsEnableTransmit() {
     BooleanData data(StorageLocation(
-        IS_TRANSMIT_DATA_LENGTH,
-        IS_TRANSMIT_DATA_STORE_INDEX
+        IS_ENABLE_TRANSMIT_LENGTH,
+        IS_ENABLE_TRANSMIT_STORE_INDEX
     ));
     Storage::get(data);
     this->isMqttTransmitSet = data.getData();
+}
+
+void DataTransmitManager::retrieveIsTransmitSensorData() {
+    BooleanData data(StorageLocation(
+        IS_TRANSMIT_SENSOR_DATA_LENGTH,
+        IS_TRANSMIT_SENSOR_DATA_STORE_INDEX
+    ));
+    Storage::get(data);
+    this->isTransmitSensorData = data.getData();
 }
 
 void DataTransmitManager::retrieveIsMqttTransmitSet() {

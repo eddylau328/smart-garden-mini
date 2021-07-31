@@ -1,9 +1,13 @@
 #ifndef TransmitterController_h
 #define TransmitterController_h
 
+
+#include <millisDelay.h>
+
 #include "MqttTransmitter/MqttTransmitter.h"
 #include "DataTransmitter.h"
 #include "TransmitConstant.h"
+
 
 class TransmitterController {
 
@@ -14,6 +18,7 @@ class TransmitterController {
         static TaskHandle_t transmitMainLoop;
         static void mainLoop(void * pvParameters );
         static DataTransmitter *transmitter;
+        static millisDelay sendSensorDataTimer;
 
         static TransmitConstant::TransmitMethod transmitMethod;
         static void updateTransmitMethod(TransmitConstant::TransmitMethod method);

@@ -1,16 +1,6 @@
 #include "WifiTransmitter.h"
 
-void WifiTransmitter::send(TransmitAction::SendAction actionType) {
-    switch(actionType) {
-        case TransmitAction::SendAction::SensorData:
-            sendSensorData();
-            break;
-        default:
-            break;
-    }
-}
-
-void WifiTransmitter::sendSensorData() {
+void WifiTransmitter::sendSensorData(JsonParser *parser) {
     if (WifiController::isConnectedNetwork()) {
         // HTTPClient http;
         // // Your Domain name with URL path or IP address with path

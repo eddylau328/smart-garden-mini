@@ -4,6 +4,7 @@
 DataTransmitter *TransmitterController::transmitter;
 TaskHandle_t TransmitterController::transmitMainLoop;
 TransmitConstant::TransmitMethod TransmitterController::transmitMethod;
+millisDelay TransmitterController::sendSensorDataTimer;
 
 
 void TransmitterController::init() {
@@ -23,11 +24,16 @@ void TransmitterController::init() {
 void TransmitterController::mainLoop(void * pvParameters ) {
     const TickType_t xDelay = 2000 / portTICK_PERIOD_MS;
     DataTransmitManager *manager = DeviceManager::getDataTransmitManager();
+    sendSensorDataTimer.start(60 * 1000);
     while (true) {
-        if (manager->getIsTransmitData()) {
+        if (manager->getIsEnableTransmit()) {
             if (manager->getTransmitMethod() != transmitMethod)
                 updateTransmitMethod(manager->getTransmitMethod());
             transmitter->mainLoop();
+            if (sendSensorDataTimer.justFinished()) {
+                transmitter->send(TransmitAction::SendAction::SensorData);
+                sendSensorDataTimer.repeat();
+            }
         }
         vTaskDelay(xDelay);
     }

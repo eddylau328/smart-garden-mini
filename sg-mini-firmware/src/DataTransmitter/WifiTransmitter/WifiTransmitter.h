@@ -8,12 +8,11 @@
 
 
 class WifiTransmitter : public DataTransmitter {
-
-    public:
-        void send(TransmitAction::SendAction actionType);
     
+    protected:
+        void sendSensorData(JsonParser *parser);
+
     private:
-        void sendSensorData();
         const char* serverName = "http://192.168.0.105:3000/";
 };
 

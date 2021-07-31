@@ -42,21 +42,19 @@ void MqttTransmitter::mainLoop() {
     }
 }
 
-void MqttTransmitter::send(TransmitAction::SendAction actionType) {
+void MqttTransmitter::sendInit(JsonParser *parser) {
+    String path = BASE_PATH + INIT_PATH + deviceId;
     char *message = new char[MESSAGE_BUFFER];
-    JsonParser *parser = this->getJsonParser(actionType);
     parser->parse(&message, MESSAGE_BUFFER);
-    String path = this->getPublishPath(actionType);
-    bool isPublished = client->publish(path.c_str(), message);
-
-    Serial.print("publish ");
-    Serial.println(path);
-    Serial.println(isPublished);
-    Serial.println(message);
-    Serial.println(client->state());
-
+    this->mqttSend(path, message);
     delete message;
-    delete parser;
+}
+
+void MqttTransmitter::sendSensorData(JsonParser *parser) {
+    String path = BASE_PATH + SEND_DATA_PATH + deviceId;
+    char *message = new char[MESSAGE_BUFFER];
+    parser->parse(&message, MESSAGE_BUFFER);
+    this->mqttSend(path, message);
 }
 
 void MqttTransmitter::handleReceiveMessage(char *title, byte *message, unsigned int length) {
@@ -101,38 +99,28 @@ void MqttTransmitter::updateServerSetting() {
         Helper::copyUInt8_t(this->mqttServerIp, setting.getMqttServerIp(), 4);
         this->mqttServerPort = setting.getMqttServerPort();
         this->disconnect();
-        Serial.print("establish connection to ");
-        for (int i = 0; i < 4; i++) {
-            Serial.print(mqttServerIp[i]);
-            if (i < 3)
-                Serial.print(".");
-        }
-        Serial.print(":");
-        Serial.println(mqttServerPort);
-
+        this->debugConnection();
         client->setServer(mqttServerIp, mqttServerPort);
         client->setCallback(handleReceiveMessage);
     }
 }
 
-JsonParser* MqttTransmitter::getJsonParser(TransmitAction::SendAction actionType) {
-    switch(actionType) {
-        case TransmitAction::SendAction::Init:
-            return new InitJsonParser();
-        case TransmitAction::SendAction::SensorData:
-            return new SensorJsonParser(); 
-        default:
-            return NULL;
-    }
+void MqttTransmitter::mqttSend(String path, char *message) {
+    bool isPublished = client->publish(path.c_str(), message);
+    Serial.print("publish ");
+    Serial.println(path);
+    Serial.println(isPublished);
+    Serial.println(message);
+    Serial.println(client->state());
 }
 
-String MqttTransmitter::getPublishPath(TransmitAction::SendAction actionType) {
-    switch(actionType) {
-        case TransmitAction::SendAction::Init:
-            return BASE_PATH + INIT_PATH + deviceId;
-        case TransmitAction::SendAction::SensorData:
-            return BASE_PATH + SEND_DATA_PATH + deviceId;
-        default:
-            return BASE_PATH;
+void MqttTransmitter::debugConnection() {
+    Serial.print("establish connection to ");
+    for (int i = 0; i < 4; i++) {
+        Serial.print(mqttServerIp[i]);
+        if (i < 3)
+            Serial.print(".");
     }
+    Serial.print(":");
+    Serial.println(mqttServerPort);
 }
