@@ -48,6 +48,16 @@ void Helper::copyString(char *target, const char *copy, int length) {
     *(target + i) = *(copy + i);
 }
 
+void Helper::copyUInt8_t(unsigned char *target, unsigned char *copy, int length) {
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
+}
+
+void Helper::copyUInt8_t(unsigned char *target, const unsigned char *copy, int length) {
+  for (int i = 0; i < length; i++)
+    *(target + i) = *(copy + i);
+}
+
 size_t Helper::getStringLength(char *target) {
   size_t length = 0;
   for (int i = 0; i >= 0; i++) {
@@ -68,6 +78,31 @@ size_t Helper::getStringLength(const char *target) {
   return length;
 }
 
+size_t Helper::getStringLength(unsigned char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
+}
+
+size_t Helper::getStringLength(const unsigned char *target) {
+  size_t length = 0;
+  for (int i = 0; i >= 0; i++) {
+    length++;
+    if (*(target + i) == '\0')
+      return length;
+  }
+  return length;
+}
+
+void Helper::copyString(char *target, byte *copy, int length) {
+  for (int i = 0; i < length; i++)
+    *(target + i) = (char)*(copy + i);
+}
+
 bool Helper::compareString(char *target, char *compare, int targetLength) {
   for (int i = 0; i < targetLength; i++)
     if (*(target + i) != *(compare + i))
@@ -76,6 +111,20 @@ bool Helper::compareString(char *target, char *compare, int targetLength) {
 }
 
 bool Helper::compareString(char *target, const char *compare, int targetLength) {
+  for (int i = 0; i < targetLength; i++)
+    if (*(target + i) != *(compare + i))
+      return false;
+  return true;
+}
+
+bool Helper::compareUInt8_t(unsigned char *target, unsigned char *compare, int targetLength) {
+  for (int i = 0; i < targetLength; i++)
+    if (*(target + i) != *(compare + i))
+      return false;
+  return true;
+}
+
+bool Helper::compareUInt8_t(unsigned char *target, const unsigned char *compare, int targetLength) {
   for (int i = 0; i < targetLength; i++)
     if (*(target + i) != *(compare + i))
       return false;

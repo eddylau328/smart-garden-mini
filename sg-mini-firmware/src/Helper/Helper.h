@@ -85,6 +85,33 @@ class Helper {
     static void copyString(char *target, const char *copy, int length);
 
     /**
+     * @brief copy the character array (Noted: this function copies the character value-by-value)
+     * 
+     * @param target - the character array you store the result
+     * @param copy - the character array you want to copy
+     * @param length - the length of your target array
+     */
+    static void copyUInt8_t(unsigned char *target, unsigned char *copy, int length);
+
+    /**
+     * @brief copy the const character array (Noted: this function copies the character value-by-value)
+     * 
+     * @param target  - the character array you store the result
+     * @param copy - the constant character array you want to copy
+     * @param length - the length of your target array
+     */
+    static void copyUInt8_t(unsigned char *target, const unsigned char *copy, int length);
+
+    /**
+     * @brief copy the byte character array
+     * 
+     * @param target - the character array you store the result
+     * @param copy - the byte array you want to copy
+     * @param length - the length of your target array
+     */
+    static void copyString(char *target, byte *copy, int length);
+
+    /**
      * @brief Get the String Length
      * 
      * @param target - the character pointer you want to check the string length
@@ -100,6 +127,23 @@ class Helper {
      * @return size_t - the string length
      */
     static size_t getStringLength(const char *target);
+
+    /**
+     * @brief Get the String Length
+     * 
+     * @param target - the character pointer you want to check the string length
+     * 
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(unsigned char *target);
+
+    /**
+     * @brief Get the String Length
+     * 
+     * @param target - the constant character pointer want to check the string length
+     * @return size_t - the string length
+     */
+    static size_t getStringLength(const unsigned char *target);
 
     /**
      * @brief compare the character array value by value
@@ -122,6 +166,28 @@ class Helper {
      * @return false - the target array is not the same as the constant compare array for the given length the target has 
      */
     static bool compareString(char *target, const char *compare, int targetLength);
+
+    /**
+     * @brief compare the character array value by value
+     * 
+     * @param target - the character array you want to test
+     * @param compare - the character array you want to compare
+     * @param targetLength - the length of the target array
+     * @return true - the target array is same as the compare array for the given length the target has 
+     * @return false - the target array is not the same as the compare array for the given length the target has 
+     */
+    static bool compareUInt8_t(unsigned char *target, unsigned char *compare, int targetLength);
+
+    /**
+     * @brief compare the character array value by value
+     * 
+     * @param target - the character array you want to test
+     * @param compare - the constant character array you want to compare
+     * @param targetLength - the length of the target array
+     * @return true - the target array is same as the constant compare array for the given length the target has 
+     * @return false - the target array is not the same as the constant compare array for the given length the target has 
+     */
+    static bool compareUInt8_t(unsigned char *target, const unsigned char *compare, int targetLength);  
 
     /**
      * @brief convert the character array to 8-bit integer

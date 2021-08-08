@@ -1,11 +1,14 @@
 #ifndef WifiController_h
 #define WifiController_h
 
+#include <Arduino.h>
+#include <millisDelay.h>
 
 // Own Library
 
 #include "WifiScan.h"
 #include "WifiConnect.h"
+#include "../DeviceSetting/DeviceManager.h"
 
 /**
  * @brief provides wifi connection functions for connecting to the backend server for receiving/sending data
@@ -20,6 +23,7 @@ class WifiController: public WifiScan, public WifiConnect {
     static TaskHandle_t wifiMainLoop;
     static void mainLoop(void * pvParameters );
 
+    static millisDelay reconnectDelay;
 };
 
 #endif

@@ -24,6 +24,7 @@ void WifiSettingManager::setIsWifiOn(bool isWifiOn) {
 
 void WifiSettingManager::setAccessPointSetting(AccessPointSetting accessPointSetting) {
     this->accessPointSetting = accessPointSetting;
+    this->isAccessPointSet = true;
     storeAccessPointSetting();
     storeIsAccessPointSet();
 }
@@ -97,7 +98,7 @@ void WifiSettingManager::retrieveAccessPointSetting() {
     CharArrayData wifiPasswordData(wifiPasswordLocation);
     Storage::get(wifiPasswordData);
 
-    setAccessPointSetting(AccessPointSetting(
+    this->setAccessPointSetting(AccessPointSetting(
         wifiNameData.getData(), 
         wifiPasswordData.getData()
     ));
